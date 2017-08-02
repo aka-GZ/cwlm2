@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/main_title"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:alpha="1"
+    android:background="@color/blue"
+    android:layout_alignParentTop="true" 
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
+    android:paddingTop="25dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <!-- 
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false" -->
+    <ImageView
+        android:id="@+id/iv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="8dp"
+        android:src="@mipmap/back" />
+   
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="首页"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="8dp"
+        android:src="@mipmap/home" />
+
+</LinearLayout>

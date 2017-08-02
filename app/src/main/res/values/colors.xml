@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+
+    <color name="white">#FFFFFF</color>
+    <color name="white_alpha">#ddffffff</color>
+    <color name="white_alpha_6">#bbdddddd</color>
+
+    <color name="garytext_zhi">#a1a1a1</color>
+    <!--<color name="gray_load">#ececec</color>-->
+    <color name="gray_bg">#aaeaeaea</color>
+
+    <color name="blue">#003377</color>
+    <color name="text_black">#231815</color>
+    <color name="text_gary">#545454</color>
+    <color name="text_gary_light">#a1a1a1</color>
+    <color name="line_gray">#aaefefef</color>
+    <color name="red">#f44747</color>
+    <color name="yellow">#fed24f</color>
+    <color name="transparent">#00000000</color>
+
+
+    <!--scan code -->
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#b0000000</color>
+    <color name="possible_result_points">#00000000</color>
+
+
+</resources>
