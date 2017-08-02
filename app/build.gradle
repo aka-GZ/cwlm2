@@ -58,12 +58,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.squareup.okio:okio:1.13.0'
     compile 'com.google.code.gson:gson:2.8.1'
-//    compile 'com.jakewharton:butterknife:8.7.0'
-//    compile 'com.jakewharton:butterknife-annotations:8.7.0'
-//    compile 'com.jakewharton:butterknife-gradle-plugin:8.7.0'
-//    compile 'com.jakewharton:butterknife:8.6.0'
-//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-//    classpath 'com.jakewharton:butterknife-gradle-plugin:8.6.0'
 
     compile 'de.hdodenhof:circleimageview:2.1.0' //圆形头像
 //注释掉原有bugly的仓库
@@ -73,4 +67,8 @@ dependencies {
 
     compile 'cn.jiguang.sdk:jpush:3.0.8'  // 此处以JPush 3.0.3 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.6'  // 此处以JCore 1.1.1 版本为例。
+
+
+    //加载动画
+    compile 'com.wang.avi:library:2.1.3'
 }

@@ -1,5 +1,6 @@
 package com.cwlm.capacitylock.net;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
@@ -8,6 +9,9 @@ import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
 import com.cwlm.capacitylock.obj.UserObj;
+import com.cwlm.capacitylock.ui.LoginActivity;
+import com.cwlm.capacitylock.ui.MainActivity;
+import com.cwlm.capacitylock.utils.MyDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -29,11 +33,14 @@ public class OkHttpUtils {
     int infCode = -1;
     private OkHttpClient okhttp;
     private boolean showProgressDialog = false;
+    MyDialog progressDialog = null;
+
 
     public OkHttpUtils(Context context, int infCode) {
         this.ctx = context;
         this.infCode = infCode;
     }
+
     public OkHttpUtils(Context context, int infCode, boolean showProgressDialog) {
         this.ctx = context;
         this.infCode = infCode;
@@ -42,6 +49,11 @@ public class OkHttpUtils {
 
     public void GetDataFromNet(String... parms) {
 
+
+        if (showProgressDialog && progressDialog == null) {
+            progressDialog = new MyDialog(ctx, "加载中...");
+            progressDialog.show();
+        }
 
         //创建OkHttpClient对象
         okhttp = new OkHttpClient();
@@ -59,8 +71,8 @@ public class OkHttpUtils {
             case InterfaceFinals.sendSMSNew:   //获取验证码
 
                 body = new FormBody.Builder()
-                        .add("toUser",parms[0])
-                        .add("type",parms[1])
+                        .add("toUser", parms[0])
+                        .add("type", parms[1])
                         .build();
 
                 PostRequst(InterfaceFinals.sendSMSNew_Requst, okhttp, body, BaseModel.class, InterfaceFinals.sendSMSNew);
@@ -69,8 +81,8 @@ public class OkHttpUtils {
             case InterfaceFinals.login:   //登录
 
                 body = new FormBody.Builder()
-                        .add("phoneNum",parms[0])
-                        .add("idenCode",parms[1])
+                        .add("phoneNum", parms[0])
+                        .add("idenCode", parms[1])
                         .build();
 
                 PostRequst(InterfaceFinals.login_Requst, okhttp, body, UserObj.class, InterfaceFinals.login);
@@ -83,8 +95,8 @@ public class OkHttpUtils {
         }
     }
 
-    public void cancel(){
-        if (okhttp!=null){
+    public void cancel() {
+        if (okhttp != null) {
             okhttp.cache();
         }
     }
@@ -104,10 +116,11 @@ public class OkHttpUtils {
             @Override
             public void onFailure(Call call, IOException e) {
 
-                ((BaseActivity)ctx).runOnUiThread(new Runnable() {
+                ((BaseActivity) ctx).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ((BaseActivity)ctx).showToast("请求失败，请重试");
+                        progressDialog.dismiss();
+                        ((BaseActivity) ctx).showToast("请求失败，请重试");
                     }
                 });
             }
@@ -115,6 +128,10 @@ public class OkHttpUtils {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String res = response.body().string();
+
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
 
                 Log.e(" requst ", "|---------------------------------" + "-------------------------------------------------");
                 Log.e(" requst ", "|" + body2 + "");
@@ -131,13 +148,12 @@ public class OkHttpUtils {
                         public void run() {
                             if (!res.contains("{")) { //数据返回异常
                                 ((BaseActivity) ctx).showToast("数据异常,请重新请求");
-                            }
-                            else if (model != null && "1".equals(model.getStatusCode())) {
+                            } else if (model != null && "1".equals(model.getStatusCode())) {
                                 model.setInfCode(inf);
                                 ((BaseActivity) ctx).onSuccess(model);
-                            }else if (model != null) {
+                            } else if (model != null) {
                                 ((BaseActivity) ctx).onFail(model);
-                            }else {
+                            } else {
                                 ((BaseActivity) ctx).showToast("数据解析异常，请重试");
                             }
                         }

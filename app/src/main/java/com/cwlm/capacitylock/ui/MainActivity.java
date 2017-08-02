@@ -1,5 +1,6 @@
 package com.cwlm.capacitylock.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +51,7 @@ import com.cwlm.capacitylock.service.MyOrientationListener;
 import com.cwlm.capacitylock.ui.percenter.PersonInfoCenterActivity;
 import com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity;
 import com.cwlm.capacitylock.utils.DrivingRouteOverlay;
+import com.cwlm.capacitylock.utils.MyDialog;
 import com.cwlm.capacitylock.utils.OverlayManager;
 
 import java.util.ArrayList;
@@ -325,6 +327,10 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_right_out);
+
+
+
+
 
                 break;
             case R.id.main_refresh:

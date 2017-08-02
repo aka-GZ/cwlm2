@@ -1,6 +1,20 @@
-package com.cwlm.capacitylock.utils;
+/*
+ * Copyright (C) 2013 readyState Software Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import java.lang.reflect.Method;
+package com.cwlm.capacitylock.utils;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -21,17 +35,24 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout.LayoutParams;
 
-@SuppressWarnings({ "unchecked", "rawtypes" })
+import java.lang.reflect.Method;
+
+/**系统栏背景管理器
+ * Class to manage status and navigation bar tint effects when using KitKat 
+ * translucent system UI modes.
+ */
 public class SystemBarTintManager {
-	
-	static {
+
+    static {
         // Android allows a system property to override the presence of the navigation bar.
         // Used by the emulator.
         // See https://github.com/android/platform_frameworks_base/blob/master/policy/src/com/android/internal/policy/impl/PhoneWindowManager.java#L1076
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             try {
-                Class c = Class.forName("android.os.SystemProperties");
-                Method m = c.getDeclaredMethod("get", String.class);
+                @SuppressWarnings("rawtypes")
+				Class c = Class.forName("android.os.SystemProperties");
+                @SuppressWarnings("unchecked")
+				Method m = c.getDeclaredMethod("get", String.class);
                 m.setAccessible(true);
                 sNavBarOverride = (String) m.invoke(null, "qemu.hw.mainkeys");
             } catch (Throwable e) {
@@ -63,6 +84,7 @@ public class SystemBarTintManager {
      *
      * @param activity The host activity.
      */
+    @SuppressWarnings("ResourceType")
     @TargetApi(19)
     public SystemBarTintManager(Activity activity) {
 

@@ -5,8 +5,8 @@ package com.cwlm.capacitylock.finals;
  */
 public class InterfaceFinals {
 
-//    public static final String URL = "http://zylm.net:80"; //正式服务器
-    public static final String URL = "http://wooowoo.cn";  //测试服务器
+    public static final String URL = "http://zylm.net:80"; //正式服务器
+//    public static final String URL = "http://wooowoo.cn";  //测试服务器
 
     //请求URL
     public static final String getAllStopPlace_Requst= URL + "/CarLock/allweixin/getAllStopPlace"; //获取所有停车场车辆信息

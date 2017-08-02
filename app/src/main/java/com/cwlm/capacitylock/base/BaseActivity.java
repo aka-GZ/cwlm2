@@ -110,6 +110,7 @@ public abstract class BaseActivity extends Activity {
 			
 			public void onClick(View v) {
 				finish();
+				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
 			}
 		});
 		iv_right.setOnClickListener(new OnClickListener() {

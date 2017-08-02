@@ -31,6 +31,7 @@ import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.obj.UserObj;
 import com.cwlm.capacitylock.utils.CountDownTimerUtils;
+import com.cwlm.capacitylock.utils.MyDialog;
 import com.cwlm.capacitylock.utils.MyUtils;
 import com.cwlm.capacitylock.utils.PreferencesUtil;
 import com.cwlm.capacitylock.utils.SmsContent;
@@ -154,7 +155,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
 
                 String username = id_username.getText().toString().trim();
-                getDataFromNet(InterfaceFinals.sendSMSNew, username, "REGISTER");
+                getDataFromNet(InterfaceFinals.sendSMSNew,true , username, "REGISTER");
 
 //                RequestParams params1 = MyApplication.getRequestParams();
 //                params1.put("toUser", id_username.getText().toString().trim());
@@ -199,13 +200,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     break;
                 }
 
-                dialog = new ProgressDialog(LoginActivity.this);
-                dialog.setMessage("登陆中");
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.setCancelable(true);
-                dialog.show();
-
-                getDataFromNet(InterfaceFinals.login, username_login, code);
+                    getDataFromNet(InterfaceFinals.login, true, username_login, code);
 
 
 //                RequestParams params = MyApplication.getRequestParams();
