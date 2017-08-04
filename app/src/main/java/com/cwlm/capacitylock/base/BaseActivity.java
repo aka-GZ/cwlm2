@@ -22,7 +22,10 @@ import com.baidu.mapapi.SDKInitializer;
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.net.OkHttpUtils;
+import com.cwlm.capacitylock.obj.UserObj;
+import com.cwlm.capacitylock.ui.LoginActivity;
 import com.cwlm.capacitylock.ui.MainActivity;
+import com.cwlm.capacitylock.utils.PreferencesUtil;
 import com.cwlm.capacitylock.utils.SystemBarTintManager;
 
 import okhttp3.OkHttpClient;
@@ -48,7 +51,7 @@ public abstract class BaseActivity extends Activity {
 	public LinearLayout main_ll_sy,main_ll_xx,main_ll_gr;
 	
 
-//	public UserObj user = MyApplication.user;
+	public UserObj user;
 //------------------------------------------------------------
 	
 	
@@ -74,6 +77,8 @@ public abstract class BaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(mLayoutId);
+
+		user = (UserObj) PreferencesUtil.getPreferences(BaseActivity.this, "User");
 
 		MyApplication.getInstance().addActivity(this);
 		getData();

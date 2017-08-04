@@ -1,7 +1,11 @@
 package com.cwlm.capacitylock.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 
+import com.cwlm.capacitylock.obj.UserObj;
+
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -42,6 +46,47 @@ public class MyUtils {
     }
 
 
+
+    /**
+     *
+     * 车牌号正则表达式（包含新车牌）
+     * **/
+    public static Boolean isCarNumber(String cph){
+        Pattern pattern = Pattern.compile("^[\u4e00-\u9fa5|WJ]{1}[A-Z0-9]{6,7}$");
+        Matcher matcher = pattern.matcher(cph);
+        return matcher.matches();
+    }
+
+
+
+    /**
+     * 判断文件或文件夹是否存在
+     * @param path 文件夹路径
+     */
+    public static boolean isExist(String path) {
+        File file = new File(path);
+        //判断文件夹是否存在
+        if (!file.exists()) {
+            //file.mkdir(); //不存在创建文件夹
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 判断是否登录
+     * @param ctx
+     */
+    public static boolean isLogin(Context ctx) {
+
+        UserObj user = (UserObj) PreferencesUtil.getPreferences(ctx, "User");
+        if (user == null || TextUtils.isEmpty(user.getPhoneNum())) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 
 
 

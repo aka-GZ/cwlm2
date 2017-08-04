@@ -3,6 +3,7 @@ package com.cwlm.capacitylock.net;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.BaseAdapter;
 
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
@@ -86,6 +87,71 @@ public class OkHttpUtils {
                         .build();
 
                 PostRequst(InterfaceFinals.login_Requst, okhttp, body, UserObj.class, InterfaceFinals.login);
+
+                break;
+            case InterfaceFinals.myOrder:   //获取我的订单信息
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.myOrder_Requst, okhttp, body, BaseModel.class, InterfaceFinals.myOrder);
+
+                break;
+            case InterfaceFinals.predetermine:   //我的预定
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.predetermine_Requst, okhttp, body, BaseModel.class, InterfaceFinals.predetermine);
+
+                break;
+            case InterfaceFinals.cancelPredetermine:   //取消预定
+
+                body = new FormBody.Builder()
+                        .add("orderInfoId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.cancelPredetermine_Requst, okhttp, body, BaseModel.class, InterfaceFinals.cancelPredetermine);
+
+                break;
+            case InterfaceFinals.getCarNumber:   //获取车牌号
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.getCarNumber_Requst, okhttp, body, BaseModel.class, InterfaceFinals.getCarNumber);
+
+                break;
+            case InterfaceFinals.bindCarNumber:   //绑定车牌号
+
+                body = new FormBody.Builder()
+                        .add("carNumber", parms[0])
+                        .add("step", parms[1])
+                        .build();
+
+                PostRequst(InterfaceFinals.bindCarNumber_Requst, okhttp, body, BaseModel.class, InterfaceFinals.bindCarNumber);
+
+                break;
+            case InterfaceFinals.getStopPlaceAllMonthCardPrice:   //获取月卡信息
+
+                body = new FormBody.Builder()
+                        .add("stopPlaceId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.getStopPlaceAllMonthCardPrice_Requst, okhttp, body, BaseModel.class, InterfaceFinals.getStopPlaceAllMonthCardPrice);
+
+                break;
+            case InterfaceFinals.getOrderInfo:   //app充值下订单
+
+                body = new FormBody.Builder()
+                        .add("rechargeMoney", parms[0])
+                        .add("payType", parms[1])
+                        .build();
+
+                PostRequst(InterfaceFinals.getOrderInfo_Requst, okhttp, body, BaseModel.class, InterfaceFinals.getOrderInfo);
 
                 break;
 

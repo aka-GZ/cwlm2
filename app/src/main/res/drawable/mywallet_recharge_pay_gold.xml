@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/blue" /> <!--填充色 透明-->
+    <stroke android:color="@color/gold_money" android:width="1dp"/>
+    <solid android:color="@color/gold_money"/>
     <corners android:radius="0dp" />  <!-- 圆角 -->
 </shape>
