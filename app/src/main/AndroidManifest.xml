@@ -53,13 +53,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.MainActivity"
-            android:launchMode="singleTop"/>
-        <activity android:name=".ui.LoginActivity"
-            android:launchMode="singleTop"/>
+        <activity android:name=".ui.MainActivity" android:launchMode="singleTop"/>
+        <activity android:name=".ui.LoginActivity" android:launchMode="singleTop"/>
+        <activity android:name=".ui.ServiceWebView" android:launchMode="singleTop"/>
 
         <activity android:name=".ui.percenter.PersonInfoCenterActivity"/>
         <activity android:name=".ui.percenter.OrderInfoCenterActivity"/>
+        <activity android:name=".ui.percenter.BindCarNumbleActivity"/>
+        <activity android:name=".ui.percenter.BindParkActivity"/>
+        <activity android:name=".ui.percenter.MyPreParkActivity"/>
+        <activity android:name=".ui.percenter.MyWallet_1Activity"/>
+        <activity android:name=".ui.percenter.RechargeMonthCardActivity"/>
+        <activity android:name=".ui.percenter.VipStateActivity"/>
         <activity android:name="com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity"/>
 
 
@@ -117,6 +122,21 @@
             </intent-filter>
         </receiver>
 
+        <!--alipay-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
 
 
     </application>

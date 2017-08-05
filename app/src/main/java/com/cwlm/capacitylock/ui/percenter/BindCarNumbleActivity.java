@@ -42,7 +42,7 @@ public class BindCarNumbleActivity extends BaseActivity implements View.OnClickL
 
     String StopPlaceId = "";
 
-    public BindCarNumbleActivity(int resid) {
+    public BindCarNumbleActivity() {
         super(R.layout.act_bindcarnumble);
     }
 

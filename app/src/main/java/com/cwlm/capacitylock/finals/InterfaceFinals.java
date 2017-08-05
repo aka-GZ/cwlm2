@@ -23,7 +23,7 @@ public class InterfaceFinals {
     public static final String bindCarNumber_Requst = URL + "/CarLock/appUserInfo/bindCarNumber"; //绑定车牌号
     public static final String getStopPlaceAllMonthCardPrice_Requst = URL + "/CarLock/stopplace/getStopPlaceAllMonthCardPrice";//获取月卡信息
     public static final String getOrderInfo_Requst = URL +"/CarLock/appOrderInfo/getOrderInfo";//app充值下订单
-
+    public static final String getAllUserMonthCard_Requst = URL +"/CarLock/stopplace/getAllUserMonthCard";//获取月卡充值记录
 
     //接口常量
     public static final int getAllStopPlace = 0;  //获取所有停车场车辆信息
@@ -36,6 +36,7 @@ public class InterfaceFinals {
     public static final int bindCarNumber = 7;  //绑定车牌号
     public static final int getStopPlaceAllMonthCardPrice = 8;  //获取月卡信息
     public static final int getOrderInfo = 9;  //app充值下订单
+    public static final int getAllUserMonthCard = 10;  //获取月卡充值记录
 
 
     //协议html地址

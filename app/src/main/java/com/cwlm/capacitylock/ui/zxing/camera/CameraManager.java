@@ -271,7 +271,7 @@ public final class CameraManager {
 
 			DisplayMetrics dm = context.getResources().getDisplayMetrics();
 			int width = (int)(dm.widthPixels * 0.6);
-			int height = (int)(width * 0.9);
+			int height = (int)(width * 1);                          //调整扫描框大小
 
 			int leftOffset = (screenResolution.x - width) / 2;
 			int topOffset = (screenResolution.y - height) / 2;

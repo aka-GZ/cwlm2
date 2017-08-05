@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
     @Override
     public void getData() {
-        getDataFromNet(InterfaceFinals.getAllStopPlace);
+        getDataFromNet(InterfaceFinals.getAllStopPlace , true);
     }
 
     @Override
@@ -127,7 +127,6 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                             main_spareparknumber.setText(obj.getSpareParkNumber());
                             main_allparknumber.setText(" / " + obj.getAllParkNumber());
                             main_stopprice.setText(obj.getStopPrice());
-
 
                         } catch (Exception e) {
                             e.printStackTrace();

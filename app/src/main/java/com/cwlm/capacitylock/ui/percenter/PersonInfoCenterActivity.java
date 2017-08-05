@@ -4,19 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,18 +22,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
-import com.cwlm.capacitylock.obj.UserObj;
 import com.cwlm.capacitylock.ui.LoginActivity;
-import com.cwlm.capacitylock.ui.MainActivity;
 import com.cwlm.capacitylock.utils.MyUtils;
 import com.cwlm.capacitylock.utils.PreferencesUtil;
 
@@ -81,7 +67,6 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 
 	@Override
 	public void onClick(View v) {
-		Intent intent = new Intent();
 		switch (v.getId()) {
 			case R.id.menu_user_img:      //用户头像
 
@@ -100,13 +85,12 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 			case R.id.menu_user_name:      //用户名
 
 				//判断用户是否登录
-				if(MyUtils.isLogin(PersonInfoCenterActivity.this)){
-					//showToast("请先登录!");
-					intent.setClass(PersonInfoCenterActivity.this,LoginActivity.class);
+				if(!MyUtils.isLogin(PersonInfoCenterActivity.this)){
+					showToast("请先登录!");
+					startActivity(LoginActivity.class);
 				}else{
 					showToast("已登录!");
 				}
-				startActivity(intent);
 				//overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
 
 				break;
@@ -114,13 +98,12 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 
 
 				//判断用户是否登录
-				if(MyUtils.isLogin(PersonInfoCenterActivity.this)){
+				if(!MyUtils.isLogin(PersonInfoCenterActivity.this)){
 					showToast("请先登录!");
-					intent.setClass(PersonInfoCenterActivity.this,LoginActivity.class);
+					startActivity(LoginActivity.class);
 				}else{
-					intent.setClass(PersonInfoCenterActivity.this, OrderInfoCenterActivity.class);
+					startActivity(OrderInfoCenterActivity.class);
 				}
-				startActivity(intent);
 				//overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
 
 
@@ -128,13 +111,12 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 			case R.id.menu_reservation:    //我的预定
 
 				//判断用户是否登录
-				if(MyUtils.isLogin(PersonInfoCenterActivity.this)){
+				if(!MyUtils.isLogin(PersonInfoCenterActivity.this)){
 					showToast("请先登录!");
-					intent.setClass(PersonInfoCenterActivity.this,LoginActivity.class);
+					startActivity(LoginActivity.class);
 				}else{
-					intent.setClass(PersonInfoCenterActivity.this, MyPreParkActivity.class);
+					startActivity(MyPreParkActivity.class);
 				}
-				startActivity(intent);
 //				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
 
 						break;
@@ -154,30 +136,27 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 //
 			case R.id.per_vip:         //办理月卡
 
-
 				//判断用户是否登录
-				if(MyUtils.isLogin(PersonInfoCenterActivity.this)){
+				if(!MyUtils.isLogin(PersonInfoCenterActivity.this)){
 					showToast("请先登录!");
-					intent.setClass(PersonInfoCenterActivity.this,LoginActivity.class);
+					startActivity(LoginActivity.class);
 				}else{
-					intent.setClass(PersonInfoCenterActivity.this, BindParkActivity.class);
+					startActivity(BindParkActivity.class);
 				}
-				startActivity(intent);
 //				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
 				break;
-//			case R.id.menu_wallet_top:         //我的钱包
-//
-//				//判断用户是否登录
-//				if(TextUtils.isEmpty(MyApplication.getUserId())){
-//					showToast("请先登录!");
-//					intent.setClass(PersonInfoCenterActivity.this,LoginActivity.class);
-//				}else{
-//					intent.setClass(PersonInfoCenterActivity.this, MyWallet_1Activity.class);
-//				}
-//				startActivity(intent);
+			case R.id.menu_wallet_top:         //我的钱包
+
+				//判断用户是否登录
+				if(!MyUtils.isLogin(PersonInfoCenterActivity.this)){
+					showToast("请先登录!");
+					startActivity(LoginActivity.class);
+				}else{
+					startActivity(MyWallet_1Activity.class);
+				}
 //				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-//
-//
+
+
 //				break;
 //			case R.id.per_mylock:         //我的车位
 //
@@ -201,20 +180,19 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 //
 //
 //				break;
-//			case R.id.per_vip_state:         //查询月卡状态
-//
-//				//判断用户是否登录
-//				if(TextUtils.isEmpty(MyApplication.getUserId())){
-//					showToast("请先登录!");
-//					intent.setClass(PersonInfoCenterActivity.this,LoginActivity.class);
-//				}else{
-//					intent.setClass(PersonInfoCenterActivity.this, VipStateActivity.class);
-//				}
-//				startActivity(intent);
+			case R.id.per_vip_state:         //查询月卡状态
+
+				//判断用户是否登录
+				if(!MyUtils.isLogin(PersonInfoCenterActivity.this)){
+					showToast("请先登录!");
+					startActivity(LoginActivity.class);
+				}else{
+					startActivity(VipStateActivity.class);
+				}
 //				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-//
-//
-//				break;
+
+
+				break;
 //			case R.id.menu_certification:         //实名认证
 //
 //				//判断用户是否登录

@@ -61,8 +61,8 @@ public class OrderInfoCenterActivity extends BaseActivity {
 
     @Override
     public void getData() {
-//      getDataFromNet(InterfaceFinals.myOrder,user.getUserId());
-        getDataFromNet(InterfaceFinals.myOrder,"15009468415885658379");
+      getDataFromNet(InterfaceFinals.myOrder,user.getUserId());
+//        getDataFromNet(InterfaceFinals.myOrder,"15009468415885658379");
     }
 
     public void initView() {

@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
@@ -27,11 +28,13 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.mapapi.map.Text;
 import com.cwlm.capacitylock.R;
+import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.ui.zxing.camera.CameraManager;
 import com.cwlm.capacitylock.ui.zxing.decoding.CaptureActivityHandler;
 import com.cwlm.capacitylock.ui.zxing.decoding.InactivityTimer;
@@ -47,23 +50,16 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 
-//import co.huiqu.webapp.R;
-//import co.huiqu.zxing.camera.CameraManager;
-//import co.huiqu.zxing.decoding.CaptureActivityHandler;
-//import co.huiqu.zxing.decoding.InactivityTimer;
-//import co.huiqu.zxing.decoding.RGBLuminanceSource;
-//import co.huiqu.zxing.view.ViewfinderView;
-
 /**
  * Initial the camera
  * 
  * @author zhangguoyu
  * 
  */
-public class CaptureActivity extends Activity implements Callback {
+public class CaptureActivity extends BaseActivity implements Callback {
 
-	private TextView btnLight;
-	private TextView btnOpenImage;
+	private ImageView btnLight;
+	private ImageView btnOpenImage;
 	private boolean playBeep;
 	private boolean vibrate;
 	private boolean hasSurface;
@@ -76,29 +72,66 @@ public class CaptureActivity extends Activity implements Callback {
 	private InactivityTimer inactivityTimer;
 	private static final float BEEP_VOLUME = 0.10f;
 
+	public CaptureActivity() {
+		super(R.layout.act_capture);
+	}
+
+//	@Override
+//	public void onCreate(Bundle savedInstanceState) {
+//		super.onCreate(savedInstanceState);
+//		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//		}
+//		setContentView(R.layout.act_capture);
+//		CameraManager.init(getApplication());
+//		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+//		btnLight = (TextView) findViewById(R.id.btn_light);
+//		btnOpenImage = (TextView) findViewById(R.id.btn_openimg);
+////		btnLight.getBackground().setAlpha(50);
+////		btnOpenImage.getBackground().setAlpha(50);
+//		btnLight.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				IfOpenLight();
+//			}
+//		});
+//		btnOpenImage.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				pickPictureFromAblum();
+//			}
+//		});
+//
+//
+//		hasSurface = false;
+//		inactivityTimer = new InactivityTimer(this);
+//		setListener();
+//	}
+
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-		}
-		setContentView(R.layout.act_capture);
+	public void getData() {
+
+	}
+
+	@Override
+	public void initView() {
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-		btnLight = (TextView) findViewById(R.id.btn_light);
-		btnOpenImage = (TextView) findViewById(R.id.btn_openimg);
+		btnLight = (ImageView) findViewById(R.id.btn_light);
+		btnOpenImage = (ImageView) findViewById(R.id.btn_openimg);
 //		btnLight.getBackground().setAlpha(50);
 //		btnOpenImage.getBackground().setAlpha(50);
 		btnLight.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				IfOpenLight();
+				finish_Anim();
 			}
 		});
 		btnOpenImage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				pickPictureFromAblum();
+//				pickPictureFromAblum();  扫描图片二维码，暂时无此功能
+				IfOpenLight();
 			}
 		});
 
@@ -112,7 +145,9 @@ public class CaptureActivity extends Activity implements Callback {
 	 * 注册事件
 	 */
 	private void setListener() {
-		((TextView) findViewById(R.id.tv_left_title)).setOnClickListener(new OnClickListener() {
+		((TextView) findViewById(R.id.tv_title)).setText("扫码停车");
+		((ImageView) findViewById(R.id.iv_right)).setVisibility(View.INVISIBLE);
+		((ImageView) findViewById(R.id.iv_left)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				onBackPressed();
@@ -212,8 +247,7 @@ public class CaptureActivity extends Activity implements Callback {
 				Uri selectedImage = data.getData();
 				String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-				Cursor cursor = getContentResolver().query(selectedImage,
-						filePathColumn, null, null, null);
+				Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
 				cursor.moveToFirst();
 
 				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
@@ -299,12 +333,12 @@ public class CaptureActivity extends Activity implements Callback {
 		if (ifOpenLight){
 			//关闪光灯
 			CameraManager.get().closeLight();
-			btnLight.setText(getString(R.string.str_open_light));
+//			btnLight.setText(getString(R.string.str_open_light));
 			ifOpenLight = false;
 		}else{
 			//开闪光灯
 			CameraManager.get().openLight();
-			btnLight.setText(getString(R.string.str_close_light));
+//			btnLight.setText(getString(R.string.str_close_light));
 			ifOpenLight = true;
 
 		}

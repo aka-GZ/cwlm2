@@ -1,6 +1,7 @@
 package com.cwlm.capacitylock.ui.percenter;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,10 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
+import com.cwlm.capacitylock.model.BaseModel;
+import com.cwlm.capacitylock.model.RechargeModel;
 import com.cwlm.capacitylock.model.RechargeMonthCardModel;
+import com.cwlm.capacitylock.pay.PayResult;
 import com.cwlm.capacitylock.ui.ServiceWebView;
 import com.google.gson.Gson;
 
@@ -38,6 +43,8 @@ public class RechargeMonthCardActivity extends BaseActivity implements View.OnCl
 
     List<Double> money_list;
 
+    RechargeMonthCardModel.ObjectBean obj = null;
+
     public RechargeMonthCardActivity() {
         super(R.layout.act_rechargemonthcard);
     }
@@ -50,6 +57,114 @@ public class RechargeMonthCardActivity extends BaseActivity implements View.OnCl
         getDataFromNet(InterfaceFinals.getStopPlaceAllMonthCardPrice , StopPlaceId);
 
     }
+
+
+    @Override
+    public void onSuccess(BaseModel resModel) {
+        int infCode = resModel.getInfCode();
+        switch (infCode) {
+            case InterfaceFinals.getOrderInfo://app下订单返回参数
+                RechargeModel model = (RechargeModel)resModel;
+
+
+                final String payInfo = model.getMap().getPayInfo();
+                Runnable payRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        // 构造PayTask 对象
+                        PayTask alipay = new PayTask(RechargeMonthCardActivity.this);
+                        // 调用支付接口，获取支付结果
+//                            String result = alipay.pay(payInfo, true);
+                        Map<String, String> result = alipay.payV2(payInfo,true);
+                        Message msg = new Message();
+                        msg.what = SDK_PAY_FLAG;
+                        msg.obj = result;
+                        mHandler.sendMessage(msg);
+                    }
+                };
+                // 必须异步调用
+                Thread payThread = new Thread(payRunnable);
+                payThread.start();
+                break;
+            case InterfaceFinals.getStopPlaceAllMonthCardPrice://获取月卡信息
+                RechargeMonthCardModel rmcmmodel = (RechargeMonthCardModel)resModel;
+
+                obj = rmcmmodel.getObject();
+                money_list = new ArrayList<Double>();
+                money_list.clear();
+                money_list.add(obj.getMonthPrice());
+                money_list.add(obj.getQuarterPrice());
+                money_list.add(obj.getHalfYearPrice());
+                money_list.add(obj.getYearPrice());
+                if (obj.getMonthPrice()!=0){
+                    textView0.setVisibility(View.VISIBLE);
+                    textView0.setText("月卡 " + obj.getMonthPrice() + "元" );
+                }
+                if (obj.getQuarterPrice()!=0){
+                    textView1.setVisibility(View.VISIBLE);
+                    textView1.setText("季卡 " + obj.getQuarterPrice() + "元" );
+                }
+                if (obj.getHalfYearPrice()!=0){
+                    textView2.setVisibility(View.VISIBLE);
+                    textView2.setText("半年卡 " + obj.getHalfYearPrice() + "元" );
+                }
+                if (obj.getYearPrice()!=0){
+                    textView3.setVisibility(View.VISIBLE);
+                    textView3.setText("年卡 " + obj.getYearPrice() + "元" );
+                }
+//                RechargeMonthCardAdapter adapter = new RechargeMonthCardAdapter(RechargeMonthCardActivity.this, money_list);
+//                    recharge_gv.setAdapter(adapter);
+//                    recharge_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                            if (OldView == null){
+//                                OldView = view;
+//                                ChangeNewView(view , true);
+//                            }else{
+//                                ChangeNewView(OldView , false);
+//                                ChangeNewView(view , true);
+//                                OldView = view;
+//                            }
+//                            Position = position;
+//                        }
+//                    });
+                break;
+        }
+    }
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+            String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+            String resultStatus = payResult.getResultStatus();
+            // 判断resultStatus 为9000则代表支付成功
+            if (TextUtils.equals(resultStatus, "9000")) {
+                // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                //stopPlaceCardPriceType （1表示月卡，2表示季卡，3表示半年卡，4表示年卡）
+                String stopPlaceCardPriceType = "";
+                if (Position == 0) {
+                    stopPlaceCardPriceType = "1";
+                } else if (Position == 1) {
+                    stopPlaceCardPriceType = "2";
+                } else if (Position == 2) {
+                    stopPlaceCardPriceType = "3";
+                } else if (Position == 3) {
+                    stopPlaceCardPriceType = "4";
+                }
+//                map.put("stopPlaceCardPriceType", stopPlaceCardPriceType);
+//                map.put("stopPlaceId", obj.getStopPlaceId());
+//                map.put("payMoney", money_list.get(Position));
+
+                showToast("支付成功");
+                Intent intent = new Intent(RechargeMonthCardActivity.this, VipStateActivity.class);
+                startActivity(intent);
+
+            } else {
+                // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                showToast("支付失败");
+            }
+        };
+    };
 
     int Position = -1;
     View OldView = null;
@@ -176,144 +291,5 @@ public void selected(int i) {
         }
     }
 
-    RechargeMonthCardModel.ObjectBean obj = null;
 
-    @Override
-    public void loadData(Message msg) {
-        switch (msg.what) {
-            case SDK_PAY_FLAG: {
-                PayResult payResult = new PayResult((String) msg.obj);
-                // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
-                String resultInfo = payResult.getResult();
-                String resultStatus = payResult.getResultStatus();
-                // ToastUtil.show(RechargeActivity.this,resultStatus);
-                // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
-                if (TextUtils.equals(resultStatus, "9000")) {
-                    Map<String, Object> map = MyApplication.getMap();//stopPlaceCardPriceType （1表示月卡，2表示季卡，3表示半年卡，4表示年卡）
-                    String stopPlaceCardPriceType = "";
-                    if (Position == 0) {
-                        stopPlaceCardPriceType = "1";
-                    } else if (Position == 1) {
-                        stopPlaceCardPriceType = "2";
-                    } else if (Position == 2) {
-                        stopPlaceCardPriceType = "3";
-                    } else if (Position == 3) {
-                        stopPlaceCardPriceType = "4";
-                    }
-                    map.put("stopPlaceCardPriceType", stopPlaceCardPriceType);
-                    map.put("stopPlaceId", obj.getStopPlaceId());
-                    map.put("payMoney", money_list.get(Position));
-                    ZylmOkHttpManager.PostRequest(ZylmRestClient.getAbsoluteUrl(Constants.Strings.request_url88), map, R.id.success_rechargemonthcard, activityHandler);
-                } else {
-                    // 判断resultStatus 为非“9000”则代表可能支付失败
-                    // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
-                    if (TextUtils.equals(resultStatus, "8000")) {
-
-                    } else {
-                        // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                        Toast.makeText(this, "支付失败", Toast.LENGTH_SHORT).show();
-                        setResult(400);
-                        finish();
-                    }
-                }
-                break;
-            }
-            case SDK_CHECK_FLAG: {
-                ToastUtil.show(this, "检查结果为：" + msg.obj);
-                break;
-            }
-            case R.id.success_rechargemonthcard:
-
-                CaptureData cdmodel = new Gson().fromJson(msg.obj.toString(), CaptureData.class);
-
-                if ("1".equals(cdmodel.getStatusCode())) {
-
-                    ToastUtil.shortShow(this, "充值成功");
-                    Intent intent = new Intent(RechargeMonthCardActivity.this, VipStateActivity.class);
-                    startActivity(intent);
-                } else{
-                    showToast(cdmodel.getMess().toString());
-                    }
-
-                finish();
-                break;
-            case R.id.rechargemonthcard: //获取月卡信息
-                RechargeMonthCardModel rmcmmodel = new Gson().fromJson(msg.obj.toString(), RechargeMonthCardModel.class);
-
-                if ("1".equals(rmcmmodel.getStatusCode())) {
-
-                    obj = rmcmmodel.getObject();
-                    money_list = new ArrayList<Double>();
-                    money_list.clear();
-                    money_list.add(obj.getMonthPrice());
-                    money_list.add(obj.getQuarterPrice());
-                    money_list.add(obj.getHalfYearPrice());
-                    money_list.add(obj.getYearPrice());
-                    if (obj.getMonthPrice()!=0){
-                        textView0.setVisibility(View.VISIBLE);
-                        textView0.setText("月卡 " + obj.getMonthPrice() + "元" );
-                    }
-                    if (obj.getQuarterPrice()!=0){
-                        textView1.setVisibility(View.VISIBLE);
-                        textView1.setText("季卡 " + obj.getQuarterPrice() + "元" );
-                    }
-                    if (obj.getHalfYearPrice()!=0){
-                        textView2.setVisibility(View.VISIBLE);
-                        textView2.setText("半年卡 " + obj.getHalfYearPrice() + "元" );
-                    }
-                    if (obj.getYearPrice()!=0){
-                        textView3.setVisibility(View.VISIBLE);
-                        textView3.setText("年卡 " + obj.getYearPrice() + "元" );
-                    }
-                    //RechargeMonthCardAdapter adapter = new RechargeMonthCardAdapter(RechargeMonthCardActivity.this, money_list);
-//                    recharge_gv.setAdapter(adapter);
-//                    recharge_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                        @Override
-//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                            if (OldView == null){
-//                                OldView = view;
-//                                ChangeNewView(view , true);
-//                            }else{
-//                                ChangeNewView(OldView , false);
-//                                ChangeNewView(view , true);
-//                                OldView = view;
-//                            }
-//                            Position = position;
-//                        }
-//                    });
-                } else {
-                    showToast(rmcmmodel.getMess().toString());
-                }
-                break;
-            case R.id.recharge: //获取支付宝订单
-                RechargeModel model = new Gson().fromJson(msg.obj.toString(), RechargeModel.class);
-
-                if ("1".equals(model.getStatusCode())) {
-
-                    final String payInfo = model.getMap().getPayInfo();
-                    Runnable payRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            // 构造PayTask 对象
-                            PayTask alipay = new PayTask(RechargeMonthCardActivity.this);
-                            // 调用支付接口，获取支付结果
-                            String result = alipay.pay(payInfo);
-                            Message msg = new Message();
-                            msg.what = SDK_PAY_FLAG;
-                            msg.obj = result;
-                            Message.obtain(activityHandler, SDK_PAY_FLAG, result).sendToTarget();
-                        }
-                    };
-                    // 必须异步调用
-                    Thread payThread = new Thread(payRunnable);
-                    payThread.start();
-                } else {
-                    showToast(model.getMess().toString());
-                }
-                break;
-            default:
-                break;
-        }
-    }
 }

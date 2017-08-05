@@ -28,6 +28,8 @@
             android:layout_alignParentTop="true"
             android:background="@color/white"
             android:orientation="vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:paddingBottom="0dp"
             android:paddingLeft="0dp"
             android:paddingRight="0dp"

@@ -1,31 +1,24 @@
 package com.cwlm.capacitylock.ui.percenter;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Message;
-import android.text.TextPaint;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
 
-import java.util.Map;
 
 /**
  *
- * Created by Administrator on 2017-03-23.
+ * Created by akawok on 2017-08-05.
  */
 public class MyWallet_1Activity extends BaseActivity implements View.OnClickListener {
     TextView accountBalance;
-    Button recharge;
-    LinearLayout id_back;
+    LinearLayout recharge;
 
 
     public MyWallet_1Activity(){
-        super(R.layout.activity_mywallet_1);
+        super(R.layout.act_mywallet);
     }
 
 //    @Override
@@ -45,11 +38,11 @@ public class MyWallet_1Activity extends BaseActivity implements View.OnClickList
     }
 
     public void initView() {
-        recharge= (Button) findViewById(R.id.recharge);
+        recharge= (LinearLayout) findViewById(R.id.recharge);
         recharge.setOnClickListener(this);
         accountBalance= (TextView) findViewById(R.id.accountBalance);
-        TextPaint tp = accountBalance.getPaint();
-        tp.setFakeBoldText(true);
+//        TextPaint tp = accountBalance.getPaint();
+//        tp.setFakeBoldText(true);
     }
 
 //    public void loadData(Message msg) {

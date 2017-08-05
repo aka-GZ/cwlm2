@@ -254,7 +254,7 @@ public abstract class BaseActivity extends Activity {
      * @param cls
      * @param obj
      */
-    public void startActivity(Class<?> cls, Object obj){ 
+    public void startActivity(Class<?> cls, Object obj){
 		Intent intent = new Intent(this,cls);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		if (obj != null) {
@@ -262,11 +262,25 @@ public abstract class BaseActivity extends Activity {
 		}
 		startActivity(intent);
 
-//		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-		overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+		overridePendingTransition(R.anim.push_left_in, R.anim.push_right_out);
+//		overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 	}
-	
-    protected void onDestroy() {
+
+	@Override
+	public void finish() {
+		super.finish();
+	}
+
+
+	/**
+	 * 有退出动画的finish
+	 */
+	public void finish_Anim() {
+		finish();
+		overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+	}
+
+	protected void onDestroy() {
 		if (taskList != null && !taskList.isEmpty()) {
 			for (OkHttpUtils task : taskList) {
 				task.cancel();

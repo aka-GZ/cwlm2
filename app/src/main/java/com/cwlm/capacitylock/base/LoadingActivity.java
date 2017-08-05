@@ -142,7 +142,9 @@ public class LoadingActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    startActivity(MainActivity.class);
+                    Intent i = new Intent(LoadingActivity.this, MainActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();
                     break;
                 default:
@@ -150,7 +152,6 @@ public class LoadingActivity extends BaseActivity {
             }
         }
     };
-
 
 
     /**
