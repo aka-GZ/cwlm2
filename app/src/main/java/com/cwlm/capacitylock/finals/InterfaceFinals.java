@@ -24,6 +24,10 @@ public class InterfaceFinals {
     public static final String getStopPlaceAllMonthCardPrice_Requst = URL + "/CarLock/stopplace/getStopPlaceAllMonthCardPrice";//获取月卡信息
     public static final String getOrderInfo_Requst = URL +"/CarLock/appOrderInfo/getOrderInfo";//app充值下订单
     public static final String getAllUserMonthCard_Requst = URL +"/CarLock/stopplace/getAllUserMonthCard";//获取月卡充值记录
+    public static final String getSweepNumber_Requst = URL +"/CarLock/appUserInfo/getSweepNumber"; //主页获取押金和使用次数
+    public static final String scanCode_Requst = URL +"/CarLock/stopplace/scanCode";//app扫码停车_新
+    public static final String cancelPark_Requst = URL +"/CarLock/stopplace/cancelPark";//app取消停车
+
 
     //接口常量
     public static final int getAllStopPlace = 0;  //获取所有停车场车辆信息
@@ -37,6 +41,9 @@ public class InterfaceFinals {
     public static final int getStopPlaceAllMonthCardPrice = 8;  //获取月卡信息
     public static final int getOrderInfo = 9;  //app充值下订单
     public static final int getAllUserMonthCard = 10;  //获取月卡充值记录
+    public static final int getSweepNumber = 11;  //主页获取押金和使用次数
+    public static final int scanCode = 12;  //app扫码停车_新
+    public static final int cancelPark = 13;  //app取消停车
 
 
     //协议html地址

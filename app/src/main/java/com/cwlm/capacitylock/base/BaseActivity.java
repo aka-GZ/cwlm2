@@ -213,7 +213,7 @@ public abstract class BaseActivity extends Activity {
 	 */
 	public void showToast(String msg){
 		if (mToast == null) {
-			mToast = Toast.makeText(BaseActivity.this, "", Toast.LENGTH_LONG);
+			mToast = Toast.makeText(BaseActivity.this, "", Toast.LENGTH_SHORT);
 		}
 		mToast.setText(msg);
 		mToast.show();

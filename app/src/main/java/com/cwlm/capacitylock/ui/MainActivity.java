@@ -229,6 +229,13 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
     }
 
 
+    /**
+     *
+     * 回跳activity（新版本逻辑不使用）
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
@@ -316,20 +323,12 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
         switch (v.getId()) {
             case R.id.iv_left:
 
-                intent = new Intent(MainActivity.this, PersonInfoCenterActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_right_out);
+                startActivity(PersonInfoCenterActivity.class);
 
                 break;
             case R.id.iv_right:
 
-                intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_right_out);
-
-
-
-
+                startActivity(LoginActivity.class);
 
                 break;
             case R.id.main_refresh:
@@ -354,8 +353,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 break;
             case R.id.scan_code:
 
-                intent = new Intent(MainActivity.this, CaptureActivity.class);
-                startActivityForResult(intent, 0);
+                startActivity(CaptureActivity.class);
 
                 break;
 

@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -35,11 +37,21 @@ import android.widget.Toast;
 import com.baidu.mapapi.map.Text;
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
+import com.cwlm.capacitylock.finals.InterfaceFinals;
+import com.cwlm.capacitylock.model.BaseModel;
+import com.cwlm.capacitylock.ui.LoginActivity;
+import com.cwlm.capacitylock.ui.MainActivity;
+import com.cwlm.capacitylock.ui.scan.CancelActivity;
+import com.cwlm.capacitylock.ui.scan.ErrorActivity;
 import com.cwlm.capacitylock.ui.zxing.camera.CameraManager;
 import com.cwlm.capacitylock.ui.zxing.decoding.CaptureActivityHandler;
 import com.cwlm.capacitylock.ui.zxing.decoding.InactivityTimer;
 import com.cwlm.capacitylock.ui.zxing.decoding.RGBLuminanceSource;
 import com.cwlm.capacitylock.ui.zxing.view.ViewfinderView;
+import com.cwlm.capacitylock.utils.MyDialog;
+import com.cwlm.capacitylock.utils.PreferencesUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -49,6 +61,12 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
+
+import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Initial the camera
@@ -71,6 +89,10 @@ public class CaptureActivity extends BaseActivity implements Callback {
 	private Vector<BarcodeFormat> decodeFormats;
 	private InactivityTimer inactivityTimer;
 	private static final float BEEP_VOLUME = 0.10f;
+
+
+	private OkHttpClient okhttp;
+	MyDialog progressDialog = null;
 
 	public CaptureActivity() {
 		super(R.layout.act_capture);
@@ -199,7 +221,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
 	 * Handler scan result
 	 * @param result
 	 * @param barcode
-	 * 获取结果
+	 * 扫描获取结果 (因为扫码activity只接受网络请求，而不解析，所以重新添加okhttp请求)
 	 */
 	public void handleDecode(Result result, Bitmap barcode) {
 		inactivityTimer.onActivity();
@@ -211,14 +233,99 @@ public class CaptureActivity extends BaseActivity implements Callback {
 					.show();
 		} else {
 
-			Intent resultIntent = new Intent();
-			Bundle bundle = new Bundle();
-			bundle.putString("result", resultString);
-			resultIntent.putExtras(bundle);
-			this.setResult(RESULT_OK, resultIntent);
+			//创建OkHttpClient对象
+			okhttp = new OkHttpClient();
+			FormBody body = new FormBody.Builder()
+					.add("userId", user.getUserId())
+					.add("param", resultString)
+					.add("carNumber", user.getCarNumber())
+					.build();
+			Request request = new Request.Builder()
+					.url(InterfaceFinals.scanCode_Requst)
+					.post(body)
+					.build();
+
+			if (progressDialog == null) {
+				progressDialog = new MyDialog(this, "加载中...");
+				progressDialog.show();
+			}
+			//new call
+			Call call = okhttp.newCall(request);
+			//请求加入调度
+			call.enqueue(new okhttp3.Callback() {
+				@Override
+				public void onFailure(Call call, IOException e) {
+
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							progressDialog.dismiss();
+							showToast("请求失败，请重试");
+						}
+					});
+				}
+
+				@Override
+				public void onResponse(Call call, final Response response) throws IOException {
+					final String res = response.body().string();
+
+					if (progressDialog != null) {
+						progressDialog.dismiss();
+					}
+
+					Log.e("response", "|---------------------------------" + "-------------------------------------------------");
+					Log.e("response", "|" + res + "");
+					Log.e("response", "|---------------------------------" + "-------------------------------------------------");
+
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							BaseModel result = new Gson().fromJson(res, BaseModel.class);
+							//非业主扫码成功  &  业主扫码成功
+							if("2".equals(result.getStatusCode())||"1".equals(result.getStatusCode())){
+								Intent intent=new Intent(CaptureActivity.this,CancelActivity.class);
+								intent.putExtra("data",res);
+								startActivity(intent);
+								finish();
+							}
+							//当前车位不可用,推荐附近停车位
+							else if("4".equals(result.getStatusCode())||"5".equals(result.getStatusCode())){
+								Intent intent=new Intent(CaptureActivity.this,ErrorActivity.class);
+								intent.putExtra("freelock",res);
+								startActivity(intent);
+								finish();
+							}
+							//车锁主扫非自己车位且未交押金（如果交了押金将会返回 2 ）
+							else if("16".equals(result.getStatusCode())){
+
+								//未交押金跳转交押金界面
+								startActivity(PayDepositActivity.class);
+								finish();
+
+							}
+							//黑名单用户
+							else if("6".equals(result.getStatusCode())){
+
+								//清除登录信息
+								PreferencesUtil.clearPreferences(CaptureActivity.this , "User");
+								startActivity(LoginActivity.class);
+								finish();
+
+							}else{
+								showToast(result.getMess());
+								//跳回主页
+								startActivity(MainActivity.class);
+								finish();
+							}
+
+
+						}
+					});
+				}
+			});
 		}
-		CaptureActivity.this.finish();
 	}
+
 
 	/*
 	 * 获取带二维码的相片进行扫描
@@ -229,12 +336,12 @@ public class CaptureActivity extends BaseActivity implements Callback {
 				MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
 		startActivityForResult(mIntent, 1);
-		
+
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see android.app.Activity#onActivityResult(int, int,
 	 * android.content.Intent) 对相册获取的结果进行分析
 	 */
@@ -262,8 +369,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
 					String resultImage = resultString.getText();
 					if (resultImage.equals("")) {
 
-						Toast.makeText(CaptureActivity.this, "扫描失败",
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(CaptureActivity.this, "扫描失败",Toast.LENGTH_SHORT).show();
 					} else {
 
 						Intent resultIntent = new Intent();
@@ -275,9 +381,9 @@ public class CaptureActivity extends BaseActivity implements Callback {
 
 					CaptureActivity.this.finish();
 				}
-				
+
 				break;
-				
+
 			default:
 				break;
 			}
@@ -285,10 +391,10 @@ public class CaptureActivity extends BaseActivity implements Callback {
 
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
 	/**
 	 * 解析QR图内容
-	 * 
+	 *
 	 * @return
 	 */
 	// 解析QR图片
@@ -297,7 +403,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
 		if (TextUtils.isEmpty(picturePath)) {
 			return null;
 		}
-		
+
 		Map<DecodeHintType, String> hints1 = new Hashtable<DecodeHintType, String>();
 		hints1.put(DecodeHintType.CHARACTER_SET, "utf-8");
 
@@ -374,8 +480,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,int height) {
 
 	}
 

@@ -154,6 +154,37 @@ public class OkHttpUtils {
                 PostRequst(InterfaceFinals.getOrderInfo_Requst, okhttp, body, BaseModel.class, InterfaceFinals.getOrderInfo);
 
                 break;
+            case InterfaceFinals.getAllUserMonthCard:   //获取月卡充值记录
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.getAllUserMonthCard_Requst, okhttp, body, BaseModel.class, InterfaceFinals.getAllUserMonthCard);
+
+                break;
+//            case InterfaceFinals.scanCode:   //app扫码停车_新     ----该接口已在扫码界面单独调用
+//
+//                body = new FormBody.Builder()
+//                        .add("userId", parms[0])
+//                        .add("param", parms[1])
+//                        .add("carNumber", parms[2])
+//                        .build();
+//
+//                PostRequst(InterfaceFinals.scanCode_Requst, okhttp, body, BaseModel.class, InterfaceFinals.scanCode);
+//
+//                break;
+            case InterfaceFinals.cancelPark:   //app取消停车
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .add("rid", parms[1])
+                        .add("addr", parms[2])
+                        .build();
+
+                PostRequst(InterfaceFinals.scanCode_Requst, okhttp, body, BaseModel.class, InterfaceFinals.scanCode);
+
+                break;
 
 
             default:
