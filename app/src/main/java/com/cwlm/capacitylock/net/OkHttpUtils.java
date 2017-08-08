@@ -9,6 +9,7 @@ import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
+import com.cwlm.capacitylock.model.OrderInfoModel;
 import com.cwlm.capacitylock.obj.UserObj;
 import com.cwlm.capacitylock.ui.LoginActivity;
 import com.cwlm.capacitylock.ui.MainActivity;
@@ -95,7 +96,7 @@ public class OkHttpUtils {
                         .add("userId", parms[0])
                         .build();
 
-                PostRequst(InterfaceFinals.myOrder_Requst, okhttp, body, BaseModel.class, InterfaceFinals.myOrder);
+                PostRequst(InterfaceFinals.myOrder_Requst, okhttp, body, OrderInfoModel.class, InterfaceFinals.myOrder);
 
                 break;
             case InterfaceFinals.predetermine:   //我的预定

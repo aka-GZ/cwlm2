@@ -14,14 +14,18 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.navisdk.adapter.BNRoutePlanNode;
 import com.cwlm.capacitylock.R;
+import com.cwlm.capacitylock.adapter.OrderInfoAdapter;
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.base.MyApplication;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
+import com.cwlm.capacitylock.model.OrderInfoModel;
 import com.cwlm.capacitylock.obj.GetAllStopPlaceObj;
+import com.cwlm.capacitylock.obj.OrderInfoObj;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,19 +45,20 @@ public class OrderInfoCenterActivity extends BaseActivity {
         super.onResume();
     }
 
+
+
+    List<OrderInfoObj> list = new ArrayList<OrderInfoObj>();
     @Override
     public void onSuccess(BaseModel resModel) {
         int infCode = resModel.getInfCode();
         switch (infCode) {
             case InterfaceFinals.myOrder:
-//                list.clear();
-//                list.addAll(((GetAllStopPlaceModel) resModel).getObject());
-//                for (int i = 0; i < list.size(); i++) {
-//                    Bundle mBundle = new Bundle();
-//                    mBundle.putInt("id", i);
-//                    AddBaiduMarker(list.get(i).getLatitude(), list.get(i).getLongitude(), mBundle);
-//                }
-
+                list.clear();
+                list.addAll(((OrderInfoModel)resModel).getObject());
+                OrderInfoAdapter order_list_adapter=new OrderInfoAdapter(this,list);
+                order_list.setAdapter(order_list_adapter);
+                order_list_adapter.notifyDataSetChanged();
+                no_order.setVisibility(View.GONE);
 
                 break;
         }
