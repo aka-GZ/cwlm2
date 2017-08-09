@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -124,6 +125,7 @@ public class PreferencesUtil {
 			editor.putString(name, obj64);
 			editor.commit();
 
+			Log.e("SharedPreferences" , "保存User成功");
 			System.out.println("保存成功");
 
 		} catch (IOException e) {

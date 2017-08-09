@@ -183,7 +183,19 @@ public class OkHttpUtils {
                         .add("addr", parms[2])
                         .build();
 
-                PostRequst(InterfaceFinals.scanCode_Requst, okhttp, body, BaseModel.class, InterfaceFinals.scanCode);
+                PostRequst(InterfaceFinals.cancelPark_Requst, okhttp, body, BaseModel.class, InterfaceFinals.cancelPark);
+
+                break;
+            case InterfaceFinals.lockApply:   //申请车位锁
+
+                body = new FormBody.Builder()
+                        .add("name", parms[0])
+                        .add("phoneNum", parms[1])
+                        .add("installAddress", parms[2])
+                        .add("remark", parms[3])
+                        .build();
+
+                PostRequst(InterfaceFinals.lockApply_Requst, okhttp, body, BaseModel.class, InterfaceFinals.lockApply);
 
                 break;
 
@@ -217,7 +229,9 @@ public class OkHttpUtils {
                 ((BaseActivity) ctx).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        progressDialog.dismiss();
+                        if (progressDialog != null) {
+                            progressDialog.dismiss();
+                        }
                         ((BaseActivity) ctx).showToast("请求失败，请重试");
                     }
                 });

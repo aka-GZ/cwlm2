@@ -125,7 +125,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case InterfaceFinals.login:
                 if ("1".equals(resModel.getStatusCode())) {
                     UserObj user = (UserObj)resModel;
-                    PreferencesUtil.setPreferences(LoginActivity.this, "User", user);
+                    PreferencesUtil.setPreferences(getApplicationContext(), "User", user);
                     //给jpush当做操作唯一标识
                     JPushInterface.setAlias(LoginActivity.this, 0 , user.getPhoneNum());
                     MyUtils.StartJpushService(getApplication());

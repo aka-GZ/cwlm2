@@ -9,13 +9,14 @@ import java.io.File;
  */
 public class InterfaceFinals {
 
-    public static final String URL = "http://zylm.net:80"; //正式服务器
-//    public static final String URL = "http://wooowoo.cn";  //测试服务器
+//    public static final String URL = "http://zylm.net:80"; //正式服务器
+    public static final String URL = "http://wooowoo.cn";  //测试服务器
 
     //请求URL
     public static final String getAllStopPlace_Requst = URL + "/CarLock/allweixin/getAllStopPlace"; //获取所有停车场车辆信息
     public static final String sendSMSNew_Requst = URL + "/CarLock/user/sendSMSNew"; //获取验证码登录
-    public static final String login_Requst = URL + "/CarLock/user/smslogin"; //登录
+//    public static final String login_Requst = URL + "/CarLock/user/smslogin"; //登录 - 旧
+    public static final String login_Requst = URL + "/CarLock/user/newsmsLogin"; //登录
     public static final String myOrder_Requst = URL + "/CarLock/order/getListByUserIdForMobile"; //我的订单
     public static final String predetermine_Requst = URL + "/CarLock/stopplace/getPredetermine"; //我的预定
     public static final String cancelPredetermine_Requst = URL + "/CarLock/allweixin/cancelPredetermine"; //取消预定
@@ -27,7 +28,7 @@ public class InterfaceFinals {
     public static final String getSweepNumber_Requst = URL +"/CarLock/appUserInfo/getSweepNumber"; //主页获取押金和使用次数
     public static final String scanCode_Requst = URL +"/CarLock/stopplace/scanCode";//app扫码停车_新
     public static final String cancelPark_Requst = URL +"/CarLock/stopplace/cancelPark";//app取消停车
-
+    public static final String lockApply_Requst = "/CarLock/lock/lockApply";//申请车位锁
 
     //接口常量
     public static final int getAllStopPlace = 0;  //获取所有停车场车辆信息
@@ -44,6 +45,7 @@ public class InterfaceFinals {
     public static final int getSweepNumber = 11;  //主页获取押金和使用次数
     public static final int scanCode = 12;  //app扫码停车_新
     public static final int cancelPark = 13;  //app取消停车
+    public static final int lockApply = 14;  //申请车位锁
 
 
     //协议html地址

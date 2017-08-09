@@ -57,6 +57,11 @@
         <activity android:name=".ui.LoginActivity" android:launchMode="singleTop"/>
         <activity android:name=".ui.ServiceWebView" android:launchMode="singleTop"/>
 
+
+        <activity android:name=".ui.scan.CancelActivity"/>
+        <activity android:name=".ui.scan.ErrorActivity"/>
+
+
         <activity android:name=".ui.percenter.PersonInfoCenterActivity"/>
         <activity android:name=".ui.percenter.OrderInfoCenterActivity"/>
         <activity android:name=".ui.percenter.BindCarNumbleActivity"/>
@@ -64,7 +69,10 @@
         <activity android:name=".ui.percenter.MyPreParkActivity"/>
         <activity android:name=".ui.percenter.MyWallet_1Activity"/>
         <activity android:name=".ui.percenter.RechargeMonthCardActivity"/>
+        <activity android:name=".ui.percenter.ApplyLockActivity"/>
         <activity android:name=".ui.percenter.VipStateActivity"/>
+        <activity android:name=".ui.percenter.IntroduceActivity"/>
+        <activity android:name=".ui.percenter.SettingActivity"/>
         <activity android:name="com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity"/>
 
 

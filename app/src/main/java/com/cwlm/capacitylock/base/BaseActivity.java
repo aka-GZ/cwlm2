@@ -25,6 +25,7 @@ import com.cwlm.capacitylock.net.OkHttpUtils;
 import com.cwlm.capacitylock.obj.UserObj;
 import com.cwlm.capacitylock.ui.LoginActivity;
 import com.cwlm.capacitylock.ui.MainActivity;
+import com.cwlm.capacitylock.utils.MyDialog;
 import com.cwlm.capacitylock.utils.PreferencesUtil;
 import com.cwlm.capacitylock.utils.SystemBarTintManager;
 
@@ -88,7 +89,13 @@ public abstract class BaseActivity extends Activity {
 
 	}
 
-	
+	/**
+	 * 重新加载user对象数据（页面需要时时刷新数据时使用）
+	 */
+	public void onRestartUser() {
+		user = (UserObj) PreferencesUtil.getPreferences(BaseActivity.this, "User");
+	}
+
 	/**
 	 * 初始化标题栏
 	 */
@@ -217,6 +224,42 @@ public abstract class BaseActivity extends Activity {
 		}
 		mToast.setText(msg);
 		mToast.show();
+	}
+
+
+	MyDialog progressDialog = null;
+	/**
+	 * 显示加载框
+	 */
+	public void showProgressDialog(){
+
+		if (progressDialog == null) {
+			progressDialog = new MyDialog(this, "加载中...");
+			progressDialog.show();
+		}
+
+	}
+	/**
+	 * 显示加载框
+	 * @param msg
+	 */
+	public void showProgressDialog(String msg){
+
+		if (progressDialog == null) {
+			progressDialog = new MyDialog(this, msg + "");
+			progressDialog.show();
+		}
+
+	}
+	/**
+	 * 关闭加载框
+	 */
+	public void cancelProgressDialog(){
+
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
+
 	}
 	
 	/**

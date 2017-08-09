@@ -172,14 +172,14 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 //				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
 //
 //				break;
-//			case R.id.menu_apply_lock_top:         //申请车位锁
-//
-//				intent.setClass(PersonInfoCenterActivity.this, ApplyLockActivity.class);
-//				startActivity(intent);
+			case R.id.menu_apply_lock_top:         //申请车位锁
+
+				startActivity(ApplyLockActivity.class);
+
 //				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-//
-//
-//				break;
+
+
+				break;
 			case R.id.per_vip_state:         //查询月卡状态
 
 				//判断用户是否登录
@@ -221,19 +221,20 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 //
 //
 //				break;
-//			case R.id.menu_per_center:     //个人中心 - 更多
-//
-//				//判断用户是否登录
-//				if(TextUtils.isEmpty(MyApplication.getUserId())){
-//					showToast("请先登录!");
-//					intent.setClass(PersonInfoCenterActivity.this,LoginActivity.class);
-//				}else{
-//					intent.setClass(PersonInfoCenterActivity.this, PersonalCenterActivity.class);
-//				}
-//				startActivity(intent);
+			case R.id.menu_per_center:     // 设置 - 更多
+
+				//判断用户是否登录
+
+				//判断用户是否登录
+				if(!MyUtils.isLogin(PersonInfoCenterActivity.this)){
+					showToast("请先登录!");
+					startActivity(LoginActivity.class);
+				}else{
+					startActivity(SettingActivity.class);
+				}
 //				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-//
-//				break;
+
+				break;
 
 			default:
 				break;
@@ -297,9 +298,15 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 
 	@Override
 	protected void onResume() {
+        onRestartUser();
+
+		Log.e("===============" , "11111111111111111111111111111");
 		//显示手机号
 		if (user == null || TextUtils.isEmpty(user.getPhoneNum())) {
 			menu_user_name.setText("未登录");
+			Log.e("===============" , "222222222222222222222222222222");
+//			Log.e("==========" , user.getPhoneNum());
+//			Log.e("=====================" , user.toString());
 		} else {
 			String PhoneNum = user.getPhoneNum();
 			menu_user_name.setText(PhoneNum.substring(0,3)+"****"+PhoneNum.substring(7,10));

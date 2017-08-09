@@ -1,9 +1,8 @@
 package com.cwlm.capacitylock.obj;
 import com.cwlm.capacitylock.model.BaseModel;
 
-import java.io.Serializable;
 import java.util.Date;
-public class UserObj extends BaseModel implements Serializable {
+public class UserObj extends BaseModel{
 	private String userId;
 	private String phoneNum;
 	private Date addTime;

@@ -299,7 +299,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
 							else if("16".equals(result.getStatusCode())){
 
 								//未交押金跳转交押金界面
-								startActivity(PayDepositActivity.class);
+//								startActivity(PayDepositActivity.class);
 								finish();
 
 							}
