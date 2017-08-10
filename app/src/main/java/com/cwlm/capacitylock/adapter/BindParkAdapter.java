@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.obj.BindParkObj;
+import com.cwlm.capacitylock.obj.GetAllStopPlaceObj;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ import java.util.List;
  */
 public class BindParkAdapter extends BaseAdapter {
     private Context context;
-    List<BindParkObj> list;
+    List<GetAllStopPlaceObj> list;
 
-    public BindParkAdapter(Context context, List<BindParkObj> list) {
+    public BindParkAdapter(Context context, List<GetAllStopPlaceObj> list) {
         this.context = context;
         this.list = list;
     }

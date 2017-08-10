@@ -12,7 +12,10 @@ import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.BindParkModel;
+import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
 import com.cwlm.capacitylock.obj.BindParkObj;
+import com.cwlm.capacitylock.obj.GetAllStopPlaceObj;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +28,7 @@ public class BindParkActivity extends BaseActivity {
     ListView bindpark_lv;
     BindParkAdapter adapter;
 
-    List<BindParkObj> list = new ArrayList<BindParkObj>();
+    List<GetAllStopPlaceObj> list = new ArrayList<GetAllStopPlaceObj>();
 
     public BindParkActivity() {
         super(R.layout.act_bindpark);
@@ -47,7 +50,7 @@ public class BindParkActivity extends BaseActivity {
         switch (infCode) {
             case InterfaceFinals.getAllStopPlace:
                 list.clear();
-                list.addAll(((BindParkModel) resModel).getObject());
+                list.addAll(((GetAllStopPlaceModel) resModel).getObject());
                 adapter = new BindParkAdapter(BindParkActivity.this , list);
                 bindpark_lv.setAdapter(adapter);
                 adapter.notifyDataSetChanged();

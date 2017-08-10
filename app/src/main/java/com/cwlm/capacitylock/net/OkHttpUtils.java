@@ -1,18 +1,14 @@
 package com.cwlm.capacitylock.net;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
-import android.widget.BaseAdapter;
 
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
 import com.cwlm.capacitylock.model.OrderInfoModel;
-import com.cwlm.capacitylock.obj.UserObj;
-import com.cwlm.capacitylock.ui.LoginActivity;
-import com.cwlm.capacitylock.ui.MainActivity;
+import com.cwlm.capacitylock.model.UserModel;
 import com.cwlm.capacitylock.utils.MyDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -87,7 +83,7 @@ public class OkHttpUtils {
                         .add("idenCode", parms[1])
                         .build();
 
-                PostRequst(InterfaceFinals.login_Requst, okhttp, body, UserObj.class, InterfaceFinals.login);
+                PostRequst(InterfaceFinals.login_Requst, okhttp, body, UserModel.class, InterfaceFinals.login);
 
                 break;
             case InterfaceFinals.myOrder:   //获取我的订单信息

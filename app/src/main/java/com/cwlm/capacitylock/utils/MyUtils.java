@@ -14,6 +14,7 @@ import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by akawok on 2017-08-01.
+ *
  */
 public class MyUtils {
 

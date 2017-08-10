@@ -13,6 +13,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -29,6 +30,7 @@ import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
+import com.cwlm.capacitylock.model.UserModel;
 import com.cwlm.capacitylock.obj.UserObj;
 import com.cwlm.capacitylock.utils.CountDownTimerUtils;
 import com.cwlm.capacitylock.utils.MyDialog;
@@ -124,8 +126,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             case InterfaceFinals.login:
                 if ("1".equals(resModel.getStatusCode())) {
-                    UserObj user = (UserObj)resModel;
+                    UserObj user = ((UserModel)resModel).getObject();
                     PreferencesUtil.setPreferences(getApplicationContext(), "User", user);
+
                     //给jpush当做操作唯一标识
                     JPushInterface.setAlias(LoginActivity.this, 0 , user.getPhoneNum());
                     MyUtils.StartJpushService(getApplication());
