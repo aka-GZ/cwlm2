@@ -7,8 +7,14 @@ import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
+import com.cwlm.capacitylock.model.MyBalanceModel;
+import com.cwlm.capacitylock.model.MyLocksModel;
 import com.cwlm.capacitylock.model.OrderInfoModel;
+import com.cwlm.capacitylock.model.RechargeModel;
+import com.cwlm.capacitylock.model.RechargeMonthCardModel;
+import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.model.UserModel;
+import com.cwlm.capacitylock.obj.BindCarNumbleObj;
 import com.cwlm.capacitylock.utils.MyDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -30,7 +36,7 @@ public class OkHttpUtils {
     Context ctx;
     int infCode = -1;
     private OkHttpClient okhttp;
-    private boolean showProgressDialog = false;
+    private boolean showProgressDialog = true;
     MyDialog progressDialog = null;
 
 
@@ -119,7 +125,7 @@ public class OkHttpUtils {
                         .add("userId", parms[0])
                         .build();
 
-                PostRequst(InterfaceFinals.getCarNumber_Requst, okhttp, body, BaseModel.class, InterfaceFinals.getCarNumber);
+                PostRequst(InterfaceFinals.getCarNumber_Requst, okhttp, body, BindCarNumbleObj.class, InterfaceFinals.getCarNumber);
 
                 break;
             case InterfaceFinals.bindCarNumber:   //绑定车牌号
@@ -138,7 +144,7 @@ public class OkHttpUtils {
                         .add("stopPlaceId", parms[0])
                         .build();
 
-                PostRequst(InterfaceFinals.getStopPlaceAllMonthCardPrice_Requst, okhttp, body, BaseModel.class, InterfaceFinals.getStopPlaceAllMonthCardPrice);
+                PostRequst(InterfaceFinals.getStopPlaceAllMonthCardPrice_Requst, okhttp, body, RechargeMonthCardModel.class, InterfaceFinals.getStopPlaceAllMonthCardPrice);
 
                 break;
             case InterfaceFinals.getOrderInfo:   //app充值下订单
@@ -148,7 +154,7 @@ public class OkHttpUtils {
                         .add("payType", parms[1])
                         .build();
 
-                PostRequst(InterfaceFinals.getOrderInfo_Requst, okhttp, body, BaseModel.class, InterfaceFinals.getOrderInfo);
+                PostRequst(InterfaceFinals.getOrderInfo_Requst, okhttp, body, RechargeModel.class, InterfaceFinals.getOrderInfo);
 
                 break;
             case InterfaceFinals.getAllUserMonthCard:   //获取月卡充值记录
@@ -194,9 +200,66 @@ public class OkHttpUtils {
                 PostRequst(InterfaceFinals.lockApply_Requst, okhttp, body, BaseModel.class, InterfaceFinals.lockApply);
 
                 break;
+            case InterfaceFinals.appGetMyBalance:   //app获取余额
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.appGetMyBalance_Requst, okhttp, body, MyBalanceModel.class, InterfaceFinals.appGetMyBalance);
+
+                break;
+            case InterfaceFinals.saveAdvice:   //投诉意见
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .add("advice", parms[1])
+                        .build();
+
+                PostRequst(InterfaceFinals.saveAdvice_Requst, okhttp, body, BaseModel.class, InterfaceFinals.saveAdvice);
+
+                break;
+            case InterfaceFinals.getRentCarLockInfo:   //获取我的车位锁列表
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.getRentCarLockInfo_Requst, okhttp, body, MyLocksModel.class, InterfaceFinals.getRentCarLockInfo);
+
+                break;
+            case InterfaceFinals.appBindingUser:   //获取我的车位锁列表
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .add("carLockKey", parms[1])
+                        .build();
+
+                PostRequst(InterfaceFinals.appBindingUser_Requst, okhttp, body, BaseModel.class, InterfaceFinals.appBindingUser);
+
+                break;
+            case InterfaceFinals.getSweepNumber:   //主页获取押金和使用次数
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.getSweepNumber_Requst, okhttp, body, SweepNumberModel.class, InterfaceFinals.getSweepNumber);
+
+                break;
 
 
             default:
+
+                ((BaseActivity) ctx).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (progressDialog != null) {
+                            progressDialog.dismiss();
+                        }
+                        ((BaseActivity) ctx).showToast("请求失败，请重试");
+                    }
+                });
                 break;
         }
     }
@@ -237,9 +300,6 @@ public class OkHttpUtils {
             public void onResponse(Call call, final Response response) throws IOException {
                 final String res = response.body().string();
 
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
-                }
 
                 Log.e(" requst ", "|---------------------------------" + "-------------------------------------------------");
                 Log.e(" requst ", "|" + body2 + "");
@@ -248,12 +308,17 @@ public class OkHttpUtils {
                 Log.e("response", "|---------------------------------" + "-------------------------------------------------");
 
 
-                try {
-                    final BaseModel model = (BaseModel) new Gson().fromJson(res, cls);
+                ((BaseActivity) ctx).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    ((BaseActivity) ctx).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                        if (progressDialog != null) {
+                            progressDialog.dismiss();
+                        }
+
+                        try {
+                            final BaseModel model = (BaseModel) new Gson().fromJson(res, cls);
+
                             if (!res.contains("{")) { //数据返回异常
                                 ((BaseActivity) ctx).showToast("数据异常,请重新请求");
                             } else if (model != null && "1".equals(model.getStatusCode())) {
@@ -264,15 +329,17 @@ public class OkHttpUtils {
                             } else {
                                 ((BaseActivity) ctx).showToast("数据解析异常，请重试");
                             }
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                            ((BaseActivity) ctx).showToast("数据解析错误");
                         }
-                    });
-                } catch (JsonSyntaxException e) {
-                    e.printStackTrace();
-                    ((BaseActivity) ctx).showToast("数据解析错误");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    ((BaseActivity) ctx).showToast("暂无更新数据");
-                }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                            ((BaseActivity) ctx).showToast("暂无更新数据");
+                        }
+
+                    }
+                });
             }
         });
     }

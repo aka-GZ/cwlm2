@@ -141,23 +141,23 @@ public class RechargeMonthCardActivity extends BaseActivity implements View.OnCl
             if (TextUtils.equals(resultStatus, "9000")) {
                 // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                 //stopPlaceCardPriceType （1表示月卡，2表示季卡，3表示半年卡，4表示年卡）
-                String stopPlaceCardPriceType = "";
-                if (Position == 0) {
-                    stopPlaceCardPriceType = "1";
-                } else if (Position == 1) {
-                    stopPlaceCardPriceType = "2";
-                } else if (Position == 2) {
-                    stopPlaceCardPriceType = "3";
-                } else if (Position == 3) {
-                    stopPlaceCardPriceType = "4";
-                }
+//                String stopPlaceCardPriceType = "";
+//                if (Position == 0) {
+//                    stopPlaceCardPriceType = "1";
+//                } else if (Position == 1) {
+//                    stopPlaceCardPriceType = "2";
+//                } else if (Position == 2) {
+//                    stopPlaceCardPriceType = "3";
+//                } else if (Position == 3) {
+//                    stopPlaceCardPriceType = "4";
+//                }
 //                map.put("stopPlaceCardPriceType", stopPlaceCardPriceType);
 //                map.put("stopPlaceId", obj.getStopPlaceId());
 //                map.put("payMoney", money_list.get(Position));
 
                 showToast("支付成功");
-                Intent intent = new Intent(RechargeMonthCardActivity.this, VipStateActivity.class);
-                startActivity(intent);
+                startActivity(VipStateActivity.class);
+                finish();
 
             } else {
                 // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
@@ -171,6 +171,7 @@ public class RechargeMonthCardActivity extends BaseActivity implements View.OnCl
 
     public void initView() {
         tv_title.setText("充值");
+        iv_right.setVisibility(View.INVISIBLE);
         recharge_now = (Button) findViewById(R.id.recharge_now);
         recharge_now.setOnClickListener(this);
         charge_agreement = (TextView) findViewById(R.id.charge_agreement);
@@ -247,10 +248,6 @@ public void selected(int i) {
         switch (v.getId()) {
             case R.id.recharge_now:
                 if ("alipay".equals(Checked)) {
-//                    // 订单
-//                    String orderInfo = getOrderInfo("车位", "地锁租用费用", Constants.Strings.recharge_money);
-//                    // 对订单做RSA 签名
-//                    String sign = sign(orderInfo);
 
 
                     if (Position != -1) {

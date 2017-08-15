@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/recharge_item_ll"
+    android:background="@drawable/mywallet_recharge_pay"
+    android:padding="10dp"
+    android:gravity="center">
+
+
+
+    <TextView
+        android:id="@+id/recharge_item_tv_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="100.00"
+        android:textColor="@color/text_gary"
+        android:textSize="16sp"/>
+
+
+    <TextView
+        android:id="@+id/recharge_item_tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text=" 元"
+        android:textColor="@color/text_gary"
+        android:textSize="16sp"/>
+
+    <!--android:text="￥"-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/recharge_item_tv_3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:text="元"-->
+        <!--android:textColor="@color/background"-->
+        <!--android:textSize="18sp"/>-->
+
+    <!--android:background="@drawable/side"-->
+
+</LinearLayout>

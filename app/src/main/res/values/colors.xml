@@ -12,6 +12,7 @@
     <color name="gray_bg">#aaeaeaea</color>
 
     <color name="blue">#003377</color>
+    <color name="black">#000000</color>
     <color name="text_black">#231815</color>
     <color name="text_gary">#545454</color>
     <color name="text_gary_light">#a1a1a1</color>

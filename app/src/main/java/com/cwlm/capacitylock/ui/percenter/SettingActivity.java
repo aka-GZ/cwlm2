@@ -49,7 +49,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             setting_phonenum_tv.setText("未登录");
         } else {
             String PhoneNum = user.getPhoneNum();
-            setting_phonenum_tv.setText(PhoneNum.substring(0, 3) + "****" + PhoneNum.substring(7, 10));
+            setting_phonenum_tv.setText(PhoneNum.substring(0, 3) + "****" + PhoneNum.substring(7));
             if (!TextUtils.isEmpty(user.getCarNumber())) {
                 setting_bind_carnumber_tv.setText(user.getCarNumber());
             }

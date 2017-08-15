@@ -28,7 +28,11 @@ public class InterfaceFinals {
     public static final String getSweepNumber_Requst = URL +"/CarLock/appUserInfo/getSweepNumber"; //主页获取押金和使用次数
     public static final String scanCode_Requst = URL +"/CarLock/stopplace/scanCode";//app扫码停车_新
     public static final String cancelPark_Requst = URL +"/CarLock/stopplace/cancelPark";//app取消停车
-    public static final String lockApply_Requst = "/CarLock/lock/lockApply";//申请车位锁
+    public static final String lockApply_Requst = URL +"/CarLock/lock/lockApply";//申请车位锁
+    public static final String appGetMyBalance_Requst = URL +"/CarLock/wallet/appGetMyBalance";//app获取余额
+    public static final String saveAdvice_Requst = URL +"/CarLock/user/saveAdvice"; //投诉意见
+    public static final String getRentCarLockInfo_Requst = URL +"/CarLock/proprietor/getRentCarLockInfoForUserId";//app查询我的车位
+    public static final String appBindingUser_Requst = URL +"/CarLock/user/appBindingUser";//app绑定我的车位
 
     //接口常量
     public static final int getAllStopPlace = 0;  //获取所有停车场车辆信息
@@ -46,11 +50,17 @@ public class InterfaceFinals {
     public static final int scanCode = 12;  //app扫码停车_新
     public static final int cancelPark = 13;  //app取消停车
     public static final int lockApply = 14;  //申请车位锁
+    public static final int appGetMyBalance = 15;  //app获取余额
+    public static final int saveAdvice = 16;  //投诉意见
+    public static final int getRentCarLockInfo = 17; //app查询我的车位
+    public static final int appBindingUser = 18; //app绑定我的车位
 
 
     //协议html地址
     public static final String agreement = URL +"/CarLock/html/rechsarge-agreement.html"; //充值协议
 
+
+    public static final String service = "http://zylm.net/weixin/lockApply.html"; //主页我的客服地址
 
     /**
      * 文件下载存放目录

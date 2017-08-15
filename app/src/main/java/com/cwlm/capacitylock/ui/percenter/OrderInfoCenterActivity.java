@@ -34,18 +34,10 @@ import java.util.Map;
 public class OrderInfoCenterActivity extends BaseActivity {
     ListView order_list;
     TextView no_order;
-//    List<OrderInfo> list = new ArrayList<OrderInfo>();
 
     public OrderInfoCenterActivity() {
         super(R.layout.act_orderinfo_center);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-
 
     List<OrderInfoObj> list = new ArrayList<OrderInfoObj>();
     @Override
@@ -67,17 +59,11 @@ public class OrderInfoCenterActivity extends BaseActivity {
     @Override
     public void getData() {
       getDataFromNet(InterfaceFinals.myOrder,user.getUserId());
-//        getDataFromNet(InterfaceFinals.myOrder,"15009468415885658379");
     }
 
     public void initView() {
         tv_title.setText("订单记录");
-        iv_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        iv_right.setVisibility(View.INVISIBLE);
         order_list= (ListView) findViewById(R.id.order_list);
         no_order= (TextView) findViewById(R.id.no_order);
     }
@@ -92,22 +78,4 @@ public class OrderInfoCenterActivity extends BaseActivity {
         }
     }
 
-//    public void loadData(Message msg) {
-//        switch (msg.what){
-//            case R.id.getOrderInfos:
-////                ToastUtil.show(this, JSON.toJSONString(msg.obj));
-//                ResultData resultData= JSON.parseObject(msg.obj.toString(),ResultData.class);
-//                if ("1".equals(resultData.getStatusCode())){
-//                    List<OrderInfoPo> orderInfos=JSON.parseArray(resultData.getObject().toString(),OrderInfoPo.class);
-//                    Order_List_Adapter order_list_adapter=new Order_List_Adapter(this,orderInfos);
-//                    order_list.setAdapter(order_list_adapter);
-//                    order_list_adapter.notifyDataSetChanged();
-//                    no_order.setVisibility(View.GONE);
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-
-//    }
 }

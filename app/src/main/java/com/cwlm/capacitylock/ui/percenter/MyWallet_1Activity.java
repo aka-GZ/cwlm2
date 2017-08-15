@@ -6,6 +6,10 @@ import android.widget.TextView;
 
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
+import com.cwlm.capacitylock.finals.InterfaceFinals;
+import com.cwlm.capacitylock.model.BaseModel;
+import com.cwlm.capacitylock.model.MyBalanceModel;
+import com.cwlm.capacitylock.obj.MyBalanceObj;
 
 
 /**
@@ -13,24 +17,20 @@ import com.cwlm.capacitylock.base.BaseActivity;
  * Created by akawok on 2017-08-05.
  */
 public class MyWallet_1Activity extends BaseActivity implements View.OnClickListener {
-    TextView accountBalance;
-    LinearLayout recharge;
+    TextView accountBalance ,mywallet_deposit_tv;
+    LinearLayout recharge , mywallet_deposit_rl , mywallet_redpacket_ll;
 
 
     public MyWallet_1Activity(){
         super(R.layout.act_mywallet);
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        loadMyBalance();
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataFromNet(InterfaceFinals.appGetMyBalance , user.getUserId());
+    }
 
-//    private void loadMyBalance() {
-//        Map<String,Object> map= MyApplication.getMap();
-//        ZylmOkHttpManager.PostRequest(ZylmRestClient.getAbsoluteUrl(Constants.Strings.request_url59),map,R.id.getBalance,activityHandler);
-//    }
 
     @Override
     public void getData() {
@@ -38,41 +38,39 @@ public class MyWallet_1Activity extends BaseActivity implements View.OnClickList
     }
 
     public void initView() {
+        tv_title.setText("我的钱包");
+        iv_right.setVisibility(View.INVISIBLE);
         recharge= (LinearLayout) findViewById(R.id.recharge);
+        mywallet_deposit_rl= (LinearLayout) findViewById(R.id.mywallet_deposit_rl);
+        mywallet_redpacket_ll= (LinearLayout) findViewById(R.id.mywallet_redpacket_ll);
+        accountBalance = (TextView) findViewById(R.id.accountBalance);
+        mywallet_deposit_tv = (TextView) findViewById(R.id.mywallet_deposit_tv);
+
         recharge.setOnClickListener(this);
-        accountBalance= (TextView) findViewById(R.id.accountBalance);
-//        TextPaint tp = accountBalance.getPaint();
+        mywallet_deposit_rl.setOnClickListener(this);
+//        TextPaint tp = accountBalance.getPaint(); 加粗字体
 //        tp.setFakeBoldText(true);
     }
 
-//    public void loadData(Message msg) {
-//        if(msg.what==R.id.getBalance){
-//            ResultData resultData= JSON.parseObject(msg.obj.toString(),ResultData.class);
-//            if ("1".equals(resultData.getStatusCode())){
-//                UnionWeixinUser unionWeixinUser=JSON.parseObject(resultData.getObject().toString(),UnionWeixinUser.class);
-//                accountBalance.setText(unionWeixinUser.getAccountBalance().toString());
-//            }else if("2".equals(resultData.getStatusCode())){
-//                //提示请先登陆
-//                ToastUtil.show(MyWallet_1Activity.this,resultData.getMess());
-//                Intent intent=new Intent(MyWallet_1Activity.this,LoginActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }else if ("3".equals(resultData.getStatusCode())){
-//                ToastUtil.show(MyWallet_1Activity.this,resultData.getMess());
-//            }else{
-//                ToastUtil.show(this,resultData.getMess());
-//            }
-//
-//        }
-//    }
+    @Override
+    public void onSuccess(BaseModel resModel) {
+        int infcode = resModel.getInfCode();
+        switch(infcode){
+            case InterfaceFinals.appGetMyBalance:
+
+                MyBalanceObj obj = ((MyBalanceModel)resModel).getObject();
+                accountBalance.setText(obj.getAccountBalance() + "");
+
+                break;
+
+        }
+    }
+
 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.recharge:
-//                Intent intent=new Intent(MyWallet_1Activity.this,RechargeActivity.class);
-//                startActivity(intent);
-//                overridePendingTransition(R.anim.push_right_out, R.anim.push_left_in);
-                showToast("创建订单支付");
+                startActivity(RechargeActivity.class);
                 break;
             default:
                 break;

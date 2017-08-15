@@ -2,6 +2,7 @@ package com.cwlm.capacitylock.obj;
 
 /**
  * Created by Zheng on 2017/8/4.
+ * 目前被GetAllStopPlaceObj替代
  */
 
 public class BindParkObj {

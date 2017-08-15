@@ -5,14 +5,14 @@ import java.util.Date;
 public class UserObj implements Serializable{
 	private String userId;
 	private String phoneNum;
-	private Date addTime;
+	private String addTime;
 	private Integer type;
 	private String psw;
-	private Integer state;
-	private Integer isReceive;
-	private Integer isInform;//是否接受订单通知
-	private Boolean authentication;
-	private Double balance;
+	private String state;
+	private String isReceive;
+	private String isInform;//是否接受订单通知
+	private String authentication;
+	private String balance;
 	private String carNumber;
 
 	public String getUserId() {
@@ -31,11 +31,11 @@ public class UserObj implements Serializable{
 		this.phoneNum = phoneNum;
 	}
 
-	public Date getAddTime() {
+	public String getAddTime() {
 		return addTime;
 	}
 
-	public void setAddTime(Date addTime) {
+	public void setAddTime(String addTime) {
 		this.addTime = addTime;
 	}
 
@@ -55,43 +55,43 @@ public class UserObj implements Serializable{
 		this.psw = psw;
 	}
 
-	public Integer getState() {
+	public String getState() {
 		return state;
 	}
 
-	public void setState(Integer state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
-	public Integer getIsReceive() {
+	public String getIsReceive() {
 		return isReceive;
 	}
 
-	public void setIsReceive(Integer isReceive) {
+	public void setIsReceive(String isReceive) {
 		this.isReceive = isReceive;
 	}
 
-	public Integer getIsInform() {
+	public String getIsInform() {
 		return isInform;
 	}
 
-	public void setIsInform(Integer isInform) {
+	public void setIsInform(String isInform) {
 		this.isInform = isInform;
 	}
 
-	public Boolean getAuthentication() {
+	public String getAuthentication() {
 		return authentication;
 	}
 
-	public void setAuthentication(Boolean authentication) {
+	public void setAuthentication(String authentication) {
 		this.authentication = authentication;
 	}
 
-	public Double getBalance() {
+	public String getBalance() {
 		return balance;
 	}
 
-	public void setBalance(Double balance) {
+	public void setBalance(String balance) {
 		this.balance = balance;
 	}
 

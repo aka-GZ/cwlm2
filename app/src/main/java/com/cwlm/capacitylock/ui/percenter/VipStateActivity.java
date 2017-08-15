@@ -64,19 +64,5 @@ public class VipStateActivity extends BaseActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        Intent intent1=new Intent(this,PersonalCenterActivity.class);
-//        startActivity(intent1);
-//        overridePendingTransition(R.anim.push_null_in, R.anim.push_left_out);
-        finish();
-        return true;
-    }
-
 
 }

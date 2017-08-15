@@ -58,7 +58,7 @@ public class BindParkActivity extends BaseActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        Intent intent = new Intent(BindParkActivity.this, BindCarNumbleActivity.class);
+                        Intent intent = new Intent(BindParkActivity.this, RechargeMonthCardActivity.class);
                         intent.putExtra("data",list.get(position).getStopPlaceId());
                         startActivity(intent);
                         //overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
@@ -69,14 +69,5 @@ public class BindParkActivity extends BaseActivity {
                 break;
         }
     }
-
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        finish();
-//        overridePendingTransition(R.anim.push_null_in, R.anim.push_left_out);
-        return true;
-    }
-
 
 }

@@ -21,8 +21,10 @@ import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
+import com.cwlm.capacitylock.obj.BindCarNumbleObj;
 import com.cwlm.capacitylock.ui.LoginActivity;
 import com.cwlm.capacitylock.utils.MyUtils;
+import com.cwlm.capacitylock.utils.PreferencesUtil;
 
 
 /**
@@ -56,14 +58,19 @@ public class BindCarNumbleActivity extends BaseActivity implements View.OnClickL
         int infCode = resModel.getInfCode();
         switch (infCode) {
             case InterfaceFinals.getCarNumber:
-//                bind_carnum_headtv.setText(resultData1.getObject().toString().substring(0,2));
-//                carnumber.setText(resultData1.getObject().toString().substring(2));
+                BindCarNumbleObj obj = (BindCarNumbleObj)resModel;
+                bind_carnum_headtv.setText(obj.getObject().toString().substring(0,2));
+                carnumber.setText(obj.getObject().toString().substring(2));
                 break;
             case InterfaceFinals.bindCarNumber:
-                Intent intent = new Intent(BindCarNumbleActivity.this, RechargeMonthCardActivity.class);
-                intent.putExtra("data",StopPlaceId);
-                startActivity(intent);
+//                Intent intent = new Intent(BindCarNumbleActivity.this, RechargeMonthCardActivity.class);
+//                intent.putExtra("data",StopPlaceId);
+//                startActivity(intent);
 //                overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+
+                user.setCarNumber(bind_carnum_headtv.getText().toString().toUpperCase() + carnumber.getText().toString().trim().toUpperCase());
+                PreferencesUtil.setPreferences(getApplicationContext(), "User", user);
+                showToast("绑定成功");
                 finish();
                 break;
         }

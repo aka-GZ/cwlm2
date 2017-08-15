@@ -6,9 +6,11 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -25,6 +27,8 @@ import com.cwlm.capacitylock.net.OkHttpUtils;
 import com.cwlm.capacitylock.obj.UserObj;
 import com.cwlm.capacitylock.ui.LoginActivity;
 import com.cwlm.capacitylock.ui.MainActivity;
+import com.cwlm.capacitylock.ui.percenter.BindCarNumbleActivity;
+import com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity;
 import com.cwlm.capacitylock.utils.MyDialog;
 import com.cwlm.capacitylock.utils.PreferencesUtil;
 import com.cwlm.capacitylock.utils.SystemBarTintManager;
@@ -226,6 +230,36 @@ public abstract class BaseActivity extends Activity {
 		mToast.show();
 	}
 
+	public void showDialog(String msg){
+
+		View v = getLayoutInflater().inflate(R.layout.base_actvity_dialog , null);
+		final Dialog dialog = new Dialog(BaseActivity.this,R.style.mydialog);
+		dialog.setContentView(R.layout.base_actvity_dialog);
+		dialog.show();
+		v.findViewById(R.id.base_dialog_skip).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(CaptureActivity.class);
+				if(dialog.isShowing()) {
+					dialog.dismiss();
+				}
+			}
+		});
+		v.findViewById(R.id.base_dialog_go).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(BindCarNumbleActivity.class);
+				if(dialog.isShowing()) {
+					dialog.dismiss();
+				}
+			}
+		});
+		TextView base_dialog_text = (TextView) v.findViewById(R.id.base_dialog_text);
+		base_dialog_text.setText(msg);
+	}
+
+
+
 
 	MyDialog progressDialog = null;
 	/**
@@ -321,6 +355,18 @@ public abstract class BaseActivity extends Activity {
 	public void finish_Anim() {
 		finish();
 		overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+	}
+
+	/**
+	 * 给页面返回键添加动画
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+			finish_Anim();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	protected void onDestroy() {

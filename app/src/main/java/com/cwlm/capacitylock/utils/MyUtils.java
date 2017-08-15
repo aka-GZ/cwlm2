@@ -1,9 +1,17 @@
 package com.cwlm.capacitylock.utils;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
+import android.view.View;
 
+import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.obj.UserObj;
+import com.cwlm.capacitylock.ui.MainActivity;
+import com.cwlm.capacitylock.ui.percenter.BindCarNumbleActivity;
+import com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity;
 
 import java.io.File;
 import java.util.regex.Matcher;
@@ -89,6 +97,15 @@ public class MyUtils {
 
     }
 
+    /**
+     * 调用拨号界面
+     * @param phone 电话号码
+     */
+    public static void call(Context ctx , String phone) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+phone));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ctx.startActivity(intent);
+    }
 
 
 

@@ -1,9 +1,11 @@
 package com.cwlm.capacitylock.ui;
 
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,12 +48,17 @@ import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
+import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.obj.GetAllStopPlaceObj;
+import com.cwlm.capacitylock.obj.SweepNumberObj;
 import com.cwlm.capacitylock.service.MyOrientationListener;
+import com.cwlm.capacitylock.ui.percenter.BindCarNumbleActivity;
+import com.cwlm.capacitylock.ui.percenter.MyLockActivity;
 import com.cwlm.capacitylock.ui.percenter.PersonInfoCenterActivity;
 import com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity;
 import com.cwlm.capacitylock.utils.DrivingRouteOverlay;
 import com.cwlm.capacitylock.utils.MyDialog;
+import com.cwlm.capacitylock.utils.MyUtils;
 import com.cwlm.capacitylock.utils.OverlayManager;
 
 import java.util.ArrayList;
@@ -132,12 +139,38 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                             e.printStackTrace();
                             showToast("请重新选择");
                         }
-
                         return true;
                     }
                 });
+                break;
+            case InterfaceFinals.getSweepNumber:
+                SweepNumberObj obj = ((SweepNumberModel) resModel).getMap();
+                if (obj.getSweepNumber()<=3){
+                    final Dialog dialog = new Dialog(MainActivity.this,R.style.mydialog);
+                    dialog.setContentView(R.layout.dialog);
+                    dialog.show();
+                    dialog.findViewById(R.id.dialog_skip).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(dialog.isShowing()) {
+                                dialog.dismiss();
+                            }
+                            startActivity(CaptureActivity.class);
+                        }
+                    });
+                    dialog.findViewById(R.id.dialog_go).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(dialog.isShowing()) {
+                                dialog.dismiss();
+                            }
+                            startActivity(BindCarNumbleActivity.class);
+                        }
+                    });
 
-
+                }else{
+                    startActivity(CaptureActivity.class);
+                }
                 break;
         }
     }
@@ -319,7 +352,6 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
     @Override
     public void onClick(View v) {
-        Intent intent;
         switch (v.getId()) {
             case R.id.iv_left:
 
@@ -348,12 +380,20 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 break;
             case R.id.main_service:
 
-                reLocation();
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, ServiceWebView.class);
+                intent.putExtra("LoadUrl",InterfaceFinals.service);
+                startActivity(intent);
 
                 break;
             case R.id.scan_code:
-
-                startActivity(CaptureActivity.class);
+                //判断用户是否登录
+                if (!MyUtils.isLogin(MainActivity.this)) {
+                    showToast("请先登录!");
+                    startActivity(LoginActivity.class);
+                } else {
+                    getDataFromNet(InterfaceFinals.getSweepNumber , user.getUserId());
+                }
 
                 break;
 

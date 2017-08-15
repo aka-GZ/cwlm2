@@ -43,7 +43,7 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 
 
     private CircleImageView menu_user_img;
-    private LinearLayout menu_reservation_record, menu_reservation, menu_per_center, per_vip_state, menu_certification, menu_complaints;
+    private LinearLayout menu_reservation_record, menu_reservation, menu_per_center, per_vip_state, menu_certification, menu_complaints ,bind_carnumber;
     private TextView menu_user_name, menu_logout;
     private LinearLayout menu_ll_userbg, per_vip, menu_wallet_top, per_mylock, menu_apply_lock_top;
     private ViewGroup.LayoutParams lp;
@@ -90,7 +90,6 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
                 } else {
                     showToast("已登录!");
                 }
-                //overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
 
                 break;
             case R.id.menu_reservation_record: //订单中心
@@ -103,8 +102,6 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
                 } else {
                     startActivity(OrderInfoCenterActivity.class);
                 }
-                //overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-
 
                 break;
             case R.id.menu_reservation:    //我的预定
@@ -116,7 +113,6 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
                 } else {
                     startActivity(MyPreParkActivity.class);
                 }
-//				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
 
                 break;
 
@@ -139,7 +135,7 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
                 } else {
                     startActivity(BindParkActivity.class);
                 }
-//				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+
                 break;
             case R.id.menu_wallet_top:         //我的钱包
 
@@ -150,30 +146,22 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
                 } else {
                     startActivity(MyWallet_1Activity.class);
                 }
-//				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-
 
 				break;
-//			case R.id.per_mylock:         //我的车位
-//
-//
-//				//判断用户是否登录
-//				if(TextUtils.isEmpty(MyApplication.getUserId())){
-//					showToast("请先登录!");
-//					intent.setClass(PersonInfoCenterActivity.this,LoginActivity.class);
-//				}else{
-//					intent.setClass(PersonInfoCenterActivity.this, MyLockActivity.class);
-//				}
-//				startActivity(intent);
-//				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-//
-//				break;
+			case R.id.per_mylock:         //我的车位
+
+                //判断用户是否登录
+                if (!MyUtils.isLogin(PersonInfoCenterActivity.this)) {
+                    showToast("请先登录!");
+                    startActivity(LoginActivity.class);
+                } else {
+                    startActivity(MyLockActivity.class);
+				}
+
+				break;
             case R.id.menu_apply_lock_top:         //申请车位锁
 
                 startActivity(ApplyLockActivity.class);
-
-//				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-
 
                 break;
             case R.id.per_vip_state:         //查询月卡状态
@@ -185,7 +173,18 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
                 } else {
                     startActivity(VipStateActivity.class);
                 }
-//				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+
+
+                break;
+            case R.id.bind_carnumber:         //绑定车牌号
+
+                //判断用户是否登录
+                if (!MyUtils.isLogin(PersonInfoCenterActivity.this)) {
+                    showToast("请先登录!");
+                    startActivity(LoginActivity.class);
+                } else {
+                    startActivity(BindCarNumbleActivity.class);
+                }
 
 
                 break;
@@ -203,20 +202,18 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 //
 //
 //				break;
-//			case R.id.menu_complaints:         //我要投诉
-//
-//				//判断用户是否登录
-//				if(TextUtils.isEmpty(MyApplication.getUserId())){
-//					showToast("请先登录!");
-//					intent.setClass(PersonInfoCenterActivity.this,LoginActivity.class);
-//				}else{
-//					intent.setClass(PersonInfoCenterActivity.this, AboutUsActivity.class);
-//				}
-//				startActivity(intent);
-//				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-//
-//
-//				break;
+			case R.id.menu_complaints:         //联系我们
+
+                //判断用户是否登录
+                if (!MyUtils.isLogin(PersonInfoCenterActivity.this)) {
+                    showToast("请先登录!");
+                    startActivity(LoginActivity.class);
+                } else {
+                    startActivity(CommitFeedbackActivity.class);
+				}
+
+
+				break;
             case R.id.menu_per_center:     // 设置 - 更多
 
                 //判断用户是否登录
@@ -226,7 +223,6 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
                 } else {
                     startActivity(SettingActivity.class);
                 }
-//				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
 
                 break;
 
@@ -251,6 +247,7 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
         per_vip_state = (LinearLayout) findViewById(R.id.per_vip_state);
         menu_certification = (LinearLayout) findViewById(R.id.menu_certification);
         menu_complaints = (LinearLayout) findViewById(R.id.menu_complaints);
+        bind_carnumber = (LinearLayout) findViewById(R.id.bind_carnumber);
 
         per_vip = (LinearLayout) findViewById(R.id.per_vip);
         menu_wallet_top = (LinearLayout) findViewById(R.id.menu_wallet_top);
@@ -283,6 +280,7 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
         per_vip_state.setOnClickListener(this);
         menu_certification.setOnClickListener(this);
         menu_complaints.setOnClickListener(this);
+        bind_carnumber.setOnClickListener(this);
 
 
     }
@@ -313,13 +311,6 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
 
         }
         super.onResume();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        finish();
-//		overridePendingTransition(R.anim.push_null_in, R.anim.push_left_out);
-        return true;
     }
 
 

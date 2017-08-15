@@ -91,7 +91,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="押金"
+            android:text="我的收益"
             android:textColor="@color/text_gary"
             android:textSize="16sp" />
 
@@ -104,7 +104,7 @@
             android:layout_marginRight="20dp"
             android:drawableRight="@mipmap/to_right_gray_light"
             android:gravity="center_vertical|left"
-            android:text="未缴纳"
+            android:text="0 元"
             android:textColor="@color/text_gary_light"
             android:textSize="14sp" />
     </LinearLayout>
@@ -122,7 +122,7 @@
         <!--android:background="@color/line_gray"/>-->
 
     <LinearLayout
-        android:id="@+id/redPacket"
+        android:id="@+id/mywallet_redpacket_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -138,7 +138,7 @@
             android:src="@mipmap/redpacket" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/mywallet_redpacket"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"

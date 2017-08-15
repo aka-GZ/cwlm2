@@ -69,10 +69,14 @@
         <activity android:name=".ui.percenter.MyPreParkActivity"/>
         <activity android:name=".ui.percenter.MyWallet_1Activity"/>
         <activity android:name=".ui.percenter.RechargeMonthCardActivity"/>
+        <activity android:name=".ui.percenter.RechargeActivity"/>
         <activity android:name=".ui.percenter.ApplyLockActivity"/>
         <activity android:name=".ui.percenter.VipStateActivity"/>
         <activity android:name=".ui.percenter.IntroduceActivity"/>
         <activity android:name=".ui.percenter.SettingActivity"/>
+        <activity android:name=".ui.percenter.CommitFeedbackActivity"/>
+        <activity android:name=".ui.percenter.BindMyLockActivity"/>
+        <activity android:name=".ui.percenter.MyLockActivity"/>
         <activity android:name="com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity"/>
 
 

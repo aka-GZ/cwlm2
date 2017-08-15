@@ -32,6 +32,7 @@ import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.UserModel;
 import com.cwlm.capacitylock.obj.UserObj;
+import com.cwlm.capacitylock.ui.percenter.BindCarNumbleActivity;
 import com.cwlm.capacitylock.utils.CountDownTimerUtils;
 import com.cwlm.capacitylock.utils.MyDialog;
 import com.cwlm.capacitylock.utils.MyUtils;
@@ -133,7 +134,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     JPushInterface.setAlias(LoginActivity.this, 0 , user.getPhoneNum());
                     MyUtils.StartJpushService(getApplication());
                     showToast("登陆成功");
-                    finish();
+                    if (user.getCarNumber() == null || "".equals(user.getCarNumber())){
+
+//                        startActivity(BindCarNumbleActivity.class);
+//                        finish();
+                        finish_Anim();
+
+                    }else{
+                        finish_Anim();
+                    }
 
                 } else {
                     showToast(resModel.getMess());
