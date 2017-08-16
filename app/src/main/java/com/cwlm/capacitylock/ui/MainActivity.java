@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,6 +46,7 @@ import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.baidu.navisdk.adapter.BNRoutePlanNode;
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
+import com.cwlm.capacitylock.base.MyApplication;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
@@ -640,6 +642,34 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
     @Override
     public void onConnectHotSpotMessage(String s, int i) {
 
+    }
+
+
+    private long firstTime = 0;
+    /**
+     * 双击退出程序
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch(keyCode)
+        {
+            case KeyEvent.KEYCODE_BACK:
+                long secondTime = System.currentTimeMillis();
+                if (secondTime - firstTime > 2000) {
+                    //如果两次按键时间间隔大于2秒，则不退出
+                    Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    firstTime = secondTime;//更新firstTime
+                    return true;
+                } else {
+                    //两次按键小于2秒时，退出应用
+                    MyApplication.getInstance().onTerminate();
+                    System.exit(0);
+                }
+                break;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 
 

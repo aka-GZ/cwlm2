@@ -124,7 +124,7 @@ public class MyUtils {
     public static void StopJpushService(Context context){
         if(!JPushInterface.isPushStopped(context)){
             JPushInterface.stopPush(context); //停止Jpush服务
-            JPushInterface.deleteAlias(context,0); //删除别名
+//            JPushInterface.deleteAlias(context,0); //删除别名
         }
     }
 

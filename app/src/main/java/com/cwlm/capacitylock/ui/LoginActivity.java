@@ -131,7 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     PreferencesUtil.setPreferences(getApplicationContext(), "User", user);
 
                     //给jpush当做操作唯一标识
-                    JPushInterface.setAlias(LoginActivity.this, 0 , user.getPhoneNum());
+                    JPushInterface.setAlias(LoginActivity.this, 0 , user.getUserId());
                     MyUtils.StartJpushService(getApplication());
                     showToast("登陆成功");
                     if (user.getCarNumber() == null || "".equals(user.getCarNumber())){

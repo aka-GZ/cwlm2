@@ -62,6 +62,11 @@
         <activity android:name=".ui.scan.ErrorActivity"/>
 
 
+        <activity android:name=".pay.PayActivity"/>
+        <activity android:name=".pay.PaySuccessActivity"/>
+
+
+
         <activity android:name=".ui.percenter.PersonInfoCenterActivity"/>
         <activity android:name=".ui.percenter.OrderInfoCenterActivity"/>
         <activity android:name=".ui.percenter.BindCarNumbleActivity"/>

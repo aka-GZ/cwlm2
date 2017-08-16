@@ -26,12 +26,12 @@ public class IntroduceActivity extends BaseActivity {
 		tv_title.setText("联系我们");
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-			finish_Anim();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+//			finish_Anim();
+//			return true;
+//		}
+//		return super.onKeyDown(keyCode, event);
+//	}
 }

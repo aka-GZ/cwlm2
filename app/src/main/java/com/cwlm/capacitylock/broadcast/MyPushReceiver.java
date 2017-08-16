@@ -57,9 +57,11 @@ public class MyPushReceiver extends BroadcastReceiver {
                 String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
                 String message = bundle.getString(JPushInterface.EXTRA_ALERT);
                 String file = bundle.getString(JPushInterface.EXTRA_MSG_ID);
+                String json = bundle.getString(JPushInterface.EXTRA_EXTRA);
 
 
-                Log.e("收到了通知", file + "---" + title + "---" + message);
+
+                Log.e("收到了通知", file + "---" + title + "---" + message + "---" + json);
 
 //			MainActivity.badgeNum++;
 //			Intent i = new Intent(MainActivity.ACTION_UPDATEUI);
@@ -83,9 +85,10 @@ public class MyPushReceiver extends BroadcastReceiver {
                 String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
                 String message = bundle.getString(JPushInterface.EXTRA_ALERT);
                 String file = bundle.getString(JPushInterface.EXTRA_MSG_ID);
+                String json = bundle.getString(JPushInterface.EXTRA_EXTRA);
 
 
-                Log.e("点击通知栏打开了通知", file + "---" + title + "---" + message);
+                Log.e("点击通知栏打开了通知", file + "---" + title + "---" + message + "---" + json);
 
 //			if (MainActivity.badgeNum >= 1) {
 //				MainActivity.badgeNum--;

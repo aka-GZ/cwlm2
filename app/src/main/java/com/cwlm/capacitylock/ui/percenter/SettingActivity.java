@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.ui.MainActivity;
+import com.cwlm.capacitylock.utils.MyUtils;
 import com.cwlm.capacitylock.utils.PreferencesUtil;
 
 /**
@@ -83,6 +84,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 PreferencesUtil.clearPreferences(SettingActivity.this , "User");
+
+                MyUtils.StopJpushService(getApplication());
                 startActivity(MainActivity.class);
             }
         });
