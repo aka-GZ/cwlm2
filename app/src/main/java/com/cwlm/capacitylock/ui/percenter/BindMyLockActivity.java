@@ -67,6 +67,7 @@ public class BindMyLockActivity extends BaseActivity {
             case InterfaceFinals.appBindingUser:
 
                 showToast("绑定车位成功");
+                finish();
 
                 break;
         }

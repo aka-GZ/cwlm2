@@ -31,8 +31,10 @@ public class InterfaceFinals {
     public static final String lockApply_Requst = URL +"/CarLock/lock/lockApply";//申请车位锁
     public static final String appGetMyBalance_Requst = URL +"/CarLock/wallet/appGetMyBalance";//app获取余额
     public static final String saveAdvice_Requst = URL +"/CarLock/user/saveAdvice"; //投诉意见
-    public static final String getRentCarLockInfo_Requst = URL +"/CarLock/proprietor/getRentCarLockInfoForUserId";//app查询我的车位
-    public static final String appBindingUser_Requst = URL +"/CarLock/user/appBindingUser";//app绑定我的车位
+//    public static final String getRentCarLockInfo_Requst = URL +"/CarLock/proprietor/getRentCarLockInfoForUserId";//app查询我的车位（旧）
+    public static final String getCarLockUseInformation_Requst = URL +"/CarLock/lock/getCarLockUseInformation";//app查询我的车位（新）
+    public static final String appBindingUser_Requst = URL +"/CarLock/user/appBindingUser";//绑定我的车位
+    public static final String updateCarLockState_Requst = URL +"/CarLock/lock/updateCarLockState";//分享我的车位
 
     //接口常量
     public static final int getAllStopPlace = 0;  //获取所有停车场车辆信息
@@ -52,8 +54,10 @@ public class InterfaceFinals {
     public static final int lockApply = 14;  //申请车位锁
     public static final int appGetMyBalance = 15;  //app获取余额
     public static final int saveAdvice = 16;  //投诉意见
-    public static final int getRentCarLockInfo = 17; //app查询我的车位
+//    public static final int getCarLockUseInformation = 17; //app查询我的车位（旧）
+    public static final int getCarLockUseInformation = 17; //app查询我的车位（新）
     public static final int appBindingUser = 18; //app绑定我的车位
+    public static final int updateCarLockState = 19; //分享我的车位
 
 
     //协议html地址

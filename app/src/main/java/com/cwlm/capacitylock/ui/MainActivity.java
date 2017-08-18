@@ -74,12 +74,12 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
     MapView mMapView;
     BaiduMap mBaiduMap;
-    LinearLayout scan_code ,main_ll_appointment;
+    LinearLayout scan_code, main_ll_appointment;
     public LocationClient mLocationClient = null;//定位服务
     public MyOrientationListener myOrientationListener = null;
 
     TextView main_appointment, main_parkname, main_parkaddress, main_spareparknumber, main_allparknumber, main_stopprice, main_km;
-    RelativeLayout main_refresh, position,main_road_condition , main_service;
+    RelativeLayout main_refresh, position, main_road_condition, main_service;
 
     private LatLng mylocation;//中心点坐标
 
@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
     @Override
     public void getData() {
-        getDataFromNet(InterfaceFinals.getAllStopPlace , true);
+        getDataFromNet(InterfaceFinals.getAllStopPlace, true);
     }
 
     @Override
@@ -147,30 +147,34 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 break;
             case InterfaceFinals.getSweepNumber:
                 SweepNumberObj obj = ((SweepNumberModel) resModel).getMap();
-                if (obj.getSweepNumber()<=3){
-                    final Dialog dialog = new Dialog(MainActivity.this,R.style.mydialog);
-                    dialog.setContentView(R.layout.dialog);
-                    dialog.show();
-                    dialog.findViewById(R.id.dialog_skip).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(dialog.isShowing()) {
-                                dialog.dismiss();
+                if (user.getCarNumber() == null || "".equals(user.getCarNumber())) {
+                    if (obj.getSweepNumber() <= 3) {
+                        final Dialog dialog = new Dialog(MainActivity.this, R.style.mydialog);
+                        dialog.setContentView(R.layout.dialog);
+                        dialog.show();
+                        dialog.findViewById(R.id.dialog_skip).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (dialog.isShowing()) {
+                                    dialog.dismiss();
+                                }
+                                startActivity(CaptureActivity.class);
                             }
-                            startActivity(CaptureActivity.class);
-                        }
-                    });
-                    dialog.findViewById(R.id.dialog_go).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(dialog.isShowing()) {
-                                dialog.dismiss();
+                        });
+                        dialog.findViewById(R.id.dialog_go).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (dialog.isShowing()) {
+                                    dialog.dismiss();
+                                }
+                                startActivity(BindCarNumbleActivity.class);
                             }
-                            startActivity(BindCarNumbleActivity.class);
-                        }
-                    });
+                        });
+                    }else{
 
-                }else{
+                    }
+
+                } else {
                     startActivity(CaptureActivity.class);
                 }
                 break;
@@ -265,8 +269,8 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
 
     /**
-     *
      * 回跳activity（新版本逻辑不使用）
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -352,6 +356,8 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 //        });
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+    Boolean BaiduHeatMapEnabled = false; //是否开启热力图层
+    Boolean TrafficEnabled = false; //是否开启交通图
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -377,14 +383,30 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 break;
             case R.id.main_road_condition:
 
-                reLocation();
+                //开启交通图
+                if(TrafficEnabled){
+                    mBaiduMap.setTrafficEnabled(false);
+                    TrafficEnabled = false;
+                }else{
+                    mBaiduMap.setTrafficEnabled(true);
+                    TrafficEnabled = true;
+                }
+
+//                //热力图层
+//                if(BaiduHeatMapEnabled){
+//                    mBaiduMap.setBaiduHeatMapEnabled(false);
+//                    BaiduHeatMapEnabled = false;
+//                }else{
+//                    mBaiduMap.setBaiduHeatMapEnabled(true);
+//                    BaiduHeatMapEnabled = true;
+//                }
 
                 break;
             case R.id.main_service:
 
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, ServiceWebView.class);
-                intent.putExtra("LoadUrl",InterfaceFinals.service);
+                intent.putExtra("LoadUrl", InterfaceFinals.service);
                 startActivity(intent);
 
                 break;
@@ -394,7 +416,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                     showToast("请先登录!");
                     startActivity(LoginActivity.class);
                 } else {
-                    getDataFromNet(InterfaceFinals.getSweepNumber , user.getUserId());
+                    getDataFromNet(InterfaceFinals.getSweepNumber, user.getUserId());
                 }
 
                 break;
@@ -503,7 +525,6 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
         });
     }
-
 
 
     // 定制RouteOverly
@@ -646,15 +667,16 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
 
     private long firstTime = 0;
+
     /**
      * 双击退出程序
+     *
      * @param keyCode
      * @param event
      * @return
      */
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch(keyCode)
-        {
+        switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 long secondTime = System.currentTimeMillis();
                 if (secondTime - firstTime > 2000) {

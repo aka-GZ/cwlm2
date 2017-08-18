@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">车位联盟</string>
     <string name="agreement"><u>充值协议</u></string>
+    <string name="share">(未分享)<u>点击设置分享</u></string>
+    <string name="close_share">(已分享)<u>点击关闭分享</u></string>
 
     <!--qrcode-->
     <string name="str_scan_title">扫一扫</string>

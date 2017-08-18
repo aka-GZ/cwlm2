@@ -256,9 +256,7 @@ public void selected(int i) {
 
                     } else {
                         showToast("请选择卡类型");
-
                     }
-
 
                 } else if ("wxpay".equals(Checked)) {
                     showToast("目前暂支持支付宝支付");

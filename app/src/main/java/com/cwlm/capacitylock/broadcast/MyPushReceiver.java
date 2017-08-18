@@ -6,15 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.cwlm.capacitylock.pay.PayActivity;
+import com.cwlm.capacitylock.pay.PaySuccessActivity;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by akawok on 2017-08-01.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * jpush自定义消息通知
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * 如果不定义这个 Receiver，则： 1) 默认用户会打开主界面 2) 接收不到自定义消息
  */
 public class MyPushReceiver extends BroadcastReceiver {
@@ -60,7 +63,6 @@ public class MyPushReceiver extends BroadcastReceiver {
                 String json = bundle.getString(JPushInterface.EXTRA_EXTRA);
 
 
-
                 Log.e("收到了通知", file + "---" + title + "---" + message + "---" + json);
 
 //			MainActivity.badgeNum++;
@@ -71,12 +73,13 @@ public class MyPushReceiver extends BroadcastReceiver {
 //			context.sendBroadcast(i);
 
 
-                // 自定义打开的界面
-//			Intent i = new Intent(context, JpushMsgActivity.class);
-//			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//			i.putExtra("msgid", file);
-//			i.putExtra("msg", message);
-//			context.startActivity(i);
+//                 自定义打开的界面
+                Intent i = new Intent(context, PaySuccessActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("title", title);
+                i.putExtra("message", message);
+                i.putExtra("json", json);
+                context.startActivity(i);
 
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
@@ -100,18 +103,19 @@ public class MyPushReceiver extends BroadcastReceiver {
 //			}
 
 
-                // 自定义打开的界面
-//			Intent i = new Intent(context, JpushMsgActivity.class);
-//			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//			i.putExtra("msgid", file);
-//			i.putExtra("msg", message);
-//			context.startActivity(i);
+//                 自定义打开的界面
+                Intent i = new Intent(context, PaySuccessActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("title", title);
+                i.putExtra("message", message);
+                i.putExtra("json", json);
+                context.startActivity(i);
 
             } else {
                 Log.e("MyPushReceiver", "Unhandled intent.getAction() - " + intent.getAction());
             }
 
-        }else{
+        } else {
             Log.e("MyPushReceiver", "极光返回intent为空错误");
         }
 

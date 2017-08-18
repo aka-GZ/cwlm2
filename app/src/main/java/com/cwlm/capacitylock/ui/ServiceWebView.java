@@ -3,6 +3,7 @@ package com.cwlm.capacitylock.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -31,6 +32,8 @@ public class ServiceWebView extends BaseActivity {
 
 
     public void initView() {
+        tv_title.setText("协议");
+        iv_right.setVisibility(View.INVISIBLE);
 
         web = (WebView) findViewById(R.id.service_web);
 

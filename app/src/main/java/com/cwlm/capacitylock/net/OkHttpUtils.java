@@ -219,16 +219,16 @@ public class OkHttpUtils {
                 PostRequst(InterfaceFinals.saveAdvice_Requst, okhttp, body, BaseModel.class, InterfaceFinals.saveAdvice);
 
                 break;
-            case InterfaceFinals.getRentCarLockInfo:   //获取我的车位锁列表
+            case InterfaceFinals.getCarLockUseInformation:   //获取我的车位锁列表
 
                 body = new FormBody.Builder()
                         .add("userId", parms[0])
                         .build();
 
-                PostRequst(InterfaceFinals.getRentCarLockInfo_Requst, okhttp, body, MyLocksModel.class, InterfaceFinals.getRentCarLockInfo);
+                PostRequst(InterfaceFinals.getCarLockUseInformation_Requst, okhttp, body, MyLocksModel.class, InterfaceFinals.getCarLockUseInformation);
 
                 break;
-            case InterfaceFinals.appBindingUser:   //获取我的车位锁列表
+            case InterfaceFinals.appBindingUser:   //绑定我的车位锁
 
                 body = new FormBody.Builder()
                         .add("userId", parms[0])
@@ -236,6 +236,17 @@ public class OkHttpUtils {
                         .build();
 
                 PostRequst(InterfaceFinals.appBindingUser_Requst, okhttp, body, BaseModel.class, InterfaceFinals.appBindingUser);
+
+                break;
+            case InterfaceFinals.updateCarLockState:   //分享我的车位
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .add("carLockId", parms[1])
+                        .add("flag", parms[2])
+                        .build();
+
+                PostRequst(InterfaceFinals.updateCarLockState_Requst, okhttp, body, BaseModel.class, InterfaceFinals.updateCarLockState);
 
                 break;
             case InterfaceFinals.getSweepNumber:   //主页获取押金和使用次数

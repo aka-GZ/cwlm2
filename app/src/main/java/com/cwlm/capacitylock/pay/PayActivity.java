@@ -5,6 +5,8 @@ import android.widget.TextView;
 
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
+import com.cwlm.capacitylock.obj.PayObj;
+import com.google.gson.Gson;
 
 /**
  * Created by Zheng on 2017/8/16.
@@ -13,6 +15,10 @@ import com.cwlm.capacitylock.base.BaseActivity;
 public class PayActivity extends BaseActivity {
 
     TextView pay_money,pay_park,pay_success;
+    String title;
+    String message;
+    String json;
+    PayObj obj;
 
     public PayActivity() {
         super(R.layout.act_pay);
@@ -20,6 +26,12 @@ public class PayActivity extends BaseActivity {
 
     @Override
     public void getData() {
+
+        title = getIntent().getStringExtra("title");
+        message = getIntent().getStringExtra("message");
+        json = getIntent().getStringExtra("json");
+
+        obj = new Gson().fromJson(json , PayObj.class);
 
     }
 

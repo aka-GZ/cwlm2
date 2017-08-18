@@ -14,6 +14,8 @@ import com.cwlm.capacitylock.ui.percenter.BindCarNumbleActivity;
 import com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity;
 
 import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -105,6 +107,30 @@ public class MyUtils {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+phone));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(intent);
+    }
+
+    /**
+     * MD5转换
+     * @param str
+     */
+    public static String getMD5(String str) {
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(str.getBytes());
+            byte[] b = md5.digest();
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < b.length; i++) {
+                int v = (int) b[i];
+                v = v < 0 ? 0x100 + v : v;
+                String cc = Integer.toHexString(v);
+                if (cc.length() == 1)
+                    sb.append('0');
+                sb.append(cc);
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
     }
 
 
