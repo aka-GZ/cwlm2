@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 选择停车场
  * Created by akawok on 2017-08-04.
  */
 public class BindParkActivity extends BaseActivity {

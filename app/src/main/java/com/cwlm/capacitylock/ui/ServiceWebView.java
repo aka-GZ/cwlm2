@@ -32,7 +32,7 @@ public class ServiceWebView extends BaseActivity {
 
 
     public void initView() {
-        tv_title.setText("协议");
+        tv_title.setText("车位联盟");
         iv_right.setVisibility(View.INVISIBLE);
 
         web = (WebView) findViewById(R.id.service_web);

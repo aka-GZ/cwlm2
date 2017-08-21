@@ -27,7 +27,7 @@ public class MyPreParkActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void getData() {
-        getDataFromNet(InterfaceFinals.predetermine, user.getUserId());
+//        getDataFromNet(InterfaceFinals.predetermine, user.getUserId());
     }
 
     public void initView() {
@@ -45,7 +45,7 @@ public class MyPreParkActivity extends BaseActivity implements View.OnClickListe
         start_navigation = (Button) findViewById(R.id.start_navigation);
         start_navigation.setOnClickListener(this);
 
-        //my_prepark.setVisibility(View.VISIBLE);
+        my_prepark.setVisibility(View.GONE);
     }
 
 

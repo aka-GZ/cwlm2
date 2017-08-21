@@ -53,6 +53,7 @@ import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
 import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.obj.GetAllStopPlaceObj;
 import com.cwlm.capacitylock.obj.SweepNumberObj;
+import com.cwlm.capacitylock.pay.PayActivity;
 import com.cwlm.capacitylock.service.MyOrientationListener;
 import com.cwlm.capacitylock.ui.percenter.BindCarNumbleActivity;
 import com.cwlm.capacitylock.ui.percenter.MyLockActivity;
@@ -171,10 +172,23 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                             }
                         });
                     }else{
+                        final Dialog dialog = new Dialog(MainActivity.this, R.style.mydialog);
+                        dialog.setContentView(R.layout.dialog);
+                        dialog.show();
+                        dialog.findViewById(R.id.dialog_skip).setVisibility(View.GONE);
+                        dialog.findViewById(R.id.dialog_go).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (dialog.isShowing()) {
+                                    dialog.dismiss();
+                                }
+                                startActivity(BindCarNumbleActivity.class);
+                            }
+                        });
 
                     }
 
-                } else {
+                }else{
                     startActivity(CaptureActivity.class);
                 }
                 break;
@@ -188,7 +202,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
         tv_title.setText("车位联盟");
         iv_left.setImageResource(R.mipmap.main_user);
         iv_left.setOnClickListener(this);
-        iv_right.setVisibility(View.VISIBLE);
+        iv_right.setVisibility(View.INVISIBLE);
         iv_right.setImageResource(R.mipmap.search);
         iv_right.setOnClickListener(this);
 
@@ -216,6 +230,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
         main_road_condition.setOnClickListener(this);
         main_service.setOnClickListener(this);
         position.setOnClickListener(this);
+        main_appointment.setOnClickListener(this);
 
         scan_code = (LinearLayout) findViewById(R.id.scan_code);
         scan_code.setOnClickListener(this);
@@ -371,17 +386,17 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 startActivity(LoginActivity.class);
 
                 break;
-            case R.id.main_refresh:
+            case R.id.main_refresh:   //刷新停车场信息
 
                 getData();
 
                 break;
-            case R.id.position:
+            case R.id.position:     //重新定位
 
                 reLocation();
 
                 break;
-            case R.id.main_road_condition:
+            case R.id.main_road_condition:    //实时路况
 
                 //开启交通图
                 if(TrafficEnabled){
@@ -402,7 +417,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 //                }
 
                 break;
-            case R.id.main_service:
+            case R.id.main_service:   //客服
 
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, ServiceWebView.class);
@@ -410,7 +425,12 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 startActivity(intent);
 
                 break;
-            case R.id.scan_code:
+            case R.id.main_appointment:  //预订车位
+
+                showToast("为了更好体验，正在升级中，敬请期待！");
+
+                break;
+            case R.id.scan_code:    // 扫码
                 //判断用户是否登录
                 if (!MyUtils.isLogin(MainActivity.this)) {
                     showToast("请先登录!");
@@ -675,7 +695,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
      * @param event
      * @return
      */
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 long secondTime = System.currentTimeMillis();

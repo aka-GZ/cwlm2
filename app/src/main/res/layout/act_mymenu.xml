@@ -470,8 +470,8 @@
                         android:id="@+id/menu_per_center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
                         android:gravity="center_vertical"
                         android:background="@color/white"
                         android:orientation="horizontal">
@@ -483,7 +483,7 @@
                             android:layout_marginLeft="20dp"
                             android:text="设置"
                             android:textColor="@color/text_gary"
-                            android:textSize="12sp" />
+                            android:textSize="14sp" />
 
 
                         <TextView
@@ -516,6 +516,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
+                        android:visibility="gone"
                         android:gravity="center_vertical"
                         android:background="@color/white"
                         android:orientation="horizontal">

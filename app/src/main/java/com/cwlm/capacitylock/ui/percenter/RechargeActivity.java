@@ -1,9 +1,6 @@
 package com.cwlm.capacitylock.ui.percenter;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -14,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.cwlm.capacitylock.R;
@@ -22,13 +18,14 @@ import com.cwlm.capacitylock.adapter.RechargeAdapter;
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
-import com.cwlm.capacitylock.model.RechargeModel;
+import com.cwlm.capacitylock.obj.RechargeObj;
 import com.cwlm.capacitylock.pay.PayResult;
 import com.cwlm.capacitylock.ui.ServiceWebView;
 
 import java.util.Map;
 
 /**
+ * 充值
  * Created by akawok on 2017-03-23.
  */
 public class RechargeActivity extends BaseActivity implements View.OnClickListener {
@@ -47,7 +44,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
     CheckBox cb_wxpay,cb_alipay;
     String Checked = "alipay";
 
-    String[] money_list = new String[]{"5","10","50","100","150","200"};
+    String[] money_list = new String[]{"10","30","50","100","150","200"};
     RechargeAdapter adapter = new RechargeAdapter(RechargeActivity.this , money_list);
 
     public RechargeActivity() {
@@ -63,11 +60,11 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
     public void onSuccess(BaseModel resModel) {
         int infCode = resModel.getInfCode();
         switch (infCode) {
-            case InterfaceFinals.getOrderInfo://app下订单返回参数
-                RechargeModel model = (RechargeModel) resModel;
+            case InterfaceFinals.getRechargeOrderInfo://app下订单返回参数
+                RechargeObj model = (RechargeObj) resModel;
 
 
-                final String payInfo = model.getMap().getPayInfo();
+                final String payInfo = model.getObject();
                 Runnable payRunnable = new Runnable() {
                     @Override
                     public void run() {
@@ -193,7 +190,7 @@ public class RechargeActivity extends BaseActivity implements View.OnClickListen
 
                     if (Position != -1) {
 
-                        getDataFromNet(InterfaceFinals.getOrderInfo , money_list[Position].toString() , "车位联盟充值");
+                        getDataFromNet(InterfaceFinals.getRechargeOrderInfo , user.getUserId() , money_list[Position].toString());
 
                     }else{
                         showToast("请选择金额");

@@ -10,11 +10,11 @@ import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
 import com.cwlm.capacitylock.model.MyBalanceModel;
 import com.cwlm.capacitylock.model.MyLocksModel;
 import com.cwlm.capacitylock.model.OrderInfoModel;
-import com.cwlm.capacitylock.model.RechargeModel;
 import com.cwlm.capacitylock.model.RechargeMonthCardModel;
 import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.model.UserModel;
 import com.cwlm.capacitylock.obj.BindCarNumbleObj;
+import com.cwlm.capacitylock.obj.RechargeObj;
 import com.cwlm.capacitylock.utils.MyDialog;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -147,14 +147,16 @@ public class OkHttpUtils {
                 PostRequst(InterfaceFinals.getStopPlaceAllMonthCardPrice_Requst, okhttp, body, RechargeMonthCardModel.class, InterfaceFinals.getStopPlaceAllMonthCardPrice);
 
                 break;
-            case InterfaceFinals.getOrderInfo:   //app充值下订单
+            case InterfaceFinals.getMonthcardOrderInfo:   //app购买月卡下订单
 
                 body = new FormBody.Builder()
-                        .add("rechargeMoney", parms[0])
-                        .add("payType", parms[1])
+                        .add("userId", parms[0])
+                        .add("stopPlaceId", parms[1])
+                        .add("payMoney", parms[2])
+                        .add("stopPlaceCardPriceType", parms[3])
                         .build();
 
-                PostRequst(InterfaceFinals.getOrderInfo_Requst, okhttp, body, RechargeModel.class, InterfaceFinals.getOrderInfo);
+                PostRequst(InterfaceFinals.getMonthcardOrderInfo_Requst, okhttp, body, RechargeObj.class, InterfaceFinals.getMonthcardOrderInfo);
 
                 break;
             case InterfaceFinals.getAllUserMonthCard:   //获取月卡充值记录
@@ -256,6 +258,16 @@ public class OkHttpUtils {
                         .build();
 
                 PostRequst(InterfaceFinals.getSweepNumber_Requst, okhttp, body, SweepNumberModel.class, InterfaceFinals.getSweepNumber);
+
+                break;
+            case InterfaceFinals.getRechargeOrderInfo:   //app充值下订单
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .add("rechargeMoney", parms[1])
+                        .build();
+
+                PostRequst(InterfaceFinals.getRechargeOrderInfo_Requst, okhttp, body, RechargeObj.class, InterfaceFinals.getRechargeOrderInfo);
 
                 break;
 

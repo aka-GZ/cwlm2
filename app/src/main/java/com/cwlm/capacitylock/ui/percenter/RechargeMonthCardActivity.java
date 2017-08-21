@@ -9,18 +9,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
-import com.cwlm.capacitylock.model.RechargeModel;
 import com.cwlm.capacitylock.model.RechargeMonthCardModel;
+import com.cwlm.capacitylock.obj.RechargeObj;
 import com.cwlm.capacitylock.pay.PayResult;
 import com.cwlm.capacitylock.ui.ServiceWebView;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,17 +42,19 @@ public class RechargeMonthCardActivity extends BaseActivity implements View.OnCl
     List<Double> money_list;
 
     RechargeMonthCardModel.ObjectBean obj = null;
+    private String stopPlaceId;
 
     public RechargeMonthCardActivity() {
         super(R.layout.act_rechargemonthcard);
     }
 
 
+
     public void getData() {
-        String StopPlaceId = getIntent().getStringExtra("data");
+        stopPlaceId = getIntent().getStringExtra("data");
 
         //StopPlaceId = "1";  //测试用
-        getDataFromNet(InterfaceFinals.getStopPlaceAllMonthCardPrice , StopPlaceId);
+        getDataFromNet(InterfaceFinals.getStopPlaceAllMonthCardPrice , stopPlaceId);
 
     }
 
@@ -63,11 +63,11 @@ public class RechargeMonthCardActivity extends BaseActivity implements View.OnCl
     public void onSuccess(BaseModel resModel) {
         int infCode = resModel.getInfCode();
         switch (infCode) {
-            case InterfaceFinals.getOrderInfo://app下订单返回参数
-                RechargeModel model = (RechargeModel)resModel;
+            case InterfaceFinals.getMonthcardOrderInfo://app下订单返回参数
+                RechargeObj model = (RechargeObj)resModel;
 
 
-                final String payInfo = model.getMap().getPayInfo();
+                final String payInfo = model.getObject();
                 Runnable payRunnable = new Runnable() {
                     @Override
                     public void run() {
@@ -252,7 +252,7 @@ public void selected(int i) {
 
                     if (Position != -1) {
 
-                        getDataFromNet(InterfaceFinals.getOrderInfo , money_list.get(Position).toString() , "会员卡办理");
+                        getDataFromNet(InterfaceFinals.getMonthcardOrderInfo , user.getUserId() , stopPlaceId , money_list.get(Position).toString() , String.valueOf(Position+1));
 
                     } else {
                         showToast("请选择卡类型");

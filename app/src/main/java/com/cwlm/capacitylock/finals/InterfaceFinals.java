@@ -9,8 +9,8 @@ import java.io.File;
  */
 public class InterfaceFinals {
 
-//    public static final String URL = "http://zylm.net:80"; //正式服务器
-    public static final String URL = "http://wooowoo.cn";  //测试服务器
+    public static final String URL = "http://zylm.net:80"; //正式服务器
+//    public static final String URL = "http://wooowoo.cn";  //测试服务器
 
     //请求URL
     public static final String getAllStopPlace_Requst = URL + "/CarLock/allweixin/getAllStopPlace"; //获取所有停车场车辆信息
@@ -23,7 +23,7 @@ public class InterfaceFinals {
     public static final String getCarNumber_Requst = URL + "/CarLock/appUserInfo/getCarNumber"; //获取车牌号
     public static final String bindCarNumber_Requst = URL + "/CarLock/appUserInfo/bindCarNumber"; //绑定车牌号
     public static final String getStopPlaceAllMonthCardPrice_Requst = URL + "/CarLock/stopplace/getStopPlaceAllMonthCardPrice";//获取月卡信息
-    public static final String getOrderInfo_Requst = URL +"/CarLock/appOrderInfo/getOrderInfo";//app充值下订单
+    public static final String getMonthcardOrderInfo_Requst = URL +"/CarLock/appOrderInfo/getMonthcardOrderInfo";//app购买月卡下订单
     public static final String getAllUserMonthCard_Requst = URL +"/CarLock/stopplace/getAllUserMonthCard";//获取月卡充值记录
     public static final String getSweepNumber_Requst = URL +"/CarLock/appUserInfo/getSweepNumber"; //主页获取押金和使用次数
     public static final String scanCode_Requst = URL +"/CarLock/stopplace/scanCode";//app扫码停车_新
@@ -35,6 +35,7 @@ public class InterfaceFinals {
     public static final String getCarLockUseInformation_Requst = URL +"/CarLock/lock/getCarLockUseInformation";//app查询我的车位（新）
     public static final String appBindingUser_Requst = URL +"/CarLock/user/appBindingUser";//绑定我的车位
     public static final String updateCarLockState_Requst = URL +"/CarLock/lock/updateCarLockState";//分享我的车位
+    public static final String getRechargeOrderInfo_Requst = URL +"/CarLock/appOrderInfo/getRechargeOrderInfo";//app充值下订单
 
     //接口常量
     public static final int getAllStopPlace = 0;  //获取所有停车场车辆信息
@@ -46,7 +47,7 @@ public class InterfaceFinals {
     public static final int getCarNumber = 6;  //获取车牌号
     public static final int bindCarNumber = 7;  //绑定车牌号
     public static final int getStopPlaceAllMonthCardPrice = 8;  //获取月卡信息
-    public static final int getOrderInfo = 9;  //app充值下订单
+    public static final int getMonthcardOrderInfo = 9;  //app购买月卡下订单
     public static final int getAllUserMonthCard = 10;  //获取月卡充值记录
     public static final int getSweepNumber = 11;  //主页获取押金和使用次数
     public static final int scanCode = 12;  //app扫码停车_新
@@ -58,10 +59,11 @@ public class InterfaceFinals {
     public static final int getCarLockUseInformation = 17; //app查询我的车位（新）
     public static final int appBindingUser = 18; //app绑定我的车位
     public static final int updateCarLockState = 19; //分享我的车位
-
+    public static final int getRechargeOrderInfo = 20; //app充值下订单
 
     //协议html地址
     public static final String agreement = URL +"/CarLock/html/rechsarge-agreement.html"; //充值协议
+    public static final String register_agreement = URL +"/CarLock/html/register-agreement.html"; //登录注册协议
 
 
     public static final String service = "http://zylm.net/weixin/lockApply.html"; //主页我的客服地址

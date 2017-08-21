@@ -126,7 +126,8 @@ public abstract class BaseActivity extends Activity {
 			
 			public void onClick(View v) {
 				finish();
-				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+//				overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+				overridePendingTransition(0,0);
 			}
 		});
 		iv_right.setOnClickListener(new OnClickListener() {
@@ -230,32 +231,32 @@ public abstract class BaseActivity extends Activity {
 		mToast.show();
 	}
 
-	public void showDialog(String msg){
+	public void showDialog(String msg , boolean isSkip){
 
-		View v = getLayoutInflater().inflate(R.layout.base_actvity_dialog , null);
 		final Dialog dialog = new Dialog(BaseActivity.this,R.style.mydialog);
 		dialog.setContentView(R.layout.base_actvity_dialog);
 		dialog.show();
-		v.findViewById(R.id.base_dialog_skip).setOnClickListener(new View.OnClickListener() {
+		dialog.findViewById(R.id.base_dialog_skip).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(CaptureActivity.class);
 				if(dialog.isShowing()) {
 					dialog.dismiss();
 				}
 			}
 		});
-		v.findViewById(R.id.base_dialog_go).setOnClickListener(new View.OnClickListener() {
+		dialog.findViewById(R.id.base_dialog_go).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(BindCarNumbleActivity.class);
 				if(dialog.isShowing()) {
 					dialog.dismiss();
 				}
 			}
 		});
-		TextView base_dialog_text = (TextView) v.findViewById(R.id.base_dialog_text);
+		TextView base_dialog_text = (TextView) dialog.findViewById(R.id.base_dialog_text);
 		base_dialog_text.setText(msg);
+		if (!isSkip){
+			dialog.findViewById(R.id.base_dialog_skip).setVisibility(View.GONE);
+		}
 	}
 
 
@@ -339,8 +340,8 @@ public abstract class BaseActivity extends Activity {
 		}
 		startActivity(intent);
 
-		overridePendingTransition(R.anim.push_left_in, R.anim.push_right_out);
-//		overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+//		overridePendingTransition(R.anim.push_left_in, R.anim.push_right_out);
+		overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 	}
 
 	@Override
@@ -354,7 +355,9 @@ public abstract class BaseActivity extends Activity {
 	 */
 	public void finish_Anim() {
 		finish();
-		overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+		overridePendingTransition(0,0);
+//		overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+//		overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 	}
 
 	/**

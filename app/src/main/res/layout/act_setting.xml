@@ -39,9 +39,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginRight="20dp"
-                    android:drawableRight="@mipmap/to_right_gray_light"
                     android:gravity="center_vertical"
                     android:textSize="14sp" />
+                <!--android:drawableRight="@mipmap/to_right_gray_light"-->
             </RelativeLayout>
 
 
@@ -74,9 +74,9 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginRight="20dp"
                     android:text="未绑定"
-                    android:drawableRight="@mipmap/to_right_gray_light"
                     android:gravity="center_vertical"
                     android:textSize="14sp" />
+                <!--android:drawableRight="@mipmap/to_right_gray_light"-->
             </RelativeLayout>
 
             <LinearLayout
@@ -140,10 +140,11 @@
         android:gravity="center" >
 
         <TextView
+            android:id="@+id/setting_agreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="使用条款和隐私政策"
-            android:textColor="#576b95" />
+            android:textColor="@color/blue" />
     </LinearLayout>
 
     <LinearLayout

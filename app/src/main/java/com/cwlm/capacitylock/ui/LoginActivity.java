@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,6 +67,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     public void initView() {
+        tv_title.setText("");
+        iv_right.setVisibility(View.INVISIBLE);
+        iv_left.setVisibility(View.INVISIBLE);
+        main_title.setBackgroundColor(Color.parseColor("#00000000"));
         id_code = (EditText) findViewById(R.id.id_code);
         smsContent = new SmsContent(new Handler(), LoginActivity.this, id_code);
         getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsContent);
@@ -108,7 +113,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         id_login = (LinearLayout) findViewById(R.id.id_login);
         id_login.setOnClickListener(this);
 
-        tv_title.setText("登录");
     }
 
     @Override
@@ -162,11 +166,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.id_getcode:
                 if (!MyUtils.isPhoneLegal(id_username.getText().toString())) {
-                    new AlertDialog.Builder(this)
-                            .setTitle("信息")
-                            .setMessage("请输入正确的手机号")
-                            .setPositiveButton("确定", null)
-                            .show();
+                    showDialog("              请输入正确的手机号              ",false);
+//                    new AlertDialog.Builder(this)
+//                            .setTitle("信息")
+//                            .setMessage("请输入正确的手机号")
+//                            .setPositiveButton("确定", null)
+//                            .show();
                     break;
                 }
 
@@ -200,11 +205,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             // 登陆
             case R.id.id_login:
                 if (!MyUtils.isPhoneLegal(id_username.getText().toString())) {
-                    new AlertDialog.Builder(this)
-                            .setTitle("信息")
-                            .setMessage("请输入正确的手机号")
-                            .setPositiveButton("确定", null)
-                            .show();
+//                    new AlertDialog.Builder(this)
+//                            .setTitle("信息")
+//                            .setMessage("请输入正确的手机号")
+//                            .setPositiveButton("确定", null)
+//                            .show();
+                    showDialog("              请输入正确的手机号              ",false);
                     break;
                 }
 
@@ -292,6 +298,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.term_of_service:
 
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this, ServiceWebView.class);
+                intent.putExtra("LoadUrl", InterfaceFinals.register_agreement);
+                startActivity(intent);
+
                 break;
             default:
                 break;
@@ -332,43 +343,43 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onResume();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            AlertDialog.Builder alertbBuilder = new AlertDialog.Builder(this);
-            alertbBuilder.setTitle("真的要离开？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // 结束这个Activity
-                    //  UpdateManager.setCancelUpdate(true);
-                    int currentVersion = android.os.Build.VERSION.SDK_INT;
-                    if (currentVersion > android.os.Build.VERSION_CODES.ECLAIR_MR1) {
-                        Intent startMain = new Intent(Intent.ACTION_MAIN);
-                        startMain.addCategory(Intent.CATEGORY_HOME);
-                        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(startMain);
-                        System.exit(0);
-                    } else {// android2.1
-                        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-                        am.restartPackage(getPackageName());
-                    }
-                    /*
-                    int nPid = android.os.Process.myPid();
-                    android.os.Process.killProcess(nPid);
-                    System.exit(0);
-                    */
-                }
-            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            }).create();
-            alertbBuilder.show();
-            return false;// 消费掉后退键
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+//            AlertDialog.Builder alertbBuilder = new AlertDialog.Builder(this);
+//            alertbBuilder.setTitle("真的要离开？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    // 结束这个Activity
+//                    //  UpdateManager.setCancelUpdate(true);
+//                    int currentVersion = android.os.Build.VERSION.SDK_INT;
+//                    if (currentVersion > android.os.Build.VERSION_CODES.ECLAIR_MR1) {
+//                        Intent startMain = new Intent(Intent.ACTION_MAIN);
+//                        startMain.addCategory(Intent.CATEGORY_HOME);
+//                        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        startActivity(startMain);
+//                        System.exit(0);
+//                    } else {// android2.1
+//                        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+//                        am.restartPackage(getPackageName());
+//                    }
+//                    /*
+//                    int nPid = android.os.Process.myPid();
+//                    android.os.Process.killProcess(nPid);
+//                    System.exit(0);
+//                    */
+//                }
+//            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.cancel();
+//                }
+//            }).create();
+//            alertbBuilder.show();
+//            return false;// 消费掉后退键
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
 
 //    private SMSReceiver receiver;

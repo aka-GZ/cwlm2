@@ -69,7 +69,15 @@ public class PersonInfoCenterActivity extends BaseActivity implements OnClickLis
         switch (v.getId()) {
             case R.id.menu_user_img:      //用户头像
 
-                getPicFromPhoto();
+//                getPicFromPhoto();                                     //用户换头像方法，新版本调试支持7.0
+                //判断用户是否登录
+                if (!MyUtils.isLogin(PersonInfoCenterActivity.this)) {
+                    showToast("请先登录!");
+                    startActivity(LoginActivity.class);
+                } else {
+                    showToast("已登录!");
+                }
+
 //                 //判断用户是否登录
 //                 if(TextUtils.isEmpty(MyApplication.getUserId())){
 //                     //showToast("请先登录!");

@@ -13,7 +13,7 @@ import com.cwlm.capacitylock.obj.MyBalanceObj;
 
 
 /**
- *
+ *我的钱包
  * Created by akawok on 2017-08-05.
  */
 public class MyWallet_1Activity extends BaseActivity implements View.OnClickListener {

@@ -137,6 +137,8 @@ public class CaptureActivity extends BaseActivity implements Callback {
 
 	@Override
 	public void initView() {
+		tv_title.setText("扫码停车");
+		iv_right.setVisibility(View.INVISIBLE);
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		btnLight = (ImageView) findViewById(R.id.btn_light);
