@@ -4,74 +4,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_gray"/>
 
-    <TextView
-        android:id="@+id/vipstate_item_tv_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|left"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="10dp"
-        android:textColor="@color/text_gary"
-        android:text="@null"
-        android:textSize="16sp"/>
+    <!--<TextView-->
+        <!--android:id="@+id/vipstate_item_tv_1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center_vertical|left"-->
+        <!--android:paddingTop="15dp"-->
+        <!--android:paddingBottom="15dp"-->
+        <!--android:paddingLeft="20dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:textColor="@color/text_gary"-->
+        <!--android:text="@null"-->
+        <!--android:textSize="16sp"/>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_gray"/>
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/line_gray"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|left"
-        android:padding="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="15dp">
 
+
+        <TextView
+            android:id="@+id/vipstate_item_tv_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical|left"
+            android:text="@null"
+            android:textColor="@color/text_gary"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/vipstate_item_tv_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|left"
             android:layout_margin="10dp"
-            android:textColor="@color/text_gary"
+            android:gravity="center_vertical|left"
             android:text="@null"
-            android:textSize="14sp"/>
+            android:textColor="@color/text_gary"
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/vipstate_item_tv_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|left"
             android:layout_margin="10dp"
-            android:textColor="@color/text_gary"
+            android:gravity="center_vertical|left"
             android:text="@null"
-            android:textSize="14sp"/>
+            android:textColor="@color/text_gary"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/vipstate_item_tv_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|left"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/text_gary"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical|left"
             android:text="@null"
-            android:textSize="14sp"/>
+            android:textColor="@color/text_gary"
+            android:textSize="14sp" />
 
     </LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/line_gray"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/line_gray"
-        android:layout_marginBottom="10dp"/>
+        android:background="@color/line_gray_dark"
+        android:layout_marginBottom="20dp"/>
 
 
     <!--android:background="@drawable/side"-->

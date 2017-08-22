@@ -1,9 +1,11 @@
 package com.cwlm.capacitylock.ui.percenter;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,6 +21,7 @@ import com.cwlm.capacitylock.model.RechargeMonthCardModel;
 import com.cwlm.capacitylock.obj.RechargeObj;
 import com.cwlm.capacitylock.pay.PayResult;
 import com.cwlm.capacitylock.ui.ServiceWebView;
+import com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,10 +157,8 @@ public class RechargeMonthCardActivity extends BaseActivity implements View.OnCl
 //                map.put("stopPlaceCardPriceType", stopPlaceCardPriceType);
 //                map.put("stopPlaceId", obj.getStopPlaceId());
 //                map.put("payMoney", money_list.get(Position));
-
                 showToast("支付成功");
-                startActivity(VipStateActivity.class);
-                finish();
+                showDialog("         "+user.getCarNumber()+"  办理会员成功         " , false);
 
             } else {
                 // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
@@ -165,6 +166,29 @@ public class RechargeMonthCardActivity extends BaseActivity implements View.OnCl
             }
         };
     };
+
+    public void showDialog(String msg , boolean isSkip){
+
+        final Dialog dialog = new Dialog(RechargeMonthCardActivity.this,R.style.mydialog);
+        dialog.setContentView(R.layout.base_actvity_dialog);
+        dialog.show();
+        dialog.findViewById(R.id.base_dialog_go).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+
+                startActivity(VipStateActivity.class);
+                finish();
+            }
+        });
+        TextView text = (TextView) dialog.findViewById(R.id.base_dialog_text);
+        text.setText(msg);
+        if (!isSkip){
+            dialog.findViewById(R.id.base_dialog_skip).setVisibility(View.GONE);
+        }
+    }
 
     int Position = -1;
     View OldView = null;
@@ -252,7 +276,11 @@ public void selected(int i) {
 
                     if (Position != -1) {
 
-                        getDataFromNet(InterfaceFinals.getMonthcardOrderInfo , user.getUserId() , stopPlaceId , money_list.get(Position).toString() , String.valueOf(Position+1));
+                        if (user.getCarNumber() == null || "".equals(user.getCarNumber())) {
+                            showToast("请先绑定车牌号");}
+                        else{
+                            getDataFromNet(InterfaceFinals.getMonthcardOrderInfo , user.getUserId() , stopPlaceId , money_list.get(Position).toString() , String.valueOf(Position+1));
+                        }
 
                     } else {
                         showToast("请选择卡类型");
@@ -261,7 +289,6 @@ public void selected(int i) {
                 } else if ("wxpay".equals(Checked)) {
                     showToast("目前暂支持支付宝支付");
                 }
-
 
                 break;
             case R.id.textView1:

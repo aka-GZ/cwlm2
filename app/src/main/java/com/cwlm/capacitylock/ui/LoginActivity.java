@@ -52,8 +52,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private final static int WEBFAIL = 2;
     //    private ImageButton id_back;
     private EditText id_username, id_code;
-    private ProgressDialog dialog;
-    private SmsContent smsContent;
+//    private SmsContent smsContent;
     private TextView term_of_service, id_getcode;
 
     public LoginActivity() {
@@ -72,8 +71,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         iv_left.setVisibility(View.INVISIBLE);
         main_title.setBackgroundColor(Color.parseColor("#00000000"));
         id_code = (EditText) findViewById(R.id.id_code);
-        smsContent = new SmsContent(new Handler(), LoginActivity.this, id_code);
-        getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsContent);
+
+//        smsContent = new SmsContent(new Handler(), LoginActivity.this, id_code);
+//        getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsContent);
+
 //        通过广播来获取短信填充二维码，此方法有可能被手机报病毒 使用ContentObserver更安全
 //        receiver = new SMSReceiver();
 //        IntentFilter filter = new IntentFilter();
@@ -310,30 +311,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case SUCCESS:
-                    dialog.dismiss();
-                    // finish(true);
-                    break;
-                case WEBFAIL:
-                    dialog.dismiss();
-                    showToast("网络异常");
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
     @Override
     protected void onDestroy() {
-        if (dialog != null) {
-            dialog.dismiss();
-        }
         //unregisterReceiver(receiver);//注销广播
         super.onDestroy();
     }

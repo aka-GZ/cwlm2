@@ -240,7 +240,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
 			FormBody body = new FormBody.Builder()
 					.add("userId", user.getUserId())
 					.add("param", resultString)
-					.add("carNumber", user.getCarNumber())
+					.add("carNumber", user.getCarNumber()+"")
 					.build();
 			Request request = new Request.Builder()
 					.url(InterfaceFinals.scanCode_Requst)

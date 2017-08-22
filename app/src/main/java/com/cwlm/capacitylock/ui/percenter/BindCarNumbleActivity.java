@@ -102,7 +102,7 @@ public class BindCarNumbleActivity extends BaseActivity implements View.OnClickL
                     showToast("请输入正确的的车牌号码");
                     break;
                 }
-                getDataFromNet(InterfaceFinals.bindCarNumber , bind_carnum_headtv.getText().toString().toUpperCase() + carnumber.getText().toString().trim().toUpperCase() , "2");
+                getDataFromNet(InterfaceFinals.bindCarNumber ,user.getUserId(), bind_carnum_headtv.getText().toString().toUpperCase() + carnumber.getText().toString().trim().toUpperCase() , "2");
                 break;
             case R.id.bind_carnum_head:
 

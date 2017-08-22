@@ -13,6 +13,7 @@ import com.cwlm.capacitylock.model.OrderInfoModel;
 import com.cwlm.capacitylock.model.RechargeMonthCardModel;
 import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.model.UserModel;
+import com.cwlm.capacitylock.model.VipStateModel;
 import com.cwlm.capacitylock.obj.BindCarNumbleObj;
 import com.cwlm.capacitylock.obj.RechargeObj;
 import com.cwlm.capacitylock.utils.MyDialog;
@@ -131,8 +132,9 @@ public class OkHttpUtils {
             case InterfaceFinals.bindCarNumber:   //绑定车牌号
 
                 body = new FormBody.Builder()
-                        .add("carNumber", parms[0])
-                        .add("step", parms[1])
+                        .add("userId", parms[0])
+                        .add("carNumber", parms[1])
+                        .add("step", parms[2])
                         .build();
 
                 PostRequst(InterfaceFinals.bindCarNumber_Requst, okhttp, body, BaseModel.class, InterfaceFinals.bindCarNumber);
@@ -165,7 +167,7 @@ public class OkHttpUtils {
                         .add("userId", parms[0])
                         .build();
 
-                PostRequst(InterfaceFinals.getAllUserMonthCard_Requst, okhttp, body, BaseModel.class, InterfaceFinals.getAllUserMonthCard);
+                PostRequst(InterfaceFinals.getAllUserMonthCard_Requst, okhttp, body, VipStateModel.class, InterfaceFinals.getAllUserMonthCard);
 
                 break;
 //            case InterfaceFinals.scanCode:   //app扫码停车_新     ----该接口已在扫码界面单独调用

@@ -148,7 +148,6 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 break;
             case InterfaceFinals.getSweepNumber:
                 SweepNumberObj obj = ((SweepNumberModel) resModel).getMap();
-                if (user.getCarNumber() == null || "".equals(user.getCarNumber())) {
                     if (obj.getSweepNumber() <= 3) {
                         final Dialog dialog = new Dialog(MainActivity.this, R.style.mydialog);
                         dialog.setContentView(R.layout.dialog);
@@ -176,6 +175,8 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                         dialog.setContentView(R.layout.dialog);
                         dialog.show();
                         dialog.findViewById(R.id.dialog_skip).setVisibility(View.GONE);
+                        TextView tv = (TextView) dialog.findViewById(R.id.dialog_text);
+                        tv.setText("   您已体验三次,请绑定车牌号后继续使用哦~");
                         dialog.findViewById(R.id.dialog_go).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -188,9 +189,6 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
                     }
 
-                }else{
-                    startActivity(CaptureActivity.class);
-                }
                 break;
         }
     }
@@ -436,7 +434,12 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                     showToast("请先登录!");
                     startActivity(LoginActivity.class);
                 } else {
+
+                    if (user.getCarNumber() == null || "".equals(user.getCarNumber())) {
                     getDataFromNet(InterfaceFinals.getSweepNumber, user.getUserId());
+                    }else{
+                        startActivity(CaptureActivity.class);
+                    }
                 }
 
                 break;

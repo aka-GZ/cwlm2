@@ -62,7 +62,7 @@ public class InterfaceFinals {
     public static final int getRechargeOrderInfo = 20; //app充值下订单
 
     //协议html地址
-    public static final String agreement = URL +"/CarLock/html/rechsarge-agreement.html"; //充值协议
+    public static final String agreement = URL +"/CarLock/html/recharge-agreement.html"; //充值协议
     public static final String register_agreement = URL +"/CarLock/html/register-agreement.html"; //登录注册协议
 
 
