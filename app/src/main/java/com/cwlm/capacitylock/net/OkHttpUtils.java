@@ -356,7 +356,8 @@ public class OkHttpUtils {
                             }
                         } catch (JsonSyntaxException e) {
                             e.printStackTrace();
-                            ((BaseActivity) ctx).showToast("数据解析错误");
+//                            ((BaseActivity) ctx).showToast("数据解析错误");
+                            ((BaseActivity) ctx).showToast("服务器数据升级,请稍后..");
                         }
                         catch (Exception e) {
                             e.printStackTrace();

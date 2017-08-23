@@ -47,7 +47,7 @@ public class ErrorActivity extends BaseActivity {
                showToast("暂无推荐停车位，请重试");
             }
         } catch (JsonSyntaxException e) {
-            showToast("数据异常，请重试");
+            showToast("服务器数据升级，请重试");
             e.printStackTrace();
         }
 

@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 订单记录
  * Created by akawok on 2017-08-04.
  */
 public class OrderInfoCenterActivity extends BaseActivity {

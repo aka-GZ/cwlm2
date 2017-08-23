@@ -2,82 +2,144 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
+
         <TextView
             android:id="@+id/spendTime"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:text="2017-02-02 12:15:15"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/spendstatus"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|left"
-            android:text="        2017-02-02 12:15:15"/>
+            android:text="已完成"
+            android:textColor="@color/red"
+            android:textSize="14sp" />
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
+
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_weight="4"
-            android:text="  停车场  ："/>
+            android:text="停车场："
+            android:textColor="@color/text_gary_light"
+            android:textSize="13sp" />
+
         <TextView
             android:id="@+id/stopplaceName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
             android:gravity="center_vertical|left"
-            android:text="金地京汉1903"/>
+            android:text="金地京汉1903"
+            android:textColor="@color/text_gary_light"
+            android:textSize="13sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
-        <TextView
+
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="4"
-            android:text="停车时长："/>
-        <TextView
-            android:id="@+id/park_duration"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="停车时长："
+                android:textColor="@color/text_gary_light"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/park_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="1小时"
+                android:textColor="@color/text_gary_light"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:gravity="center_vertical|left"
-            android:text="1小时"/>
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="   停车消费："
+                android:textColor="@color/text_gary_light"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/spend_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="10元"
+                android:textColor="@color/text_gary_light"
+                android:textSize="13sp" />
+        </LinearLayout>
 
         <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="2"-->
-            <!--android:visibility="gone"-->
-            <!--android:src="@drawable/to_right"/>-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="2"-->
+        <!--android:visibility="gone"-->
+        <!--android:src="@drawable/to_right"/>-->
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="4"
-            android:text="停车消费："/>
-        <TextView
-            android:id="@+id/spend_money"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|left"
-            android:layout_weight="6"
-            android:text="10元"/>
-    </LinearLayout>
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:orientation="horizontal">-->
+    <!--<TextView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_weight="4"-->
+    <!--android:text="停车消费："/>-->
+    <!--<TextView-->
+    <!--android:id="@+id/spend_money"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center_vertical|left"-->
+    <!--android:layout_weight="6"-->
+    <!--android:text="10元"/>-->
+    <!--</LinearLayout>-->
 </LinearLayout>

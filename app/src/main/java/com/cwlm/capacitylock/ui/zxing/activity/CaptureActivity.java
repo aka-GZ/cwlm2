@@ -282,41 +282,48 @@ public class CaptureActivity extends BaseActivity implements Callback {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							BaseModel result = new Gson().fromJson(res, BaseModel.class);
-							//非业主扫码成功  &  业主扫码成功
-							if("2".equals(result.getStatusCode())||"1".equals(result.getStatusCode())){
-								Intent intent=new Intent(CaptureActivity.this,CancelActivity.class);
-								intent.putExtra("data",res);
-								startActivity(intent);
-								finish();
-							}
-							//当前车位不可用,推荐附近停车位
-							else if("4".equals(result.getStatusCode())||"5".equals(result.getStatusCode())){
-								Intent intent=new Intent(CaptureActivity.this,ErrorActivity.class);
-								intent.putExtra("freelock",res);
-								startActivity(intent);
-								finish();
-							}
-							//车锁主扫非自己车位且未交押金（如果交了押金将会返回 2 ）
-							else if("16".equals(result.getStatusCode())){
 
-								//未交押金跳转交押金界面
-//								startActivity(PayDepositActivity.class);
-								finish();
+							try {
+								BaseModel result = new Gson().fromJson(res, BaseModel.class);
+								//非业主扫码成功  &  业主扫码成功
+								if("2".equals(result.getStatusCode())||"1".equals(result.getStatusCode())){
+                                    Intent intent=new Intent(CaptureActivity.this,CancelActivity.class);
+                                    intent.putExtra("data",res);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                //当前车位不可用,推荐附近停车位
+                                else if("4".equals(result.getStatusCode())||"5".equals(result.getStatusCode())){
+                                    Intent intent=new Intent(CaptureActivity.this,ErrorActivity.class);
+                                    intent.putExtra("freelock",res);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                //车锁主扫非自己车位且未交押金（如果交了押金将会返回 2 ）
+                                else if("16".equals(result.getStatusCode())){
 
-							}
-							//黑名单用户
-							else if("6".equals(result.getStatusCode())){
+                                    //未交押金跳转交押金界面
+    //								startActivity(PayDepositActivity.class);
+                                    finish();
 
-								//清除登录信息
-								PreferencesUtil.clearPreferences(CaptureActivity.this , "User");
-								startActivity(LoginActivity.class);
-								finish();
+                                }
+                                //黑名单用户
+                                else if("6".equals(result.getStatusCode())){
 
-							}else{
-								showToast(result.getMess());
-								//跳回主页
-								startActivity(MainActivity.class);
+                                    //清除登录信息
+                                    PreferencesUtil.clearPreferences(CaptureActivity.this , "User");
+                                    startActivity(LoginActivity.class);
+                                    finish();
+
+                                }else{
+                                    showToast(result.getMess());
+                                    //跳回主页
+                                    startActivity(MainActivity.class);
+                                    finish();
+                                }
+							} catch (JsonSyntaxException e) {
+								e.printStackTrace();
+								showToast("服务器数据升级,请稍后..");
 								finish();
 							}
 

@@ -52,17 +52,34 @@ public class OrderInfoAdapter extends BaseAdapter {
             viewHolder.park_duration= (TextView) view.findViewById(R.id.park_duration);
             viewHolder.spend_money= (TextView) view.findViewById(R.id.spend_money);
             viewHolder.spendTime= (TextView) view.findViewById(R.id.spendTime);
+            viewHolder.spendstatus= (TextView) view.findViewById(R.id.spendstatus);
             view.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) view.getTag();
         }
+
+        String State = list.get(position).getState();
+        //2车位预定成功，   3订单创建   4表示用户控制车位锁下降（正在使用),   5表示交易成功   6,取消订单
+        if ("2".equals(State)){
+            viewHolder.spendstatus.setText("预定");
+        }else if ("4".equals(State)){
+            viewHolder.spendstatus.setText("未支付");
+        }else if ("5".equals(State)){
+            viewHolder.spendstatus.setText("已完成");
+        }else if ("6".equals(State)){
+            viewHolder.spendstatus.setText("已取消");
+        }else{
+            viewHolder.spendstatus.setText("未知");
+        }
+
+
         viewHolder.stopplaceName.setText(list.get(position).getStopPlaceName());
         viewHolder.park_duration.setText(list.get(position).getPeriod());
         viewHolder.spend_money.setText(list.get(position).getMoney().toString()+"元");
-        viewHolder.spendTime.setText("        " + list.get(position).getCreateTime());
+        viewHolder.spendTime.setText(list.get(position).getCreateTime());
         return view;
     }
     static class ViewHolder{
-        TextView stopplaceName,park_duration,spend_money,spendTime;
+        TextView stopplaceName,park_duration,spend_money,spendTime,spendstatus;
     }
 }
