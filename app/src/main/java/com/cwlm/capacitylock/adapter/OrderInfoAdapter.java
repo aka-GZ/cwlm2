@@ -68,6 +68,8 @@ public class OrderInfoAdapter extends BaseAdapter {
             viewHolder.spendstatus.setText("已完成");
         }else if ("6".equals(State)){
             viewHolder.spendstatus.setText("已取消");
+        }else if ("7".equals(State)){
+            viewHolder.spendstatus.setText("余额不足");
         }else{
             viewHolder.spendstatus.setText("未知");
         }

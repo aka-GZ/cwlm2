@@ -100,7 +100,6 @@ public class CancelActivity extends BaseActivity {
         findViewById(R.id.cancel_btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish_Anim();
                 showDialog("关闭页面后将无法取消停车, 是否关闭？",true);
             }
         });
