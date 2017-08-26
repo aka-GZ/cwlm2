@@ -18,6 +18,7 @@ public class CarLockObj {
 	private String latitude;
 	private String parkNumber;
 	private Integer  isPri;
+	private String floor;
 
 	public Integer getIsPri() {
 		return isPri;
@@ -37,7 +38,6 @@ public class CarLockObj {
 	public void setPredetermine(Integer predetermine) {
 		this.predetermine = predetermine;
 	}
-	private String floor;
 
 	public String getCarLockId() {
 		return carLockId;

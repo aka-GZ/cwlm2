@@ -58,6 +58,7 @@ import com.cwlm.capacitylock.service.MyOrientationListener;
 import com.cwlm.capacitylock.ui.percenter.BindCarNumbleActivity;
 import com.cwlm.capacitylock.ui.percenter.MyLockActivity;
 import com.cwlm.capacitylock.ui.percenter.PersonInfoCenterActivity;
+import com.cwlm.capacitylock.ui.scan.ParkOrderDetailActivity;
 import com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity;
 import com.cwlm.capacitylock.utils.DrivingRouteOverlay;
 import com.cwlm.capacitylock.utils.MyDialog;
@@ -91,7 +92,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
     //是否进页面首次定位
     private int isFirstLoc = 0;
 
-
+    String StopPlaceId = null;
     List<GetAllStopPlaceObj> list = new ArrayList<GetAllStopPlaceObj>();
 
 
@@ -138,6 +139,10 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                             main_allparknumber.setText(" / " + obj.getAllParkNumber());
                             main_stopprice.setText(obj.getStopPrice());
 
+                            StopPlaceId = obj.getStopPlaceId();
+
+
+
                         } catch (Exception e) {
                             e.printStackTrace();
                             showToast("请重新选择");
@@ -148,46 +153,46 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 break;
             case InterfaceFinals.getSweepNumber:
                 SweepNumberObj obj = ((SweepNumberModel) resModel).getMap();
-                    if (obj.getSweepNumber() <= 3) {
-                        final Dialog dialog = new Dialog(MainActivity.this, R.style.mydialog);
-                        dialog.setContentView(R.layout.dialog);
-                        dialog.show();
-                        dialog.findViewById(R.id.dialog_skip).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (dialog.isShowing()) {
-                                    dialog.dismiss();
-                                }
-                                startActivity(CaptureActivity.class);
+                if (obj.getSweepNumber() <= 3) {
+                    final Dialog dialog = new Dialog(MainActivity.this, R.style.mydialog);
+                    dialog.setContentView(R.layout.dialog);
+                    dialog.show();
+                    dialog.findViewById(R.id.dialog_skip).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (dialog.isShowing()) {
+                                dialog.dismiss();
                             }
-                        });
-                        dialog.findViewById(R.id.dialog_go).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (dialog.isShowing()) {
-                                    dialog.dismiss();
-                                }
-                                startActivity(BindCarNumbleActivity.class);
+                            startActivity(CaptureActivity.class);
+                        }
+                    });
+                    dialog.findViewById(R.id.dialog_go).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (dialog.isShowing()) {
+                                dialog.dismiss();
                             }
-                        });
-                    }else{
-                        final Dialog dialog = new Dialog(MainActivity.this, R.style.mydialog);
-                        dialog.setContentView(R.layout.dialog);
-                        dialog.show();
-                        dialog.findViewById(R.id.dialog_skip).setVisibility(View.GONE);
-                        TextView tv = (TextView) dialog.findViewById(R.id.dialog_text);
-                        tv.setText("   您已体验三次,请绑定车牌号后继续使用哦~");
-                        dialog.findViewById(R.id.dialog_go).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (dialog.isShowing()) {
-                                    dialog.dismiss();
-                                }
-                                startActivity(BindCarNumbleActivity.class);
+                            startActivity(BindCarNumbleActivity.class);
+                        }
+                    });
+                } else {
+                    final Dialog dialog = new Dialog(MainActivity.this, R.style.mydialog);
+                    dialog.setContentView(R.layout.dialog);
+                    dialog.show();
+                    dialog.findViewById(R.id.dialog_skip).setVisibility(View.GONE);
+                    TextView tv = (TextView) dialog.findViewById(R.id.dialog_text);
+                    tv.setText("   您已体验三次,请绑定车牌号后继续使用哦~");
+                    dialog.findViewById(R.id.dialog_go).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (dialog.isShowing()) {
+                                dialog.dismiss();
                             }
-                        });
+                            startActivity(BindCarNumbleActivity.class);
+                        }
+                    });
 
-                    }
+                }
 
                 break;
         }
@@ -371,6 +376,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
     Boolean BaiduHeatMapEnabled = false; //是否开启热力图层
     Boolean TrafficEnabled = false; //是否开启交通图
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -397,10 +403,10 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
             case R.id.main_road_condition:    //实时路况
 
                 //开启交通图
-                if(TrafficEnabled){
+                if (TrafficEnabled) {
                     mBaiduMap.setTrafficEnabled(false);
                     TrafficEnabled = false;
-                }else{
+                } else {
                     mBaiduMap.setTrafficEnabled(true);
                     TrafficEnabled = true;
                 }
@@ -425,7 +431,18 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 break;
             case R.id.main_appointment:  //预订车位
 
-                showToast("为了更好体验，正在升级中，敬请期待！");
+                //判断用户是否登录
+                if (!MyUtils.isLogin(MainActivity.this)) {
+                    showToast("请先登录!");
+                    startActivity(LoginActivity.class);
+                } else {
+                    if (StopPlaceId != null) {
+                        startActivity(ParkOrderDetailActivity.class, StopPlaceId);
+                    } else {
+                        showToast("请刷新停车场后重新选择");
+                    }
+                }
+//                showToast("为了更好体验，正在升级中，敬请期待！");
 
                 break;
             case R.id.scan_code:    // 扫码
@@ -436,8 +453,8 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 } else {
 
                     if (user.getCarNumber() == null || "".equals(user.getCarNumber())) {
-                    getDataFromNet(InterfaceFinals.getSweepNumber, user.getUserId());
-                    }else{
+                        getDataFromNet(InterfaceFinals.getSweepNumber, user.getUserId());
+                    } else {
                         startActivity(CaptureActivity.class);
                     }
                 }

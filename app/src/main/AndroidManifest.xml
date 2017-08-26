@@ -69,6 +69,7 @@
 
         <activity android:name=".ui.scan.CancelActivity"/>
         <activity android:name=".ui.scan.ErrorActivity"/>
+        <activity android:name=".ui.scan.ParkOrderDetailActivity"/>
 
 
         <activity android:name=".pay.PayActivity"/>

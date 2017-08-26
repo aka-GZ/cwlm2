@@ -10,6 +10,7 @@ import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
 import com.cwlm.capacitylock.model.MyBalanceModel;
 import com.cwlm.capacitylock.model.MyLocksModel;
 import com.cwlm.capacitylock.model.OrderInfoModel;
+import com.cwlm.capacitylock.model.ParkOrderDetailModel;
 import com.cwlm.capacitylock.model.RechargeMonthCardModel;
 import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.model.UserModel;
@@ -270,6 +271,26 @@ public class OkHttpUtils {
                         .build();
 
                 PostRequst(InterfaceFinals.getRechargeOrderInfo_Requst, okhttp, body, RechargeObj.class, InterfaceFinals.getRechargeOrderInfo);
+
+                break;
+            case InterfaceFinals.getParkDetail:   //获取预约车位信息
+
+                body = new FormBody.Builder()
+                        .add("stopPlaceId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.getParkDetail_Requst, okhttp, body, ParkOrderDetailModel.class, InterfaceFinals.getParkDetail);
+
+                break;
+            case InterfaceFinals.advanceParkByApp:   //预约车位
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .add("routerId", parms[0])
+                        .add("addr", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.advanceParkByApp_Requst, okhttp, body, BaseModel.class, InterfaceFinals.advanceParkByApp);
 
                 break;
 

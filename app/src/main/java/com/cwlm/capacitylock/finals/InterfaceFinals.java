@@ -36,6 +36,8 @@ public class InterfaceFinals {
     public static final String appBindingUser_Requst = URL +"/CarLock/user/appBindingUser";//绑定我的车位
     public static final String updateCarLockState_Requst = URL +"/CarLock/lock/updateCarLockState";//分享我的车位
     public static final String getRechargeOrderInfo_Requst = URL +"/CarLock/appOrderInfo/getRechargeOrderInfo";//app充值下订单
+    public static final String getParkDetail_Requst = URL +"/CarLock/stopplace/app/getParkDetail"; //获取预约车位信息
+    public static final String advanceParkByApp_Requst = URL +"/CarLock/stopplace/advanceParkByApp"; //预约车位
 
     //接口常量
     public static final int getAllStopPlace = 0;  //获取所有停车场车辆信息
@@ -60,6 +62,9 @@ public class InterfaceFinals {
     public static final int appBindingUser = 18; //app绑定我的车位
     public static final int updateCarLockState = 19; //分享我的车位
     public static final int getRechargeOrderInfo = 20; //app充值下订单
+    public static final int getParkDetail = 21; //获取预约车位信息
+    public static final int advanceParkByApp = 22; //预约车位
+
 
     //协议html地址
     public static final String agreement = URL +"/CarLock/html/recharge-agreement.html"; //充值协议
