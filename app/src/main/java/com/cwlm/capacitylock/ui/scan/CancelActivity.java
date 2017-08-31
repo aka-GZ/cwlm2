@@ -70,8 +70,7 @@ public class CancelActivity extends BaseActivity {
         switch (infCode) {
             case InterfaceFinals.cancelPark:
 
-                showToast("取消成功");
-                finish_Anim();
+                showToast("取消成功,如果锁未升起请重试");
 
                 break;
         }
@@ -133,6 +132,7 @@ public class CancelActivity extends BaseActivity {
                         isCancel = true;
                         cancel_timer.setText("已超过两分钟无法取消停车");
                         cancel_btn.setVisibility(View.GONE);
+                        finish();
                     }
             }
         }

@@ -21,220 +21,221 @@
             android:clickable="true" />
 
 
-        <LinearLayout
-            android:id="@+id/main_ll_appointment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:paddingBottom="0dp"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
-            android:paddingTop="10dp"
-            android:visibility="gone">
+        <include layout="@layout/act_base_appointment"/>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/main_ll_appointment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:background="@color/white"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:paddingBottom="0dp"-->
+            <!--android:paddingLeft="0dp"-->
+            <!--android:paddingRight="0dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:visibility="gone">-->
 
-            <TextView
-                android:id="@+id/main_parkname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="红桃k停车场"
-                android:textColor="@color/text_gary"
-                android:textSize="18sp" />
+            <!--<TextView-->
+                <!--android:id="@+id/main_parkname"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:paddingLeft="20dp"-->
+                <!--android:paddingRight="20dp"-->
+                <!--android:text="红桃k停车场"-->
+                <!--android:textColor="@color/text_gary"-->
+                <!--android:textSize="18sp" />-->
 
-            <TextView
-                android:id="@+id/main_parkaddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/red_mark"
-                android:layout_marginTop="2dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:gravity="left"
-                android:text="武汉市高新二路红桃k电商云工厂"
-                android:textColor="@color/text_gary_light"
-                android:textSize="12sp" />
+            <!--<TextView-->
+                <!--android:id="@+id/main_parkaddress"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:drawableLeft="@mipmap/red_mark"-->
+                <!--android:layout_marginTop="2dp"-->
+                <!--android:paddingLeft="20dp"-->
+                <!--android:paddingRight="20dp"-->
+                <!--android:gravity="left"-->
+                <!--android:text="武汉市高新二路红桃k电商云工厂"-->
+                <!--android:textColor="@color/text_gary_light"-->
+                <!--android:textSize="12sp" />-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:orientation="vertical">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:paddingLeft="15dp"-->
+                <!--android:paddingRight="15dp"-->
+                <!--android:orientation="vertical">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/main_spareparknumber"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:gravity="center"
-                                android:text="20"
-                                android:textColor="@color/red"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:id="@+id/main_allparknumber"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:gravity="center"
-                                android:text=" /50"
-                                android:textColor="@color/text_gary_light"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="空余 / 总车位"
-                            android:textColor="@color/text_gary_light"
-                            android:textSize="12sp" />
-                        <!--android:drawableLeft="@mipmap/park"-->
-                    </LinearLayout>
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
 
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="vertical">-->
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="horizontal">-->
 
-                            <TextView
-                                android:id="@+id/main_stopprice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:gravity="center"
-                                android:text="6"
-                                android:textColor="@color/red"
-                                android:textSize="18sp" />
+                            <!--<TextView-->
+                                <!--android:id="@+id/main_spareparknumber"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginBottom="5dp"-->
+                                <!--android:gravity="center"-->
+                                <!--android:text="20"-->
+                                <!--android:textColor="@color/red"-->
+                                <!--android:textSize="18sp" />-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:gravity="center"
-                                android:text=" 元"
-                                android:textColor="@color/text_gary_light"
-                                android:textSize="12sp" />
+                            <!--<TextView-->
+                                <!--android:id="@+id/main_allparknumber"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginBottom="5dp"-->
+                                <!--android:gravity="center"-->
+                                <!--android:text=" /50"-->
+                                <!--android:textColor="@color/text_gary_light"-->
+                                <!--android:textSize="12sp" />-->
 
-                        </LinearLayout>
+                        <!--</LinearLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="1小时"
-                            android:textColor="@color/text_gary_light"
-                            android:textSize="14sp" />
-                        <!--android:drawableLeft="@mipmap/money"-->
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:gravity="center_horizontal"-->
+                            <!--android:text="空余 / 总车位"-->
+                            <!--android:textColor="@color/text_gary_light"-->
+                            <!--android:textSize="12sp" />-->
+                        <!--&lt;!&ndash;android:drawableLeft="@mipmap/park"&ndash;&gt;-->
+                    <!--</LinearLayout>-->
 
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="vertical">-->
 
-                            <TextView
-                                android:id="@+id/main_km"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:gravity="center"
-                                android:text="5"
-                                android:textColor="@color/red"
-                                android:textSize="18sp" />
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="horizontal">-->
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:gravity="center"
-                                android:text=" km"
-                                android:textColor="@color/text_gary_light"
-                                android:textSize="12sp" />
+                            <!--<TextView-->
+                                <!--android:id="@+id/main_stopprice"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginBottom="5dp"-->
+                                <!--android:gravity="center"-->
+                                <!--android:text="6"-->
+                                <!--android:textColor="@color/red"-->
+                                <!--android:textSize="18sp" />-->
 
-                        </LinearLayout>
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginBottom="5dp"-->
+                                <!--android:gravity="center"-->
+                                <!--android:text=" 元"-->
+                                <!--android:textColor="@color/text_gary_light"-->
+                                <!--android:textSize="12sp" />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="距离当前位置"
-                            android:textColor="@color/text_gary_light"
-                            android:textSize="12sp" />
+                        <!--</LinearLayout>-->
 
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:gravity="center"-->
+                            <!--android:text="1小时"-->
+                            <!--android:textColor="@color/text_gary_light"-->
+                            <!--android:textSize="14sp" />-->
+                        <!--&lt;!&ndash;android:drawableLeft="@mipmap/money"&ndash;&gt;-->
 
-                    </LinearLayout>
-                </LinearLayout>
+                    <!--</LinearLayout>-->
 
-
-                <TextView
-                    android:id="@+id/main_appointment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/red"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="预订车位"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="vertical">-->
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/line_gray" />
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:gravity="center"-->
+                            <!--android:orientation="horizontal">-->
 
-        </LinearLayout>
+                            <!--<TextView-->
+                                <!--android:id="@+id/main_km"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginBottom="5dp"-->
+                                <!--android:gravity="center"-->
+                                <!--android:text="5"-->
+                                <!--android:textColor="@color/red"-->
+                                <!--android:textSize="18sp" />-->
+
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginBottom="5dp"-->
+                                <!--android:gravity="center"-->
+                                <!--android:text=" km"-->
+                                <!--android:textColor="@color/text_gary_light"-->
+                                <!--android:textSize="12sp" />-->
+
+                        <!--</LinearLayout>-->
+
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:gravity="center_horizontal"-->
+                            <!--android:text="距离当前位置"-->
+                            <!--android:textColor="@color/text_gary_light"-->
+                            <!--android:textSize="12sp" />-->
+
+
+                    <!--</LinearLayout>-->
+                <!--</LinearLayout>-->
+
+
+                <!--<TextView-->
+                    <!--android:id="@+id/main_appointment"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:background="@color/red"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:text="预订车位"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textSize="16sp" />-->
+
+            <!--</LinearLayout>-->
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0.5dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@color/line_gray" />-->
+
+        <!--</LinearLayout>-->
 
 
 

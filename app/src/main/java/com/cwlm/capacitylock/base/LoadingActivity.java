@@ -1,13 +1,12 @@
 package com.cwlm.capacitylock.base;
 
 
+import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
@@ -18,8 +17,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.ui.MainActivity;
@@ -27,6 +24,7 @@ import com.cwlm.capacitylock.utils.PreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 /**
@@ -120,7 +118,7 @@ public class LoadingActivity extends BaseActivity {
                     //当引导页在最后一页时出发方法
                     if (position == viewPager.getAdapter().getCount() - 1) {
                         message.what = 1;
-                        mHandler.sendMessageDelayed(message, 2000);
+                        mHandler.sendMessageDelayed(message, 1000);
                     }
                 }
 
@@ -131,10 +129,13 @@ public class LoadingActivity extends BaseActivity {
             });
 
         } else {
+
             loadingba.setVisibility(View.VISIBLE);
             viewPager.setVisibility(View.GONE);
             message.what = 1;
             mHandler.sendMessageDelayed(message, 2000);
+
+
         }
     }
 

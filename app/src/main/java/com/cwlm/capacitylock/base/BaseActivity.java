@@ -100,6 +100,12 @@ public abstract class BaseActivity extends Activity {
 		user = (UserObj) PreferencesUtil.getPreferences(BaseActivity.this, "User");
 	}
 
+	@Override
+	protected void onResume() {
+		onRestartUser();
+		super.onResume();
+	}
+
 	/**
 	 * 初始化标题栏
 	 */

@@ -249,6 +249,7 @@ public class OkHttpUtils {
                         .add("userId", parms[0])
                         .add("carLockId", parms[1])
                         .add("flag", parms[2])
+                        .add("endHourTime", parms[3])
                         .build();
 
                 PostRequst(InterfaceFinals.updateCarLockState_Requst, okhttp, body, BaseModel.class, InterfaceFinals.updateCarLockState);

@@ -31,6 +31,15 @@
         <item name="android:backgroundDimAmount">0.5</item><!-- 灰度 -->
     </style>
 
+    <!--<style name="PermissionBlueStyle">-->
+        <!--<item name="PermissionTitleColor">@color/white</item>-->
+        <!--<item name="PermissionMsgColor">@color/white</item>-->
+        <!--<item name="PermissionItemTextColor">@color/white</item>-->
+        <!--<item name="PermissionButtonBackground">@drawable/shape_blue_btn_cancel</item>-->
+        <!--<item name="PermissionBackround">@drawable/shape_bg_white</item>-->
+        <!--<item name="PermissionButtonTextColor">@android:color/white</item>-->
+    <!--</style>-->
+
 
     <!-- CustomCheckBox theme -->
     <style name="CustomCheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">

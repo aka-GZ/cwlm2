@@ -1,12 +1,11 @@
 package com.cwlm.capacitylock.ui;
 
-import android.app.AlertDialog;
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,20 +52,18 @@ import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
 import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.obj.GetAllStopPlaceObj;
 import com.cwlm.capacitylock.obj.SweepNumberObj;
-import com.cwlm.capacitylock.pay.PayActivity;
 import com.cwlm.capacitylock.service.MyOrientationListener;
 import com.cwlm.capacitylock.ui.percenter.BindCarNumbleActivity;
-import com.cwlm.capacitylock.ui.percenter.MyLockActivity;
 import com.cwlm.capacitylock.ui.percenter.PersonInfoCenterActivity;
 import com.cwlm.capacitylock.ui.scan.ParkOrderDetailActivity;
 import com.cwlm.capacitylock.ui.zxing.activity.CaptureActivity;
 import com.cwlm.capacitylock.utils.DrivingRouteOverlay;
-import com.cwlm.capacitylock.utils.MyDialog;
 import com.cwlm.capacitylock.utils.MyUtils;
 import com.cwlm.capacitylock.utils.OverlayManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 /**
@@ -98,12 +95,15 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
     public MainActivity() {
         super(R.layout.activity_main);
-
     }
 
     @Override
     public void getData() {
+
         getDataFromNet(InterfaceFinals.getAllStopPlace, true);
+
+
+
     }
 
     @Override
@@ -452,6 +452,8 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                     startActivity(LoginActivity.class);
                 } else {
 
+                    Log.e("user.getCarNumber()",user.getCarNumber()+"");
+                    Log.e("user.getCarNumber()",user.getCarNumber());
                     if (user.getCarNumber() == null || "".equals(user.getCarNumber())) {
                         getDataFromNet(InterfaceFinals.getSweepNumber, user.getUserId());
                     } else {
@@ -657,10 +659,15 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
          * 地图移动到我的位置,此处可以重新发定位请求，然后定位；
          * 直接拿最近一次经纬度，如果长时间没有定位成功，可能会显示效果不好
          */
-        LatLng ll = new LatLng(start_latitude, start_longitude);
-        MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-        mBaiduMap.animateMapStatus(u);
-        Toast.makeText(this, "正在定位中...", Toast.LENGTH_SHORT).show();
+        try {
+            LatLng ll = new LatLng(start_latitude, start_longitude);
+            MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+            mBaiduMap.animateMapStatus(u);
+            Toast.makeText(this, "正在定位中...", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showToast("请重试..");
+        }
 
     }
 
@@ -778,8 +785,10 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
         //停止定位
         mLocationClient.stop();
 
-        // 关闭方向传感器
-        myOrientationListener.stop();
+        if (myOrientationListener==null) {
+            // 关闭方向传感器
+            myOrientationListener.stop();
+        }
     }
 
     //  public static List<Activity> activityList = new LinkedList<Activity>();
