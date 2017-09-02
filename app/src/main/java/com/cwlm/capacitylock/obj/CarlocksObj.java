@@ -38,6 +38,16 @@ public class CarlocksObj {
     private String parkNumber;
     private int isPri;
     private String floor;
+    private String endHourTime;  //分享截止时间
+
+
+    public String getEndHourTime() {
+        return endHourTime;
+    }
+
+    public void setEndHourTime(String endHourTime) {
+        this.endHourTime = endHourTime;
+    }
 
     public String getCarLockId() {
         return carLockId;

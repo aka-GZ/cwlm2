@@ -30,6 +30,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.Text;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.route.BikingRouteResult;
@@ -49,8 +50,10 @@ import com.cwlm.capacitylock.base.MyApplication;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
+import com.cwlm.capacitylock.model.PredetermineModel;
 import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.obj.GetAllStopPlaceObj;
+import com.cwlm.capacitylock.obj.PredetermineObj;
 import com.cwlm.capacitylock.obj.SweepNumberObj;
 import com.cwlm.capacitylock.service.MyOrientationListener;
 import com.cwlm.capacitylock.ui.percenter.BindCarNumbleActivity;
@@ -79,6 +82,9 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
     TextView main_appointment, main_parkname, main_parkaddress, main_spareparknumber, main_allparknumber, main_stopprice, main_km;
     RelativeLayout main_refresh, position, main_road_condition, main_service;
+    //预约后的布局
+    LinearLayout main_ll_appointment_yy,main_ll_navigation_yy;
+    TextView main_parkname_yy,main_parkaddress_yy,main_parknumber_yy,main_time_yy,main_cancel_appointment_yy,main_navigation_locklight_yy;
 
     private LatLng mylocation;//中心点坐标
 
@@ -99,11 +105,7 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
     @Override
     public void getData() {
-
         getDataFromNet(InterfaceFinals.getAllStopPlace, true);
-
-
-
     }
 
     @Override
@@ -195,9 +197,32 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 }
 
                 break;
+            case InterfaceFinals.getPredetermine:
+
+                main_ll_appointment_yy.setVisibility(View.VISIBLE);
+                PredetermineObj pObj = ((PredetermineModel) resModel).getObject();
+                predetermineObj = pObj;
+
+                main_parkname_yy.setText(pObj.getStopPlaceName());
+                main_parkaddress_yy.setText(pObj.getParkAddress());
+                main_parknumber_yy.setText("车位编号：" + pObj.getParkNumber());
+                main_time_yy.setText(pObj.getEndHourTime());
+
+            break;
+            case InterfaceFinals.cancelPredetermine:
+
+                main_ll_appointment_yy.setVisibility(View.GONE);
+                showToast("取消成功");
+
+                break;
+            case InterfaceFinals.lockLight:
+                main_navigation_locklight_yy.setText("正在闪烁中..");
+                showToast("车位接收成功，请寻找闪灯车位");
+
+                break;
         }
     }
-
+    PredetermineObj predetermineObj = null; //查询预约信息后赋值，给导航与取消预约使用
 
     @Override
     public void initView() {
@@ -208,6 +233,18 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
         iv_right.setVisibility(View.INVISIBLE);
         iv_right.setImageResource(R.mipmap.search);
         iv_right.setOnClickListener(this);
+
+        //预约后布局
+        main_ll_appointment_yy = (LinearLayout) findViewById(R.id.main_ll_appointment_yy);
+        main_ll_navigation_yy = (LinearLayout) findViewById(R.id.main_ll_navigation_yy);
+        main_parkname_yy = (TextView) findViewById(R.id.main_parkname_yy);
+        main_parkaddress_yy = (TextView) findViewById(R.id.main_parkaddress_yy);
+        main_parknumber_yy = (TextView) findViewById(R.id.main_parknumber_yy);
+        main_time_yy = (TextView) findViewById(R.id.main_time_yy);
+        main_navigation_locklight_yy = (TextView) findViewById(R.id.main_navigation_locklight_yy);
+        main_cancel_appointment_yy = (TextView) findViewById(R.id.main_cancel_appointment_yy);
+        main_ll_navigation_yy.setOnClickListener(this);
+        main_cancel_appointment_yy.setOnClickListener(this);
 
         main_ll_appointment = (LinearLayout) findViewById(R.id.main_ll_appointment);
         main_appointment = (TextView) findViewById(R.id.main_appointment);
@@ -463,6 +500,54 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
                 break;
 
+            case R.id.main_ll_navigation_yy:  //提醒车位可用（室内导航）
+
+                if (predetermineObj!=null){
+
+                getDataFromNet(InterfaceFinals.lockLight, user.getUserId(), predetermineObj.getRouterId()+"", predetermineObj.getAddr()+"");
+
+                }else{
+                    showToast("如果灯未闪烁，请重试");
+                }
+
+                break;
+
+            case R.id.main_cancel_appointment_yy:  //取消预订
+
+                if (predetermineObj!=null){
+                    final Dialog dialog = new Dialog(MainActivity.this, R.style.mydialog);
+                    dialog.setContentView(R.layout.dialog);
+                    TextView dialog_skip = (TextView) dialog.findViewById(R.id.dialog_skip);
+                    TextView dialog_go = (TextView) dialog.findViewById(R.id.dialog_go);
+                    final TextView dialog_text = (TextView) dialog.findViewById(R.id.dialog_text);
+                    dialog_skip.setText("确定");
+                    dialog_go.setText("取消");
+                    dialog_text.setText("              是否确定取消预约？              ");
+                    dialog.show();
+
+                    dialog_skip.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (dialog.isShowing()) {
+                                dialog.dismiss();
+                            }
+                            getDataFromNet(InterfaceFinals.cancelPredetermine, predetermineObj.getOrderInfoId());
+                        }
+                    });
+                    dialog_go.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (dialog.isShowing()) {
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+                }else{
+                    showToast("取消失败，请退出重试");
+                }
+
+
+                break;
         }
 
     }
@@ -755,6 +840,10 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
 
         //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mMapView.onResume();
+
+        if (user.getUserId() != null && "".equals(user.getUserId())){
+            getDataFromNet(InterfaceFinals.getPredetermine, user.getUserId());
+        }
     }
 
     @Override

@@ -76,7 +76,8 @@ public class MyLockAdapter extends BaseAdapter {
         }
         //State 0分享  1未分享
         if ("0".equals(myLocks.get(position).getState())){
-            viewHolder.item_mylock_tv_share.setText(R.string.close_share);
+//            viewHolder.item_mylock_tv_share.setText(R.string.close_share);
+            viewHolder.item_mylock_tv_share.setText("截止时间：" + myLocks.get(position).getEndHourTime());
             viewHolder.item_mylock_tv_share.setTextColor(Color.parseColor("#81de65"));
             viewHolder.item_mylock_tv_share.setOnClickListener(new View.OnClickListener() {
                 @Override

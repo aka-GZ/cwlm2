@@ -15,7 +15,16 @@ public class MyLocksObj {
     private String carNumber; //鄂A12345"//使用者车牌号
     private String parkNumber;//  "C024"车位锁号
     private String useTime; //2017-07-07 16:58:55"//使用时间
+    private String endHourTime;  //分享截止时间
 
+
+    public String getEndHourTime() {
+        return endHourTime;
+    }
+
+    public void setEndHourTime(String endHourTime) {
+        this.endHourTime = endHourTime;
+    }
 
     public String getCarLockId() {
         return carLockId;

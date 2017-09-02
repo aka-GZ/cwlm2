@@ -11,6 +11,7 @@ import com.cwlm.capacitylock.model.MyBalanceModel;
 import com.cwlm.capacitylock.model.MyLocksModel;
 import com.cwlm.capacitylock.model.OrderInfoModel;
 import com.cwlm.capacitylock.model.ParkOrderDetailModel;
+import com.cwlm.capacitylock.model.PredetermineModel;
 import com.cwlm.capacitylock.model.RechargeMonthCardModel;
 import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.model.UserModel;
@@ -287,11 +288,34 @@ public class OkHttpUtils {
 
                 body = new FormBody.Builder()
                         .add("userId", parms[0])
-                        .add("routerId", parms[0])
-                        .add("addr", parms[0])
+                        .add("routerId", parms[1])
+                        .add("addr", parms[2])
+                        .add("stopPlaceId", parms[3])
+                        .add("money", parms[4])
+                        .add("payType", parms[5])
                         .build();
 
                 PostRequst(InterfaceFinals.advanceParkByApp_Requst, okhttp, body, BaseModel.class, InterfaceFinals.advanceParkByApp);
+
+                break;
+            case InterfaceFinals.getPredetermine:   //查询用户已预约的车位信息
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.getPredetermine_Requst, okhttp, body, PredetermineModel.class, InterfaceFinals.getPredetermine);
+
+                break;
+            case InterfaceFinals.lockLight:   //主页导航车位（闪灯）
+
+                body = new FormBody.Builder()
+                        .add("userId", parms[0])
+                        .add("routerId", parms[1])
+                        .add("addr", parms[2])
+                        .build();
+
+                PostRequst(InterfaceFinals.lockLight_Requst, okhttp, body, BaseModel.class, InterfaceFinals.lockLight);
 
                 break;
 
@@ -380,8 +404,7 @@ public class OkHttpUtils {
                             e.printStackTrace();
 //                            ((BaseActivity) ctx).showToast("数据解析错误");
                             ((BaseActivity) ctx).showToast("服务器数据升级,请稍后..");
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                             ((BaseActivity) ctx).showToast("暂无更新数据");
                         }

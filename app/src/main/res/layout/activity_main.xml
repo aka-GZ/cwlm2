@@ -22,6 +22,7 @@
 
 
         <include layout="@layout/act_base_appointment"/>
+        <include layout="@layout/act_base_have_appointment"/>
         <!--<LinearLayout-->
             <!--android:id="@+id/main_ll_appointment"-->
             <!--android:layout_width="match_parent"-->

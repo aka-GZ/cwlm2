@@ -34,7 +34,7 @@ public class ParkOrderDetailActivity extends BaseActivity implements View.OnClic
     ListView park_list;
 
     String stopPlaceId;
-    List<Integer> routerIds, addrs;
+    int routerId, addr;
 
     public ParkOrderDetailActivity() {
         super(R.layout.act_park_order_detail);
@@ -43,12 +43,13 @@ public class ParkOrderDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void getData() {
-        String StopPlaceId = (String) getIntent().getSerializableExtra("data");
-        getDataFromNet(InterfaceFinals.getParkDetail, StopPlaceId);
+        stopPlaceId = (String) getIntent().getSerializableExtra("data");
+        getDataFromNet(InterfaceFinals.getParkDetail, stopPlaceId);
 
     }
 
     int radio = -1;
+
     @Override
     public void initView() {
         tv_title.setText("车位预定");
@@ -65,9 +66,9 @@ public class ParkOrderDetailActivity extends BaseActivity implements View.OnClic
         radio_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                if (checkedId == radio_one.getId()){
+                if (checkedId == radio_one.getId()) {
                     radio = 1;
-                }else if (checkedId == radio_two.getId()){
+                } else if (checkedId == radio_two.getId()) {
                     radio = 2;
                 }
             }
@@ -80,15 +81,18 @@ public class ParkOrderDetailActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.park_btn:
-                if (Position == -1){
+                if (Position == -1) {
                     showToast("请选择一个车位");
                     break;
                 }
-                if (radio == -1){
+                if (radio == -1) {
                     showToast("请选择预定时长");
                     break;
                 }
                 showToast("预定");
+
+                //1、支付宝支付  2、微信支付  3、余额支付
+                getDataFromNet(InterfaceFinals.advanceParkByApp, user.getUserId(), routerId + "", addr + "", stopPlaceId, radio + "", "3");
 
                 break;
 
@@ -98,47 +102,68 @@ public class ParkOrderDetailActivity extends BaseActivity implements View.OnClic
 
     int Position = -1;
     View OldView = null;
-    List<CarlocksObj> list  = new ArrayList<CarlocksObj>();
+    List<CarlocksObj> list;
+    CarLockAdapter adapter;
+
     @Override
     public void onSuccess(BaseModel resModel) {
         int infcode = resModel.getInfCode();
-        switch (infcode){
+        switch (infcode) {
             case InterfaceFinals.getParkDetail:
-                ParkOrderDetailModel model = (ParkOrderDetailModel)resModel;
+                ParkOrderDetailModel model = (ParkOrderDetailModel) resModel;
                 StopPlaceObj stopPlaceObj = model.getMap().getStopPlace();
-                list.clear();
-                list.addAll(model.getMap().getCarlocks());
+                list = model.getMap().getCarlocks();
 
                 park_name.setText(stopPlaceObj.getName());
-                CarLockAdapter adapter = new CarLockAdapter(ParkOrderDetailActivity.this, list);
+                adapter = new CarLockAdapter(ParkOrderDetailActivity.this, list);
                 park_list.setAdapter(adapter);
                 park_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        if (OldView == null){
-                            OldView = view;
-                            ChangeNewView(view , true);
-                        }else{
-                            ChangeNewView(OldView , false);
-                            ChangeNewView(view , true);
-                            OldView = view;
+//                        if (OldView == null) {
+//                            OldView = view;
+//                            ChangeNewView(view, true);
+//                        } else {
+//                            ChangeNewView(OldView, false);
+//                            ChangeNewView(view, true);
+//                            OldView = view;
+//                        }
+
+                        for (int i = 1; i <= list.size(); i++) {
+
+                            CarLockAdapter.isSelected.put(i,false);
                         }
-                        Position = position;
+
+                        CarLockAdapter.isSelected.put(position,true);
+
+                        if (position > 0){
+                            Position = position-1;
+                            routerId = list.get(Position).getRouterId();
+                            addr = list.get(Position).getAddr();
+                            adapter.notifyDataSetChanged();
+                        }
                     }
                 });
+
+                break;
+
+            case InterfaceFinals.advanceParkByApp:
+
+                showToast("预约成功！");
+                finish();
 
                 break;
         }
     }
 
-    private void ChangeNewView(View view , Boolean isNew){
+    private void ChangeNewView(View view, Boolean isNew) {
 
-        CheckBox item_park_selected= (CheckBox)view.findViewById(R.id.item_park_selected);
+        CheckBox item_park_selected = (CheckBox) view.findViewById(R.id.item_park_selected);
 
         if (isNew) {
             item_park_selected.setChecked(true);
-        }else{
+        } else {
             item_park_selected.setChecked(false);
         }
 

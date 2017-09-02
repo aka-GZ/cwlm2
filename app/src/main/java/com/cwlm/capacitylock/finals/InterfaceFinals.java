@@ -32,12 +32,14 @@ public class InterfaceFinals {
     public static final String appGetMyBalance_Requst = URL +"/CarLock/wallet/appGetMyBalance";//app获取余额
     public static final String saveAdvice_Requst = URL +"/CarLock/user/saveAdvice"; //投诉意见
 //    public static final String getRentCarLockInfo_Requst = URL +"/CarLock/proprietor/getRentCarLockInfoForUserId";//app查询我的车位（旧）
-    public static final String getCarLockUseInformation_Requst = URL +"/CarLock/lock/getCarLockUseInformation";//app查询我的车位（新）
+    public static final String getCarLockUseInformation_Requst = URL +"/CarLock/lock/getCarLockUseInformation_1";//app查询我的车位（新）
     public static final String appBindingUser_Requst = URL +"/CarLock/user/appBindingUser";//绑定我的车位
     public static final String updateCarLockState_Requst = URL +"/CarLock/lock/updateCarLockState";//分享我的车位
     public static final String getRechargeOrderInfo_Requst = URL +"/CarLock/appOrderInfo/getRechargeOrderInfo";//app充值下订单
     public static final String getParkDetail_Requst = URL +"/CarLock/stopplace/app/getParkDetail"; //获取预约车位信息
-    public static final String advanceParkByApp_Requst = URL +"/CarLock/stopplace/advanceParkByApp"; //预约车位
+    public static final String advanceParkByApp_Requst = URL +"/CarLock/stopplace/advanceParkByApp_1"; //预约车位
+    public static final String getPredetermine_Requst = URL +"/CarLock/stopplace/getPredetermine";  //查询用户已预约的车位信息
+    public static final String lockLight_Requst = URL + "/CarLock/newhard/lockLight";  //主页导航车位（闪灯）
 
     //接口常量
     public static final int getAllStopPlace = 0;  //获取所有停车场车辆信息
@@ -57,13 +59,14 @@ public class InterfaceFinals {
     public static final int lockApply = 14;  //申请车位锁
     public static final int appGetMyBalance = 15;  //app获取余额
     public static final int saveAdvice = 16;  //投诉意见
-//    public static final int getCarLockUseInformation = 17; //app查询我的车位（旧）
     public static final int getCarLockUseInformation = 17; //app查询我的车位（新）
     public static final int appBindingUser = 18; //app绑定我的车位
     public static final int updateCarLockState = 19; //分享我的车位
     public static final int getRechargeOrderInfo = 20; //app充值下订单
     public static final int getParkDetail = 21; //获取预约车位信息
     public static final int advanceParkByApp = 22; //预约车位
+    public static final int getPredetermine = 23; //查询用户已预约的车位信息
+    public static final int lockLight = 24; //主页导航车位（闪灯）
 
 
     //协议html地址
