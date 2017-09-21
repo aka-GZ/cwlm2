@@ -64,7 +64,7 @@ public class VipStateAdapter extends BaseAdapter {
 //        viewHolder.recharge_item_ll.setBackgroundResource(R.drawable.mywallet_recharge_pay);
 //        viewHolder.recharge_item_tv_1.setTextColor(context.getResources().getColor(R.color.background));
 //        viewHolder.recharge_item_tv_2.setTextColor(context.getResources().getColor(R.color.background));
-        viewHolder.vipstate_item_tv_1.setText("月卡ID:  " + list.get(position).getMonthCardId());
+        viewHolder.vipstate_item_tv_1.setText("ID:  " + list.get(position).getMonthCardId());
         viewHolder.vipstate_item_tv_2.setText("停车场:  " + list.get(position).getStopPlaceName());
         viewHolder.vipstate_item_tv_3.setText("开始时间:  " + list.get(position).getStartTime());
         viewHolder.vipstate_item_tv_4.setText("到期时间:  " + list.get(position).getDeadLine());

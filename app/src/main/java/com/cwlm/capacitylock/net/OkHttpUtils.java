@@ -7,6 +7,7 @@ import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
+import com.cwlm.capacitylock.model.GetStopPlaceInfoModel;
 import com.cwlm.capacitylock.model.MyBalanceModel;
 import com.cwlm.capacitylock.model.MyLocksModel;
 import com.cwlm.capacitylock.model.OrderInfoModel;
@@ -316,6 +317,15 @@ public class OkHttpUtils {
                         .build();
 
                 PostRequst(InterfaceFinals.lockLight_Requst, okhttp, body, BaseModel.class, InterfaceFinals.lockLight);
+
+                break;
+            case InterfaceFinals.getStopPlaceInfo:   //获取每个停车场基本信息
+
+                body = new FormBody.Builder()
+                        .add("stopPlaceId", parms[0])
+                        .build();
+
+                PostRequst(InterfaceFinals.getStopPlaceInfo_Requst, okhttp, body, GetStopPlaceInfoModel.class, InterfaceFinals.getStopPlaceInfo);
 
                 break;
 

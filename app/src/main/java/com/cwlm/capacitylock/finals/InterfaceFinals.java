@@ -11,9 +11,10 @@ public class InterfaceFinals {
 
     public static final String URL = "http://zylm.net:80"; //正式服务器
 //    public static final String URL = "http://wooowoo.cn";  //测试服务器
+//    public static final String URL = "http://192.168.1.3:8080";  //测试服务器
 
     //请求URL
-    public static final String getAllStopPlace_Requst = URL + "/CarLock/allweixin/getAllStopPlace"; //获取所有停车场车辆信息
+    public static final String getAllStopPlace_Requst = URL + "/CarLock/allweixin/getAllStopPlace"; //获取所有停车场信息
     public static final String sendSMSNew_Requst = URL + "/CarLock/user/sendSMSNew"; //获取验证码登录
 //    public static final String login_Requst = URL + "/CarLock/user/smslogin"; //登录 - 旧
     public static final String login_Requst = URL + "/CarLock/user/newsmsLogin"; //登录
@@ -26,7 +27,7 @@ public class InterfaceFinals {
     public static final String getMonthcardOrderInfo_Requst = URL +"/CarLock/appOrderInfo/getMonthcardOrderInfo";//app购买月卡下订单
     public static final String getAllUserMonthCard_Requst = URL +"/CarLock/stopplace/getAllUserMonthCard";//获取月卡充值记录
     public static final String getSweepNumber_Requst = URL +"/CarLock/appUserInfo/getSweepNumber"; //主页获取押金和使用次数
-    public static final String scanCode_Requst = URL +"/CarLock/stopplace/scanCode";//app扫码停车_新
+    public static final String scanCode_Requst = URL +"/CarLock/stopplace/scanCode_1";//app扫码停车_新
     public static final String cancelPark_Requst = URL +"/CarLock/stopplace/cancelPark";//app取消停车
     public static final String lockApply_Requst = URL +"/CarLock/lock/lockApply";//申请车位锁
     public static final String appGetMyBalance_Requst = URL +"/CarLock/wallet/appGetMyBalance";//app获取余额
@@ -38,8 +39,9 @@ public class InterfaceFinals {
     public static final String getRechargeOrderInfo_Requst = URL +"/CarLock/appOrderInfo/getRechargeOrderInfo";//app充值下订单
     public static final String getParkDetail_Requst = URL +"/CarLock/stopplace/app/getParkDetail"; //获取预约车位信息
     public static final String advanceParkByApp_Requst = URL +"/CarLock/stopplace/advanceParkByApp_1"; //预约车位
-    public static final String getPredetermine_Requst = URL +"/CarLock/stopplace/getPredetermine";  //查询用户已预约的车位信息
+    public static final String getPredetermine_Requst = URL +"/CarLock/stopplace/getPredetermine_1";  //查询用户已预约的车位信息
     public static final String lockLight_Requst = URL + "/CarLock/newhard/lockLight";  //主页导航车位（闪灯）
+    public static final String getStopPlaceInfo_Requst = URL + "/CarLock/stopplace/getStopPlaceInfo"; //获取每个停车场基本信息
 
     //接口常量
     public static final int getAllStopPlace = 0;  //获取所有停车场车辆信息
@@ -67,6 +69,7 @@ public class InterfaceFinals {
     public static final int advanceParkByApp = 22; //预约车位
     public static final int getPredetermine = 23; //查询用户已预约的车位信息
     public static final int lockLight = 24; //主页导航车位（闪灯）
+    public static final int getStopPlaceInfo = 25; //获取每个停车场基本信息
 
 
     //协议html地址

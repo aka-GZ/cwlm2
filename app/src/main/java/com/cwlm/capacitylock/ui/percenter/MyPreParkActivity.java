@@ -1,5 +1,6 @@
 package com.cwlm.capacitylock.ui.percenter;
 
+import android.app.Dialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -9,6 +10,9 @@ import com.cwlm.capacitylock.R;
 import com.cwlm.capacitylock.base.BaseActivity;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
+import com.cwlm.capacitylock.model.PredetermineModel;
+import com.cwlm.capacitylock.obj.PredetermineObj;
+import com.cwlm.capacitylock.ui.MainActivity;
 
 /**
  * Created by akawok on 2017-08-04.
@@ -16,9 +20,10 @@ import com.cwlm.capacitylock.model.BaseModel;
  */
 public class MyPreParkActivity extends BaseActivity implements View.OnClickListener {
 
-    LinearLayout my_prepark;
-    TextView no_prepark, pre_park_name, start_time, orderinfopoid;
-    Button my_prepark_parknumber, cancel_prepark, start_navigation;
+    TextView no_prepark;
+    //预约后的布局
+    LinearLayout main_ll_appointment_yy, main_ll_navigation_yy;
+    TextView main_parkname_yy, main_parkaddress_yy, main_parknumber_yy, main_time_yy, main_cancel_appointment_yy, main_navigation_locklight_yy;
 
     public MyPreParkActivity() {
         super(R.layout.act_myprepark);
@@ -27,71 +32,109 @@ public class MyPreParkActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void getData() {
-//        getDataFromNet(InterfaceFinals.predetermine, user.getUserId());
+        if (user.getUserId() != null && !"".equals(user.getUserId())) {
+            getDataFromNet(InterfaceFinals.getPredetermine, user.getUserId());
+        }
     }
 
     public void initView() {
         tv_title.setText("我的预定");
         iv_right.setVisibility(View.INVISIBLE);
 
-        no_prepark = (TextView) findViewById(R.id.no_prepark);
-        pre_park_name = (TextView) findViewById(R.id.pre_park_name);
-        start_time = (TextView) findViewById(R.id.start_time);
-        my_prepark_parknumber = (Button) findViewById(R.id.my_prepark_parknumber);
-        cancel_prepark = (Button) findViewById(R.id.cancel_prepark);
-        cancel_prepark.setOnClickListener(this);
-        orderinfopoid = (TextView) findViewById(R.id.orderinfopoid);
-        my_prepark = (LinearLayout) findViewById(R.id.my_prepark);
-        start_navigation = (Button) findViewById(R.id.start_navigation);
-        start_navigation.setOnClickListener(this);
 
-        my_prepark.setVisibility(View.GONE);
+        //预约后布局
+        main_ll_appointment_yy = (LinearLayout) findViewById(R.id.main_ll_appointment_yy);
+        main_ll_navigation_yy = (LinearLayout) findViewById(R.id.main_ll_navigation_yy);
+        main_parkname_yy = (TextView) findViewById(R.id.main_parkname_yy);
+        main_parkaddress_yy = (TextView) findViewById(R.id.main_parkaddress_yy);
+        main_parknumber_yy = (TextView) findViewById(R.id.main_parknumber_yy);
+        main_time_yy = (TextView) findViewById(R.id.main_time_yy);
+        main_navigation_locklight_yy = (TextView) findViewById(R.id.main_navigation_locklight_yy);
+        main_cancel_appointment_yy = (TextView) findViewById(R.id.main_cancel_appointment_yy);
+        main_ll_navigation_yy.setOnClickListener(this);
+        main_cancel_appointment_yy.setOnClickListener(this);
+
+
+        no_prepark = (TextView) findViewById(R.id.no_prepark);
     }
 
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.cancel_prepark:
-                //取消预订
-                getDataFromNet(InterfaceFinals.cancelPredetermine, orderinfopoid.getText().toString());
+            case R.id.main_cancel_appointment_yy: //取消预订
+                if (predetermineObj!=null){
+                    final Dialog dialog = new Dialog(MyPreParkActivity.this, R.style.mydialog);
+                    dialog.setContentView(R.layout.dialog);
+                    TextView dialog_skip = (TextView) dialog.findViewById(R.id.dialog_skip);
+                    TextView dialog_go = (TextView) dialog.findViewById(R.id.dialog_go);
+                    final TextView dialog_text = (TextView) dialog.findViewById(R.id.dialog_text);
+                    dialog_skip.setText("确定");
+                    dialog_go.setText("取消");
+                    dialog_text.setText("              是否确定取消预约？              ");
+                    dialog.show();
+
+                    dialog_skip.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (dialog.isShowing()) {
+                                dialog.dismiss();
+                            }
+                            getDataFromNet(InterfaceFinals.cancelPredetermine, predetermineObj.getOrderInfoId());
+                        }
+                    });
+                    dialog_go.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (dialog.isShowing()) {
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+                }else{
+                    showToast("取消失败，请退出重试");
+                }
+
                 break;
-            case R.id.start_navigation:
-                //导航
+            case R.id.main_ll_navigation_yy:  //车位闪灯（室内导航）
+                if (predetermineObj!=null){
+
+                    getDataFromNet(InterfaceFinals.lockLight, user.getUserId(), predetermineObj.getRouterId()+"", predetermineObj.getAddr()+"");
+
+                }else{
+                    showToast("如果灯未闪烁，请重试");
+                }
                 break;
             default:
                 break;
         }
     }
 
+    PredetermineObj predetermineObj = null; //查询预约信息后赋值，给导航与取消预约使用
     @Override
     public void onSuccess(BaseModel resModel) {
         int infCode = resModel.getInfCode();
         switch (infCode) {
-            case InterfaceFinals.predetermine:
+            case InterfaceFinals.getPredetermine:
                 no_prepark.setVisibility(View.GONE);
-//                ResultData resultData=JSON.parseObject(msg.obj.toString(),ResultData.class);
-//                if ("1".equals(resultData.getStatusCode())){
-//                    no_prepark.setVisibility(View.GONE);
-//                    OrderInfoPo orderInfoPo=JSON.parseObject(resultData.getObject().toString(),OrderInfoPo.class);
-//                    orderinfopoid.setText(orderInfoPo.getOrderInfoId());
-//                    pre_park_name.setText(orderInfoPo.getStopPlaceName());
-//                    start_time.setText("请您前往停车，保留30分钟，"+orderInfoPo.getCreateTime()+"后开始计费");
-//                    my_prepark_parknumber.setText("您已预约的车位:"+orderInfoPo.getFloor()+"层"+orderInfoPo.getParkNumber()+"号");
-//                    my_prepark.setVisibility(View.VISIBLE);
-//                    end_latitude=Double.parseDouble(orderInfoPo.getLatitude());
-//                    end_longitude=Double.parseDouble(orderInfoPo.getLongitude());
-//                }else if("2".equals(resultData.getStatusCode())){
-//                    my_prepark.setVisibility(View.GONE);
-//                }
-////                ToastUtil.show(this, JSON.toJSONString(msg.obj));
+                main_ll_appointment_yy.setVisibility(View.VISIBLE);
+                PredetermineObj pObj = ((PredetermineModel) resModel).getObject();
+                predetermineObj = pObj;
+
+                main_parkname_yy.setText(pObj.getStopPlaceName());
+                main_parkaddress_yy.setText(pObj.getParkAddress());
+                main_parknumber_yy.setText("车位编号：" + pObj.getParkNumber());
+                main_time_yy.setText(pObj.getReservationDeadline());
                 break;
             case InterfaceFinals.cancelPredetermine:
-//                ResultData resultData1 = JSON.parseObject(msg.obj.toString(), ResultData.class);
-//                if ("1".equals(resultData1.getStatusCode())) {
-//                    my_prepark.setVisibility(View.GONE);
-//                    no_prepark.setVisibility(View.VISIBLE);
-//                }
-//                ToastUtil.show(this, resultData1.getMess());
+                 main_ll_appointment_yy.setVisibility(View.GONE);
+                no_prepark.setVisibility(View.VISIBLE);
+                showToast("取消成功");
+
+                break;
+            case InterfaceFinals.lockLight:
+                main_navigation_locklight_yy.setText("正在闪烁中..");
+                showToast("车位接收成功，请寻找闪灯车位");
+
                 break;
             default:
                 break;

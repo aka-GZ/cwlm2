@@ -89,7 +89,6 @@ public class ParkOrderDetailActivity extends BaseActivity implements View.OnClic
                     showToast("请选择预定时长");
                     break;
                 }
-                showToast("预定");
 
                 //1、支付宝支付  2、微信支付  3、余额支付
                 getDataFromNet(InterfaceFinals.advanceParkByApp, user.getUserId(), routerId + "", addr + "", stopPlaceId, radio + "", "3");

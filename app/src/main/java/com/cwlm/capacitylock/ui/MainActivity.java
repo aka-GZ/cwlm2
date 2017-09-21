@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,9 +53,11 @@ import com.cwlm.capacitylock.base.MyApplication;
 import com.cwlm.capacitylock.finals.InterfaceFinals;
 import com.cwlm.capacitylock.model.BaseModel;
 import com.cwlm.capacitylock.model.GetAllStopPlaceModel;
+import com.cwlm.capacitylock.model.GetStopPlaceInfoModel;
 import com.cwlm.capacitylock.model.PredetermineModel;
 import com.cwlm.capacitylock.model.SweepNumberModel;
 import com.cwlm.capacitylock.obj.GetAllStopPlaceObj;
+import com.cwlm.capacitylock.obj.GetStopPlaceInfoObj;
 import com.cwlm.capacitylock.obj.PredetermineObj;
 import com.cwlm.capacitylock.obj.SweepNumberObj;
 import com.cwlm.capacitylock.service.MyOrientationListener;
@@ -108,6 +113,17 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
         getDataFromNet(InterfaceFinals.getAllStopPlace, true);
     }
 
+
+    /**
+     * 失败返回 Msg
+     */
+    public void onFail(BaseModel resModel){
+        if (resModel != null) {
+            if (!"没有预定车位".equals(resModel.getMess())){
+                showToast(resModel.getMess());
+            }
+        }
+    };
     @Override
     public void onSuccess(BaseModel resModel) {
         int infCode = resModel.getInfCode();
@@ -128,20 +144,23 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                             //获得marker中的数据
                             int id = marker.getExtraInfo().getInt("id");
 
-                            //设置两个点,绘制路线
-                            BNRoutePlanNode sNode = new BNRoutePlanNode(start_longitude, start_latitude, "", null, BNRoutePlanNode.CoordinateType.BD09LL);      //新建两个坐标点
-                            BNRoutePlanNode eNode = new BNRoutePlanNode(Double.parseDouble(list.get(id).getLongitude()), Double.parseDouble(list.get(id).getLatitude()), "", null, BNRoutePlanNode.CoordinateType.BD09LL);
-                            searchRoute(sNode, eNode);
-                            main_ll_appointment.setVisibility(View.VISIBLE);
+                            getDataFromNet(InterfaceFinals.getStopPlaceInfo,list.get(id).getStopPlaceId());
 
-                            GetAllStopPlaceObj obj = list.get(id);
-                            main_parkname.setText(obj.getName());
-                            main_parkaddress.setText(obj.getParkAddress());
-                            main_spareparknumber.setText(obj.getSpareParkNumber());
-                            main_allparknumber.setText(" / " + obj.getAllParkNumber());
-                            main_stopprice.setText(obj.getStopPrice());
-
-                            StopPlaceId = obj.getStopPlaceId();
+//
+//                            //设置两个点,绘制路线
+//                            BNRoutePlanNode sNode = new BNRoutePlanNode(start_longitude, start_latitude, "", null, BNRoutePlanNode.CoordinateType.BD09LL);      //新建两个坐标点
+//                            BNRoutePlanNode eNode = new BNRoutePlanNode(Double.parseDouble(list.get(id).getLongitude()), Double.parseDouble(list.get(id).getLatitude()), "", null, BNRoutePlanNode.CoordinateType.BD09LL);
+//                            searchRoute(sNode, eNode);
+//                            main_ll_appointment.setVisibility(View.VISIBLE);
+//
+//                            GetAllStopPlaceObj obj = list.get(id);
+//                            main_parkname.setText(obj.getName());
+//                            main_parkaddress.setText(obj.getParkAddress());
+//                            main_spareparknumber.setText(obj.getSpareParkNumber());
+//                            main_allparknumber.setText(" / " + obj.getAllParkNumber());
+//                            main_stopprice.setText(obj.getStopPrice());
+//
+//                            StopPlaceId = obj.getStopPlaceId();
 
 
 
@@ -152,6 +171,25 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                         return true;
                     }
                 });
+                break;
+            case InterfaceFinals.getStopPlaceInfo:
+                GetStopPlaceInfoObj infoObj = ((GetStopPlaceInfoModel) resModel).getObject();
+
+                //设置两个点,绘制路线
+                BNRoutePlanNode sNode = new BNRoutePlanNode(start_longitude, start_latitude, "", null, BNRoutePlanNode.CoordinateType.BD09LL);      //新建两个坐标点
+                BNRoutePlanNode eNode = new BNRoutePlanNode(Double.parseDouble(infoObj.getLongitude()), Double.parseDouble(infoObj.getLatitude()), "", null, BNRoutePlanNode.CoordinateType.BD09LL);
+                searchRoute(sNode, eNode);
+                main_ll_appointment.setVisibility(View.VISIBLE);
+
+                main_parkname.setText(infoObj.getName());
+                main_parkaddress.setText(infoObj.getParkAddress());
+                main_spareparknumber.setText(infoObj.getSpareParkNumber());
+                main_allparknumber.setText(" / " + infoObj.getAllParkNumber());
+                main_stopprice.setText(infoObj.getStopPrice());
+
+                StopPlaceId = infoObj.getStopPlaceId();
+
+
                 break;
             case InterfaceFinals.getSweepNumber:
                 SweepNumberObj obj = ((SweepNumberModel) resModel).getMap();
@@ -200,13 +238,14 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
             case InterfaceFinals.getPredetermine:
 
                 main_ll_appointment_yy.setVisibility(View.VISIBLE);
+                main_ll_appointment.setVisibility(View.GONE);
                 PredetermineObj pObj = ((PredetermineModel) resModel).getObject();
                 predetermineObj = pObj;
 
                 main_parkname_yy.setText(pObj.getStopPlaceName());
                 main_parkaddress_yy.setText(pObj.getParkAddress());
                 main_parknumber_yy.setText("车位编号：" + pObj.getParkNumber());
-                main_time_yy.setText(pObj.getEndHourTime());
+                main_time_yy.setText(pObj.getReservationDeadline());
 
             break;
             case InterfaceFinals.cancelPredetermine:
@@ -494,13 +533,14 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                     if (user.getCarNumber() == null || "".equals(user.getCarNumber())) {
                         getDataFromNet(InterfaceFinals.getSweepNumber, user.getUserId());
                     } else {
-                        startActivity(CaptureActivity.class);
+                        showDialog();
+//                        startActivity(CaptureActivity.class);
                     }
                 }
 
                 break;
 
-            case R.id.main_ll_navigation_yy:  //提醒车位可用（室内导航）
+            case R.id.main_ll_navigation_yy:  //车位闪灯（室内导航）
 
                 if (predetermineObj!=null){
 
@@ -550,6 +590,27 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
                 break;
         }
 
+    }
+
+    String array[] = new String[]{"1小时内","1 - 2小时","2 - 3小时","3 - 4小时","4 - 5小时","5 - 6小时","6 - 7小时","7 - 8小时","大于8小时"};
+    ListView dialog_scan_list;
+    public void showDialog(){
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.dialog_scan_item, array);
+        final Dialog dialog = new Dialog(MainActivity.this,R.style.mydialog);
+        dialog.setContentView(R.layout.dialog_scan);
+        dialog.show();
+        dialog_scan_list = (ListView) dialog.findViewById(R.id.dialog_scan_list);
+        dialog_scan_list.setAdapter(adapter);
+        dialog_scan_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                startActivity(CaptureActivity.class , position+1);
+                showToast("使用" + (position+1) + "小时");
+            }
+        });
     }
 
 
@@ -774,6 +835,8 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
         mXDirection = location.getDirection();
 
 
+//        Log.e("12345","经度：" + start_latitude + "      纬度：" + start_longitude);
+
         if (isFirstLoc == 0) {
             isFirstLoc = -1;
 
@@ -841,7 +904,8 @@ public class MainActivity extends BaseActivity implements BDLocationListener, Vi
         //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mMapView.onResume();
 
-        if (user.getUserId() != null && "".equals(user.getUserId())){
+        if (MyUtils.isLogin(MainActivity.this)){
+            main_ll_appointment_yy.setVisibility(View.GONE);
             getDataFromNet(InterfaceFinals.getPredetermine, user.getUserId());
         }
     }

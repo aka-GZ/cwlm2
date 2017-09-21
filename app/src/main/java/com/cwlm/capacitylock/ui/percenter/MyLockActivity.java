@@ -104,7 +104,7 @@ public class MyLockActivity extends BaseActivity implements MyLockAdapter.MyClic
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 //                    Calendar ca = Calendar.getInstance();
 //                    ca.set(Calendar.HOUR, ca.get(Calendar.HOUR) + 2);
-            Date curDate = new Date(System.currentTimeMillis() + 21600000);
+            Date curDate = new Date(System.currentTimeMillis() + 21600000);//21600000
             String date = formatter.format(curDate);
             TimeSelector timeSelector = new TimeSelector(MyLockActivity.this, new TimeSelector.ResultHandler() {
                 @Override

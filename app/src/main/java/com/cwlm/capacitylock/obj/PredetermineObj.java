@@ -31,7 +31,16 @@ public class PredetermineObj {
     private int addr;
     private String parkNumber;
     private String endHourTime;  //分享截止时间
+     private String reservationDeadline;//预约截止时间
 
+
+    public String getReservationDeadline() {
+        return reservationDeadline;
+    }
+
+    public void setReservationDeadline(String reservationDeadline) {
+        this.reservationDeadline = reservationDeadline;
+    }
 
     public String getEndHourTime() {
         return endHourTime;

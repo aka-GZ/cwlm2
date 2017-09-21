@@ -216,7 +216,9 @@ public abstract class BaseActivity extends Activity {
 	 */
 	public void onFail(BaseModel resModel){
 		if (resModel != null) {
-			showToast(resModel.getMess());
+			if (!"".equals(resModel.getMess())){
+				showToast(resModel.getMess());
+			}
 		}
 	};
 	

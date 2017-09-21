@@ -60,8 +60,7 @@ public class DrivingRouteOverlay extends OverlayManager {
                                             .zIndex(10)
                                                     .rotate((360 - step.getDirection()))
                                                             .extraInfo(b)
-                                                                    .icon(BitmapDescriptorFactory
-                                                                            .fromAssetWithDpi("Icon_line_node.png")));
+                                                                    .icon(BitmapDescriptorFactory .fromAssetWithDpi("Icon_line_node.png")));
                 }
                 // 最后路段绘制出口点
                 if (mRouteLine.getAllStep().indexOf(step) == (mRouteLine
@@ -70,29 +69,25 @@ public class DrivingRouteOverlay extends OverlayManager {
                             .position(step.getExit().getLocation())
                                     .anchor(0.5f, 0.5f)
                                             .zIndex(10)
-                                                    .icon(BitmapDescriptorFactory
-                                                            .fromAssetWithDpi("Icon_line_node.png")));
+                                                    .icon(BitmapDescriptorFactory .fromAssetWithDpi("Icon_line_node.png")));//BitmapDescriptorFactory.fromResource(R.mipmap.daohang)
 
                 }
             }
         }
-
-        if (mRouteLine.getStarting() != null) {
-            overlayOptionses.add((new MarkerOptions())
-                    .position(mRouteLine.getStarting().getLocation())
-                            .icon(getStartMarker() != null ? getStartMarker() :
-                                    BitmapDescriptorFactory
-                                            .fromAssetWithDpi("Icon_start.png")).zIndex(10));
-        }
-        if (mRouteLine.getTerminal() != null) {
-            overlayOptionses
-                    .add((new MarkerOptions())
-                            .position(mRouteLine.getTerminal().getLocation())
-                                    .icon(getTerminalMarker() != null ? getTerminalMarker() :
-                                            BitmapDescriptorFactory
-                                                    .fromAssetWithDpi("Icon_end.png"))
-                                                            .zIndex(10));
-        }
+//        这段是添加起点终点图标的作用
+//        if (mRouteLine.getStarting() != null) {
+//            overlayOptionses.add((new MarkerOptions()).position(mRouteLine.getStarting().getLocation()).icon(getStartMarker() != null ? getStartMarker() :
+//                                    BitmapDescriptorFactory .fromAssetWithDpi("Icon_start.png")).zIndex(10));
+//        }
+//        if (mRouteLine.getTerminal() != null) {
+//            overlayOptionses
+//                    .add((new MarkerOptions())
+//                            .position(mRouteLine.getTerminal().getLocation())
+//                                    .icon(getTerminalMarker() != null ? getTerminalMarker() :
+//                                            BitmapDescriptorFactory
+//                                                    .fromAssetWithDpi("Icon_end.png"))
+//                                                            .zIndex(10));
+//        }
         // poly line
         if (mRouteLine.getAllStep() != null
                 && mRouteLine.getAllStep().size() > 0) {

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_mydialog"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/dialog_scan_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/text_gary_light"
+            android:text="请选择预计使用时长"
+            android:textSize="16sp"/>
+
+        <ListView
+            android:id="@+id/dialog_scan_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:divider="@color/line_gray"
+            />
+
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_scan_text_1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:textColor="@color/text_gary_light"-->
+            <!--android:text="        1小时内        "-->
+            <!--android:textSize="16sp"/>-->
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_scan_text_2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:textColor="@color/text_gary_light"-->
+            <!--android:text="        1 - 2小时        "-->
+            <!--android:textSize="16sp"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_scan_text_3"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:textColor="@color/text_gary_light"-->
+            <!--android:text="        2 - 3小时        "-->
+            <!--android:textSize="16sp"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_scan_text_4"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:textColor="@color/text_gary_light"-->
+            <!--android:text="        3 - 4小时        "-->
+            <!--android:textSize="16sp"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_scan_text_5"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:textColor="@color/text_gary_light"-->
+            <!--android:text="        4 - 5小时        "-->
+            <!--android:textSize="16sp"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_scan_text_6"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:textColor="@color/text_gary_light"-->
+            <!--android:text="        5 - 6小时        "-->
+            <!--android:textSize="16sp"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_scan_text_7"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:textColor="@color/text_gary_light"-->
+            <!--android:text="        6 - 7小时        "-->
+            <!--android:textSize="16sp"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_scan_text_8"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:textColor="@color/text_gary_light"-->
+            <!--android:text="        7 - 8小时        "-->
+            <!--android:textSize="16sp"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_scan_text_9"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:textColor="@color/text_gary_light"-->
+            <!--android:text="        大于8小时        "-->
+            <!--android:textSize="16sp"/>-->
+
+
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/line_gray"/>-->
+
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:paddingTop="15dp"-->
+        <!--android:paddingBottom="15dp"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/dialog_skip"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@color/text_gary_light"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="跳过"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="14sp"/>&ndash;&gt;-->
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/dialog_go"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:textColor="@color/blue"-->
+            <!--android:gravity="center"-->
+            <!--android:text="确定"-->
+            <!--android:textSize="14sp"/>-->
+
+
+    <!--</LinearLayout>-->
+
+
+
+</LinearLayout>

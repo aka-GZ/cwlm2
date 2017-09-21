@@ -130,8 +130,11 @@ public class CaptureActivity extends BaseActivity implements Callback {
 //		setListener();
 //	}
 
+	int useTime;
 	@Override
 	public void getData() {
+
+		useTime = (int) getIntent().getSerializableExtra("data");
 
 	}
 
@@ -241,6 +244,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
 					.add("userId", user.getUserId())
 					.add("param", resultString)
 					.add("carNumber", user.getCarNumber()+"")
+					.add("useTime", useTime+"")
 					.build();
 			Request request = new Request.Builder()
 					.url(InterfaceFinals.scanCode_Requst)
@@ -293,7 +297,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
                                     finish();
                                 }
                                 //当前车位不可用,推荐附近停车位
-                                else if("4".equals(result.getStatusCode())||"5".equals(result.getStatusCode())){
+                                else if("4".equals(result.getStatusCode())||"7".equals(result.getStatusCode())){
                                     Intent intent=new Intent(CaptureActivity.this,ErrorActivity.class);
                                     intent.putExtra("freelock",res);
                                     startActivity(intent);
@@ -307,6 +311,12 @@ public class CaptureActivity extends BaseActivity implements Callback {
                                     finish();
 
                                 }
+								//服务器正在升级
+								else if("5".equals(result.getStatusCode())){
+
+									showToast("服务器数据升级,请稍后..");
+
+								}
                                 //黑名单用户
                                 else if("6".equals(result.getStatusCode())){
 
